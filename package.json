@@ -1,0 +1,18 @@
+{
+  "name": "firebase-ssr-starter",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/deltaepsilon/firebase-ssr-starter.git",
+  "author": "Chris Esplin <chris@chrisesplin.com>",
+  "license": "apache-2.0",
+  "dependencies": {
+    "@babel/plugin-proposal-export-default-from": "^7.0.0-beta.53",
+    "next": "^6.0.3",
+    "react": "^16.4.1",
+    "react-dom": "^16.4.1",
+    "unistore": "^3.0.6"
+  },
+  "scripts": {
+    "start": "next"
+  }
+}
