@@ -1,5 +1,2 @@
-module.exports = {
-  webpack: config => {
-    return config;
-  },
-};
+const withCss = require('@zeit/next-css');
+module.exports = withCss();
