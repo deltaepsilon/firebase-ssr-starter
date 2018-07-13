@@ -1,18 +1,16 @@
 import React from 'react';
 import { Provider } from 'unistore/react';
-import { mappedActions, store } from '../../datastore';
+import { store } from '../../datastore';
 import FirebaseHead from '../head/firebase';
 import FontsHead from '../head/fonts';
 import { AppStyle } from '../head/styles';
 
-import PrimaryAppBar from '../app-bar/primary';
+import Authentication from '../authentication/authentication';
+import PrimaryAppBar from '../app-bar/primary-app-bar';
+import PermanentDrawer from '../drawer/permanent-drawer';
+import TemporaryDrawer from '../drawer/temporary-drawer';
 
-const style = {
-  main: {
-    overflow: 'auto',
-    marginTop: '4rem',
-  },
-};
+import './app-shell.css';
 
 export default class AppShell extends React.Component {
   constructor() {
@@ -21,19 +19,24 @@ export default class AppShell extends React.Component {
   }
 
   render() {
-    const { children } = this.props;
+    const { children, secure, url } = this.props;
     return (
       <>
         <FirebaseHead firebaseEnv={this.state.environment.firebase} />
         <FontsHead />
         <AppStyle />
         <Provider store={store}>
-          <>
-            <div>
-              <PrimaryAppBar />
+          <div className="app-shell">
+            <Authentication url={url} secure={secure} />
+            <PrimaryAppBar />
+            <TemporaryDrawer />
+            <div className="content">
+              <div className="permanent-drawer">
+                <PermanentDrawer />
+              </div>
+              <main>{children}</main>
             </div>
-            <main style={style.main}>{children}</main>
-          </>
+          </div>
         </Provider>
       </>
     );

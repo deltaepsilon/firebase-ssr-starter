@@ -1,0 +1,14 @@
+.primary-app-bar .mdc-top-app-bar {
+  position: relative;
+}
+
+.primary-app-bar .menu-icon-wrapper {
+  margin-left: var(--menu-icon-width);
+  transition: margin-left var(--drawer-speed) linear;
+}
+
+@media all and (max-width: 1024px) {
+  .primary-app-bar .menu-icon-wrapper {
+    margin-left: 0;
+  }
+}
