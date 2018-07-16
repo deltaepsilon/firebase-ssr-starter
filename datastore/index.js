@@ -3,14 +3,20 @@ import * as rawActions from './actions';
 import devEnvironment from '../environments/environment.dev';
 import prodEnvironment from '../environments/environment';
 
+const localStorageName = 'firebase-ssr-starter';
 const nodeEnv = process.env.NODE_ENV;
 const isDevelopment = nodeEnv == 'development';
 
+const localStorageState = getLocalStorage() || {};
+
 const initialState = {
+  notOverriddenByLocalStorage: true,
+  ...localStorageState,
+  isSSR: typeof window != 'object',
+  isDrawerOpen: false,
   nodeEnv,
   isDevelopment: nodeEnv == 'development',
   environment: isDevelopment ? devEnvironment : prodEnvironment,
-  isDrawerOpen: false,
 };
 
 const store = createStore(initialState);
@@ -29,6 +35,26 @@ function setWindowState() {
   if (typeof window == 'object') {
     window.state = store.getState();
   }
+}
+
+store.subscribe(() => setLocalStorage(store.getState()));
+
+function getLocalStorage() {
+  let result = {};
+
+  if (typeof window == 'object') {
+    const stringified = localStorage.getItem(localStorageName);
+
+    if (stringified) {
+      result = JSON.parse(stringified);
+    }
+  }
+
+  return result;
+}
+
+function setLocalStorage(state) {
+  localStorage && localStorage.setItem(localStorageName, JSON.stringify(state));
 }
 
 export { actions, mappedActions, store };

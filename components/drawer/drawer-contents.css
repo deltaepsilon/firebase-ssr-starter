@@ -1,4 +1,4 @@
 .drawer-contents .mdc-drawer__header {
-
-  background: purple;
+  background: var(--mdc-theme-secondary-light);
+  color: var(--mdc-theme-secondary-text);
 }

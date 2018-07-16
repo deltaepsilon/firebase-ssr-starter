@@ -8,11 +8,19 @@ import { ListItem, ListItemText } from 'rmwc/List';
 
 import './drawer-contents.css';
 
-export function DrawerContents(props) {
+export function DrawerContents({ currentUser }) {
   return (
     <div className="drawer-contents">
       <DrawerHeader>
-        <div className="drawer-header">hey guys!!!</div>
+        <div className="drawer-header">
+          {!currentUser ? (
+            <Link href="/login" prefetch>
+              <a>Login</a>
+            </Link>
+          ) : (
+            <span>Logged In</span>
+          )}
+        </div>
       </DrawerHeader>
       <DrawerContent>
         <ListItem>
@@ -45,6 +53,6 @@ export function DrawerContents(props) {
 }
 
 export default connect(
-  '',
+  'currentUser',
   actions
 )(DrawerContents);
