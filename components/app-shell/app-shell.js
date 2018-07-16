@@ -9,6 +9,7 @@ import Authentication from '../authentication/authentication';
 import PrimaryAppBar from '../app-bar/primary-app-bar';
 import PermanentDrawer from '../drawer/permanent-drawer';
 import TemporaryDrawer from '../drawer/temporary-drawer';
+import ErrorHandler from '../error-handler/error-handler';
 
 import './app-shell.css';
 
@@ -16,6 +17,10 @@ export default class AppShell extends React.Component {
   constructor() {
     super();
     this.state = store.getState();
+  }
+
+  componentDidCatch(error, info) {
+    console.log('error, info', error, info);
   }
 
   render() {
@@ -28,6 +33,7 @@ export default class AppShell extends React.Component {
         <Provider store={store}>
           <div className="app-shell">
             <Authentication url={url} secure={secure} />
+            <ErrorHandler />
             <PrimaryAppBar />
             <TemporaryDrawer />
             <div className="content">

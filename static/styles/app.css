@@ -3,6 +3,12 @@
   --drawer-width: 240px;
   --menu-icon-width: -52px;
 
+  /* Color */
+  --color-text: #333;
+  --color-google: #db3236;
+  --color-facebook: #3b5998;
+
+  /* Theme */
   /* https://material.io/tools/color/#!/?view.left=0&view.right=1&primary.color=424242&secondary.color=BDBDBD */
 
   --mdc-theme-primary: #424242;
@@ -18,11 +24,66 @@
 
 body {
   font-family: 'Roboto';
+  color: var(--color-text);
   margin: 0;
+}
+
+hr {
+  border-width: 1px 0 0 0;
+  border-color: var(--color-text);
 }
 
 a,
 a:visited {
   color: inherit;
   text-decoration: none;
+}
+
+ul.plain,
+ol.plain {
+  padding: 0;
+  list-style: none;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+}
+
+.centered {
+  justify-content: center;
+  align-items: center;
+}
+
+.full-height {
+  height: 100%;
+}
+
+/* MDC Patches */
+.mdc-text-field--focused:not(.mdc-text-field--disabled) .mdc-floating-label {
+  color: var(--color-text) !important;
+}
+
+.mdc-text-field--focused:not(.mdc-text-field--disabled)
+  .mdc-text-field__input::-webkit-input-placeholder {
+  color: var(--color-text) !important;
+}
+
+.mdc-text-field--focused:not(.mdc-text-field--disabled)
+  .mdc-text-field__input:-ms-input-placeholder {
+  color: var(--color-text) !important;
+}
+
+.mdc-text-field--focused:not(.mdc-text-field--disabled)
+  .mdc-text-field__input::-ms-input-placeholder {
+  color: var(--color-text) !important;
+}
+
+.mdc-text-field--focused:not(.mdc-text-field--disabled) .mdc-text-field__input::placeholder {
+  color: var(--color-text) !important;
 }

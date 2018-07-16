@@ -1,0 +1,28 @@
+.authentication li {
+  margin-bottom: 1rem;
+}
+
+.authentication button {
+  width: 100%;
+}
+
+.authentication footer button {
+  width: inherit;
+}
+
+.authentication .google {
+  background: var(--color-google);
+}
+
+.authentication .facebook {
+  background: var(--color-facebook);
+}
+
+.authentication .material-icons,
+.authentication svg {
+  margin-right: 1rem;
+}
+
+.authentication .mdc-text-field {
+  width: 100%;
+}

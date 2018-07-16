@@ -10,6 +10,10 @@
   align-items: stretch;
 }
 
+.app-shell main {
+  flex: 1;
+}
+
 .app-shell .permanent-drawer {
   position: relative;
   transition: margin-left var(--drawer-speed) linear;

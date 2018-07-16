@@ -1,0 +1,28 @@
+.paper {
+  max-width: calc(100% - 2rem);
+}
+
+.paper .contents {
+  padding: 1rem;
+}
+
+.paper.card {
+  width: 300px;
+}
+
+.paper.card .centered {
+  text-align: center;
+}
+
+.paper.card footer {
+  display: flex;
+  justify-content: space-between;
+  direction: rtl;
+
+  margin-top: 2rem;
+}
+
+.paper.card footer button {
+  display: grid;
+  
+}
