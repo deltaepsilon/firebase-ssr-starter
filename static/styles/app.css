@@ -2,11 +2,7 @@
   --drawer-speed: 200ms;
   --drawer-width: 240px;
   --menu-icon-width: -52px;
-
-  /* Color */
-  --color-text: #333;
-  --color-google: #db3236;
-  --color-facebook: #3b5998;
+  --border-radius-large: 4px;
 
   /* Theme */
   /* https://material.io/tools/color/#!/?view.left=0&view.right=1&primary.color=424242&secondary.color=BDBDBD */
@@ -20,6 +16,15 @@
   --mdc-theme-secondary-light: #51af8f;
   --mdc-theme-secondary-dark: #005238;
   --mdc-theme-secondary-text: #ffffff;
+
+  /* Color */
+  --color-text: #333;
+  --color-text-light: #fff;
+  --color-text-light-gray: #e4e4e4;
+  --color-google: #db3236;
+  --color-facebook: #3b5998;
+  --color-loader: var(--mdc-theme-secondary);
+  --color-border: #999;
 }
 
 body {
@@ -30,7 +35,7 @@ body {
 
 hr {
   border-width: 1px 0 0 0;
-  border-color: var(--color-text);
+  border-color: var(--color-border);
 }
 
 a,
@@ -86,4 +91,17 @@ ol.plain {
 
 .mdc-text-field--focused:not(.mdc-text-field--disabled) .mdc-text-field__input::placeholder {
   color: var(--color-text) !important;
+}
+
+.mdc-snackbar {
+  z-index: 100;
+}
+
+.mdc-snackbar--multiline .mdc-snackbar__text {
+  height: inherit !important;
+  z-index: 1000;
+}
+
+.mdc-snackbar__action-button {
+  color: var(--color-text-light) !important;
 }

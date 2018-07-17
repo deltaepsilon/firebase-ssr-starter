@@ -1,8 +1,10 @@
 import React from 'react';
+import { withRouter } from 'next/router';
 import { Provider } from 'unistore/react';
-import { store } from '../../datastore';
+import { mappedActions, store } from '../../datastore';
 import FirebaseHead from '../head/firebase';
 import FontsHead from '../head/fonts';
+import MetaHead from '../head/meta';
 import { AppStyle } from '../head/styles';
 
 import Authentication from '../authentication/authentication';
@@ -13,20 +15,23 @@ import ErrorHandler from '../error-handler/error-handler';
 
 import './app-shell.css';
 
-export default class AppShell extends React.Component {
+export class AppShell extends React.Component {
   constructor() {
     super();
     this.state = store.getState();
   }
 
-  componentDidCatch(error, info) {
-    console.log('error, info', error, info);
+  componentDidMount() {
+    mappedActions.setRouter(this.props.router);
   }
 
   render() {
     const { children, secure, url } = this.props;
+    const title = 'Firebase SSR';
+
     return (
       <>
+        <MetaHead title={title} />
         <FirebaseHead firebaseEnv={this.state.environment.firebase} />
         <FontsHead />
         <AppStyle />
@@ -34,7 +39,7 @@ export default class AppShell extends React.Component {
           <div className="app-shell">
             <Authentication url={url} secure={secure} />
             <ErrorHandler />
-            <PrimaryAppBar />
+            <PrimaryAppBar title={title} />
             <TemporaryDrawer />
             <div className="content">
               <div className="permanent-drawer">
@@ -48,3 +53,5 @@ export default class AppShell extends React.Component {
     );
   }
 }
+
+export default withRouter(AppShell);

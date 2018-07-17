@@ -10,22 +10,21 @@ import '@material/button/dist/mdc.button.min.css';
 import '@material/textfield/dist/mdc.textfield.min.css';
 import './authentication.css';
 
-export default function RegisterPasswordView({
+export default function LoginPasswordView({
   email,
-  password,
-  passwordValidation,
   isValid,
-  register,
+  password,
+  reset,
+  signIn,
   setPassword,
-  setPasswordValidation,
   setView,
   views,
 }) {
   return (
     <Paper z={1} className="card authentication">
-      <h2 className="centered">Register</h2>
+      <h2 className="centered">Sign in</h2>
       <hr />
-      <form onSubmit={handleSubmit({ register, email, password, isValid })}>
+      <form onSubmit={handleSubmit({ signIn, email, password, isValid })}>
         <TextField label="Email" type="email" value={email} outlined disabled />
         <TextField
           autoFocus
@@ -36,21 +35,11 @@ export default function RegisterPasswordView({
           required
           onChange={e => setPassword(e.target.value)}
         />
-        <TextFieldHelperText persistent validationMsg>
-          Password length must be greater than 5 characters.
-        </TextFieldHelperText>
-        <TextField
-          label="Validate password"
-          type="password"
-          value={passwordValidation}
-          outlined
-          required
-          onChange={e => setPasswordValidation(e.target.value)}
-        />
         <footer>
           <Button raised accent type="submit" disabled={!isValid}>
-            Register
+            Sign in
           </Button>
+          <Button onClick={() => reset(email)}>Reset password</Button>
           <span className="flex" />
           <Button onClick={setView(views.email)}>
             <Icon use="arrow_back" />
@@ -61,13 +50,12 @@ export default function RegisterPasswordView({
   );
 }
 
-function handleSubmit({ register, email, password, isValid }) {
+function handleSubmit({ signIn, email, password, isValid }) {
   return e => {
     e.preventDefault();
 
-    console.log('isValid, email, password, register', isValid, email, password, register);
     if (isValid) {
-      register(email, password);
+      signIn(email, password);
     }
   };
 }

@@ -8,6 +8,7 @@
   "dependencies": {
     "@babel/plugin-proposal-export-default-from": "^7.0.0-beta.53",
     "@zeit/next-css": "^0.2.0",
+    "md5": "^2.2.1",
     "next": "^6.0.3",
     "react": "^16.4.1",
     "react-dom": "^16.4.1",

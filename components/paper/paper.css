@@ -1,5 +1,5 @@
 .paper {
-  max-width: calc(100% - 2rem);
+  max-width: calc(100vw - 2rem);
 }
 
 .paper .contents {
@@ -7,7 +7,7 @@
 }
 
 .paper.card {
-  width: 300px;
+  width: 480px;
 }
 
 .paper.card .centered {
@@ -22,7 +22,10 @@
   margin-top: 2rem;
 }
 
-.paper.card footer button {
-  display: grid;
-  
+.paper.card .flex {
+  flex: 1;
+}
+
+.paper.card footer button:not(:last-child) {
+  margin-right: 0.5rem;
 }

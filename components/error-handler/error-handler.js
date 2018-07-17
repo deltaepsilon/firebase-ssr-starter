@@ -16,6 +16,7 @@ export class ErrorHandler extends React.Component {
   componentDidMount() {
     window.HandledError = error => {
       const rawError = error
+        .toString()
         .split(':')
         .pop()
         .trim();
@@ -34,6 +35,7 @@ export class ErrorHandler extends React.Component {
     const hide = this.hide.bind(this);
     return (
       <Snackbar
+        alignStart
         actionHandler={hide}
         actionText="dismiss"
         dismissesOnAction
@@ -41,6 +43,7 @@ export class ErrorHandler extends React.Component {
         multiline
         onHide={hide}
         show={this.state.show}
+        // timeout={1000 * 60}
       />
     );
   }

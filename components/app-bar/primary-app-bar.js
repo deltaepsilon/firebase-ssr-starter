@@ -14,7 +14,7 @@ import {
 import '@material/top-app-bar/dist/mdc.top-app-bar.min.css';
 import './primary-app-bar.css';
 
-export function PrimaryAppBar({ toggleIsDrawerOpen }) {
+export function PrimaryAppBar({ title, toggleIsDrawerOpen }) {
   return (
     <div className="primary-app-bar">
       <TopAppBar style={{ top: 0 }}>
@@ -23,7 +23,7 @@ export function PrimaryAppBar({ toggleIsDrawerOpen }) {
             <div className="menu-icon-wrapper">
               <TopAppBarNavigationIcon use="menu" onClick={toggleIsDrawerOpen} />
             </div>
-            <TopAppBarTitle>Title</TopAppBarTitle>
+            <TopAppBarTitle>{title}</TopAppBarTitle>
           </TopAppBarSection>
 
           <TopAppBarSection alignEnd>

@@ -11,39 +11,33 @@ import '@material/textfield/dist/mdc.textfield.min.css';
 import './authentication.css';
 
 export default function EmailView({ email, isValid, setEmail, setView, views }) {
-  console.log('email', email);
   return (
     <Paper z={1} className="card authentication">
-      <h2 className="centered">Log in or register</h2>
+      <h2 className="centered">Sign in or register</h2>
       <hr />
-      <form onSubmit={handleSubmit(setEmail)}>
+      <form onSubmit={e => e.preventDefault()}>
         <TextField
+          autoFocus
           label="Email"
+          type="email"
           value={email}
           outlined
           required
           onChange={e => setEmail(e.target.value)}
         />
+        <footer>
+          <Button raised onClick={setView(views.loginPassword)} disabled={!isValid}>
+            Login
+          </Button>
+          <Button raised accent onClick={setView(views.registerPassword)} disabled={!isValid}>
+            Register
+          </Button>
+          <span className="flex" />
+          <Button onClick={setView(views.selector)}>
+            <Icon use="arrow_back" />
+          </Button>
+        </footer>
       </form>
-      <footer>
-        <Button raised onClick={setView(views.selector)} disabled={!isValid}>
-          Login
-        </Button>
-        <Button raised accent onClick={setView(views.selector)} disabled={!isValid}>
-          Register
-        </Button>
-        <Button onClick={setView(views.selector)}>
-          <Icon use="arrow_back" />
-        </Button>
-      </footer>
     </Paper>
   );
-}
-
-function handleSubmit(setEmail) {
-  return e => {
-    e.preventDefault();
-
-    console.log('setEmail', setEmail);
-  };
 }

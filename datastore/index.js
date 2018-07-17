@@ -12,11 +12,12 @@ const localStorageState = getLocalStorage() || {};
 const initialState = {
   notOverriddenByLocalStorage: true,
   ...localStorageState,
+  environment: isDevelopment ? devEnvironment : prodEnvironment,
   isSSR: typeof window != 'object',
   isDrawerOpen: false,
-  nodeEnv,
   isDevelopment: nodeEnv == 'development',
-  environment: isDevelopment ? devEnvironment : prodEnvironment,
+  nodeEnv,
+  router: {},
 };
 
 const store = createStore(initialState);

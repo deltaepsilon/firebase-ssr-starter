@@ -1,8 +1,6 @@
 /* globals firebase */
 
 import React from 'react';
-import { connect } from 'unistore/react';
-import { actions } from '../../datastore';
 import Paper from '../paper/paper';
 import { Button } from 'rmwc/Button';
 import { Icon } from 'rmwc/Icon';
@@ -21,19 +19,19 @@ export default ({ setView, views }) => {
         <li>
           <Button raised onClick={setView(views.email)}>
             <Icon use="email" />
-            Email
+            <span>Email</span>
           </Button>
         </li>
         <li>
           <Button raised className="google" onClick={login('google')}>
             <GoogleSvg />
-            Google
+            <span>Google</span>
           </Button>
         </li>
         <li>
           <Button raised className="facebook" onClick={login('facebook')}>
             <FacebookSvg />
-            Facebook
+            <span>Facebook</span>
           </Button>
         </li>
       </ul>
