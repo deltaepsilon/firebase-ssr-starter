@@ -65,7 +65,6 @@ function handleSubmit({ register, email, password, isValid }) {
   return e => {
     e.preventDefault();
 
-    console.log('isValid, email, password, register', isValid, email, password, register);
     if (isValid) {
       register(email, password);
     }

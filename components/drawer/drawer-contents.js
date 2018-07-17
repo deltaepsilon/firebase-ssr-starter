@@ -11,8 +11,6 @@ import md5 from 'md5';
 import './drawer-contents.css';
 
 export function DrawerContents({ currentUser, router }) {
-  console.log('router', router.pathname);
-
   return (
     <div className="drawer-contents">
       <DrawerHeader>
