@@ -1,8 +1,19 @@
+const admin = require('firebase-admin');
+const environment = require('./environments/environment.json');
 const functions = require('firebase-functions');
 
-// // Create and Deploy Your First Cloud Functions
-// // https://firebase.google.com/docs/functions/write-firebase-functions
-//
-// exports.helloWorld = functions.https.onRequest((request, response) => {
-//  response.send("Hello from Firebase!");
-// });
+admin.initializeApp();
+
+const {
+  AuthorizationOnCreate,
+  
+} = require('./src');
+const context = { admin, environment };
+
+
+// authorization-on-create
+const authorizationOnCreate = AuthorizationOnCreate(context);
+exports.authorizationOnCreate = functions.auth
+  .user()
+  .onCreate(authorizationOnCreate);
+  
