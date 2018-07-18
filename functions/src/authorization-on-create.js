@@ -6,9 +6,10 @@ module.exports = ({ admin, environment }) => user => {
   const usersCollection = db.collection(environment.schema.users);
   const customClaimsRef = admin.database().ref(environment.schema.customClaims);
   const auth = admin.auth();
+  const email = extractEmailFromUser(user);
 
   return Promise.resolve()
-    .then(getCustomClaimsByEmail(customClaimsRef, user.email))
+    .then(getCustomClaimsByEmail(customClaimsRef, email))
     .then(setCustomClaims(auth, user.uid))
     .then(claims => {
       const update = mapUserUpdate(claims, user);
@@ -17,12 +18,18 @@ module.exports = ({ admin, environment }) => user => {
 };
 
 function mapUserUpdate(claims, user) {
+  const email = extractEmailFromUser(user);
+
   return {
     claims,
-    email: user.email,
+    email,
     emailVerified: user.emailVerified,
     lastSignInTime: user.metadata.lastSignInTime,
     creationTime: user.metadata.creationTime,
     providerData: user.providerData,
   };
+}
+
+function extractEmailFromUser(user) {
+  return user.email || user.providerData.find(({ email }) => email).email;
 }

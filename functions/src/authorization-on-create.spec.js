@@ -12,6 +12,7 @@ const Func = require('./authorization-on-create');
 const usersCollection = admin.firestore().collection(environment.schema.users);
 
 describe('AuthorizationOnCreate', () => {
+  const email = 'tester@chrisesplin.com';
   let func;
   let user;
   let claimsObj;
@@ -23,19 +24,19 @@ describe('AuthorizationOnCreate', () => {
 
     user = {
       uid: '123456',
-      email: 'tester@chrisesplin.com',
+      email: null,
       emailVerified: true,
       metadata: {
         lastSignInTime: now,
         creationTime: now,
       },
-      providerData: [{ test: true }],
+      providerData: [{ email }],
     };
 
     userDoc = usersCollection.doc(user.uid);
 
     claimsObj = {
-      email: user.email,
+      email,
       claims: {
         isAdmin: true,
       },
@@ -47,7 +48,7 @@ describe('AuthorizationOnCreate', () => {
   afterAll(done => {
     Promise.resolve()
       .then(() => userDoc.delete())
-      .then(() => removeCustomClaimsByEmail(user.email))
+      .then(() => removeCustomClaimsByEmail(email))
       .then(() => done(), done.fail);
   });
 
@@ -57,7 +58,7 @@ describe('AuthorizationOnCreate', () => {
       .then(snapshot => snapshot.data())
       .then(user => {
         expect(user.claims).toEqual(claimsObj.claims);
-        expect(user.email).toEqual(user.email);
+        expect(user.email).toEqual(email);
         done();
       })
       .catch(done.fail);

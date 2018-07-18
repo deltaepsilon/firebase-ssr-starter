@@ -13,17 +13,23 @@ export class Authentication extends React.Component {
   }
 
   componentDidMount() {
-    this.auth.onAuthStateChanged(currentUser => {
+    this.auth.onAuthStateChanged(async currentUser => {
       this.props.setCurrentUser(currentUser);
+      this.setCustomClaims(currentUser);
       this.setState({ loaded: true });
+      
       if (this.props.secure && !currentUser) {
         location.replace('/login');
       }
-
-      if (currentUser) {
-        currentUser.getIdTokenResult().then(({ claims }) => this.props.setClaims(claims));
-      }
     });
+  }
+
+  async setCustomClaims(currentUser) {
+    if (currentUser) {
+      const {claims} = await currentUser.getIdTokenResult();
+      console.log('claims', claims);
+      this.props.setClaims(claims);
+    }
   }
 
   render() {
@@ -35,3 +41,4 @@ export default connect(
   'isSSR,currentUser',
   actions
 )(Authentication);
+ 

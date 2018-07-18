@@ -10,7 +10,7 @@ import { Icon } from 'rmwc/Icon';
 import md5 from 'md5';
 import './drawer-contents.css';
 
-export function DrawerContents({ currentUser, router }) {
+export function DrawerContents({ claims, currentUser, router }) {
   return (
     <div className="drawer-contents">
       <DrawerHeader>
@@ -20,6 +20,21 @@ export function DrawerContents({ currentUser, router }) {
         </div>
       </DrawerHeader>
       <DrawerContent>
+        {claims &&
+          claims.isAdmin && (
+            <Active router={router} href="/admin">
+              <ListItem>
+                <ListItemText>
+                  <Link href="/admin" prefetch>
+                    <a>
+                      <Icon use="supervisor_account" />
+                      <span>Admin</span>
+                    </a>
+                  </Link>
+                </ListItemText>
+              </ListItem>
+            </Active>
+          )}
         {currentUser && (
           <Active router={router} href="/settings">
             <ListItem>
@@ -76,7 +91,7 @@ export function DrawerContents({ currentUser, router }) {
 }
 
 export default connect(
-  'currentUser, router',
+  'claims, currentUser, router',
   actions
 )(DrawerContents);
 

@@ -46,6 +46,8 @@ function login(providerName) {
       facebook: firebase && new firebase.auth.FacebookAuthProvider(),
     };
 
+    providers.google.addScope('email');
+
     firebase
       .auth()
       .signInWithPopup(providers[providerName])
