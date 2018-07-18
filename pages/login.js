@@ -1,4 +1,5 @@
 import React from 'react';
+import { withRouter } from 'next/router';
 import AppShell from '.././components/app-shell/app-shell';
 
 import EmailView from '../components/authentication/email-view';
@@ -15,7 +16,7 @@ const views = {
   registerPassword: 'REGISTER_PASSWORD',
 };
 
-export default class Login extends React.Component {
+export default withRouter(class Login extends React.Component {
   constructor() {
     super();
     this.state = {
@@ -48,7 +49,7 @@ export default class Login extends React.Component {
   componentDidMount() {
     this.unsubscribe = this.auth.onAuthStateChanged(async currentUser => {
       if (currentUser) {
-        window.location.replace('/');
+        this.props.router.push('/');
       }
     });
   }
@@ -81,6 +82,7 @@ export default class Login extends React.Component {
       };
 
       providers.google.addScope('email');
+      providers.facebook.addScope('email');
 
       firebase
         .auth()
@@ -210,4 +212,4 @@ export default class Login extends React.Component {
       </AppShell>
     );
   }
-}
+})
