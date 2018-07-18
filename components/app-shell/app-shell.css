@@ -8,6 +8,8 @@
   display: flex;
   flex-grow: 1;
   align-items: stretch;
+
+  position: relative;
 }
 
 .app-shell main {

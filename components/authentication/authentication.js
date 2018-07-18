@@ -3,32 +3,31 @@ import { connect } from 'unistore/react';
 import { actions } from '../../datastore';
 
 export class Authentication extends React.Component {
-  constructor() {
-    super();
-    this.state = { loaded: false };
-  }
-
   get auth() {
     return window && window.firebase ? window.firebase.auth() : { onAuthStateChanged: () => null };
   }
 
   componentDidMount() {
     this.auth.onAuthStateChanged(async currentUser => {
-      this.props.setCurrentUser(currentUser);
-      this.setCustomClaims(currentUser);
-      this.setState({ loaded: true });
-      
       if (this.props.secure && !currentUser) {
-        location.replace('/login');
+        this.props.router.push('/login');
       }
+
+      this.props.setCurrentUser(currentUser);
+      await this.setCustomClaims(currentUser);
+
+      this.props.setLoaded(true);
     });
   }
 
   async setCustomClaims(currentUser) {
     if (currentUser) {
-      const {claims} = await currentUser.getIdTokenResult();
-      console.log('claims', claims);
+      const { claims } = await currentUser.getIdTokenResult();
       this.props.setClaims(claims);
+
+      if (this.props.admin && !claims.isAdmin) {
+        this.props.router.push('/');
+      }
     }
   }
 
@@ -38,7 +37,6 @@ export class Authentication extends React.Component {
 }
 
 export default connect(
-  'isSSR,currentUser',
+  'isSSR,currentUser,router',
   actions
 )(Authentication);
- 

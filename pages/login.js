@@ -73,6 +73,24 @@ export default class Login extends React.Component {
     this.setState({ passwordValidation });
   }
 
+  signInWithPopup(providerName) {
+    return () => {
+      const providers = {
+        google: firebase && new firebase.auth.GoogleAuthProvider(),
+        facebook: firebase && new firebase.auth.FacebookAuthProvider(),
+      };
+
+      providers.google.addScope('email');
+
+      firebase
+        .auth()
+        .signInWithPopup(providers[providerName])
+        .catch(({ message }) => {
+          throw new HandledError(message);
+        });
+    };
+  }
+
   register(email, password) {
     this.loading('Thanks for registering 😍');
     this.auth
@@ -121,6 +139,7 @@ export default class Login extends React.Component {
     const setPasswordValidation = this.setPasswordValidation.bind(this);
     const setView = this.setView.bind(this);
 
+    const signInWithPopup = this.signInWithPopup.bind(this);
     const register = this.register.bind(this);
     const reset = this.reset.bind(this);
     const signIn = this.signIn.bind(this);
@@ -175,7 +194,9 @@ export default class Login extends React.Component {
         break;
 
       case views.selector:
-        view = <SelectorView setView={setView} views={views} />;
+        view = (
+          <SelectorView signInWithPopup={signInWithPopup} setView={setView} views={views} />
+        );
         break;
 
       default:

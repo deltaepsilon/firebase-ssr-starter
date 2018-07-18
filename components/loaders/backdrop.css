@@ -1,5 +1,5 @@
 .backdrop {
-  position: fixed;
+  position: absolute;
   top: 0;
   right: 0;
   bottom: 0;
@@ -12,4 +12,11 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
+
+  opacity: 1;
+  transition: opacity 300ms linear;
+}
+
+.backdrop.transitioning {
+  opacity: 0;
 }

@@ -10,8 +10,6 @@ const isDevelopment = nodeEnv == 'development';
 const localStorageState = getLocalStorage() || {};
 
 const initialState = {
-  notOverriddenByLocalStorage: true,
-  ...localStorageState,
   claims: {},
   environment: isDevelopment ? devEnvironment : prodEnvironment,
   isSSR: typeof window != 'object',
@@ -19,6 +17,9 @@ const initialState = {
   isDevelopment: nodeEnv == 'development',
   nodeEnv,
   router: {},
+  ...localStorageState,
+  // Not overridden by localStorageState 👇
+  loaded: false,
 };
 
 const store = createStore(initialState);
@@ -40,6 +41,7 @@ function setWindowState() {
 }
 
 store.subscribe(() => setLocalStorage(store.getState()));
+// store.subscribe(() => console.log(store.getState()));
 
 function getLocalStorage() {
   let result = {};

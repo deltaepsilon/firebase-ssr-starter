@@ -10,7 +10,7 @@ import './authentication.css';
 
 import { FacebookSvg, GoogleSvg } from '../svg';
 
-export default ({ setView, views }) => {
+export default ({ signInWithPopup, setView, views }) => {
   return (
     <Paper z={1} className="card authentication">
       <h2 className="centered">Select sign-in method</h2>
@@ -23,13 +23,13 @@ export default ({ setView, views }) => {
           </Button>
         </li>
         <li>
-          <Button raised className="google" onClick={login('google')}>
+          <Button raised className="google" onClick={signInWithPopup('google')}>
             <GoogleSvg />
             <span>Google</span>
           </Button>
         </li>
         <li>
-          <Button raised className="facebook" onClick={login('facebook')}>
+          <Button raised className="facebook" onClick={signInWithPopup('facebook')}>
             <FacebookSvg />
             <span>Facebook</span>
           </Button>
@@ -38,21 +38,3 @@ export default ({ setView, views }) => {
     </Paper>
   );
 };
-
-function login(providerName) {
-  return () => {
-    const providers = {
-      google: firebase && new firebase.auth.GoogleAuthProvider(),
-      facebook: firebase && new firebase.auth.FacebookAuthProvider(),
-    };
-
-    providers.google.addScope('email');
-
-    firebase
-      .auth()
-      .signInWithPopup(providers[providerName])
-      .catch(({ message }) => {
-        throw new HandledError(message);
-      });
-  };
-}

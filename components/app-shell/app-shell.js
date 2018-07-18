@@ -12,6 +12,7 @@ import PrimaryAppBar from '../app-bar/primary-app-bar';
 import PermanentDrawer from '../drawer/permanent-drawer';
 import TemporaryDrawer from '../drawer/temporary-drawer';
 import ErrorHandler from '../error-handler/error-handler';
+import Content from './content';
 
 import './app-shell.css';
 
@@ -26,7 +27,7 @@ export class AppShell extends React.Component {
   }
 
   render() {
-    const { children, secure, url } = this.props;
+    const { admin, children, secure, url } = this.props;
     const title = 'Firebase SSR';
 
     return (
@@ -37,16 +38,16 @@ export class AppShell extends React.Component {
         <AppStyle />
         <Provider store={store}>
           <div className="app-shell">
-            <Authentication url={url} secure={secure} />
+            <Authentication admin={admin} secure={secure} url={url} />
             <ErrorHandler />
             <PrimaryAppBar title={title} />
             <TemporaryDrawer />
-            <div className="content">
+            <Content>
               <div className="permanent-drawer">
                 <PermanentDrawer />
               </div>
               <main>{children}</main>
-            </div>
+            </Content>
           </div>
         </Provider>
       </>
