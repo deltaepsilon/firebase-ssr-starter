@@ -16,6 +16,7 @@
     "unistore": "^3.0.6"
   },
   "scripts": {
-    "start": "next"
+    "start": "next",
+    "deploy:functions": "firebase deploy --only functions"
   }
 }

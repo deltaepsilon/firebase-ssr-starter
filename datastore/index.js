@@ -12,6 +12,7 @@ const localStorageState = getLocalStorage() || {};
 const initialState = {
   notOverriddenByLocalStorage: true,
   ...localStorageState,
+  claims: {},
   environment: isDevelopment ? devEnvironment : prodEnvironment,
   isSSR: typeof window != 'object',
   isDrawerOpen: false,

@@ -1,3 +1,4 @@
+export setClaims from './set-claims';
 export setCurrentUser from './set-current-user';
 export setEnvironment from './set-environment';
 export setIsDrawerOpen from './set-is-drawer-open';

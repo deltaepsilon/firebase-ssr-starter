@@ -19,6 +19,10 @@ export class Authentication extends React.Component {
       if (this.props.secure && !currentUser) {
         location.replace('/login');
       }
+
+      if (currentUser) {
+        currentUser.getIdTokenResult().then(({ claims }) => this.props.setClaims(claims));
+      }
     });
   }
 
