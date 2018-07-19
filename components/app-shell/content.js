@@ -15,7 +15,7 @@ export class Content extends React.Component {
   }
 
   get transitionMilliseconds() {
-    return 1000 * 2;
+    return 1000 * 0;
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -31,13 +31,7 @@ export class Content extends React.Component {
 
     return (
       <div className="content">
-        {loaded && !transitioning ? (
-          children
-        ) : (
-          <Backdrop transitioning={transitioning}>
-            <CubeGridLoader />
-          </Backdrop>
-        )}
+        {children}
       </div>
     );
   }

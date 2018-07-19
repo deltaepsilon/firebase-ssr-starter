@@ -5,7 +5,7 @@ export default function() {
   return (
     <AppShell >
       <h1>index.js</h1>
-      <div>Todo: add react router</div>
+      <div>No router needed after all!!!</div>
     </AppShell>
   );
 }
