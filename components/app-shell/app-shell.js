@@ -2,11 +2,14 @@ import React from 'react';
 import { withRouter } from 'next/router';
 import { Provider } from 'unistore/react';
 import { mappedActions, store } from '../../datastore';
+
+// Head tags
 import FirebaseHead from '../head/firebase';
 import FontsHead from '../head/fonts';
 import MetaHead from '../head/meta';
 import { AppStyle } from '../head/styles';
 
+// Components
 import Authentication from '../authentication/authentication';
 import PrimaryAppBar from '../app-bar/primary-app-bar';
 import PermanentDrawer from '../drawer/permanent-drawer';

@@ -19,6 +19,7 @@
     "start": "next",
     "build": "next build",
     "export": "next export",
+    "deploy": "npm run build && npm run export && firebase deploy",
     "deploy:functions": "firebase deploy --only functions",
     "deploy:hosting": "firebase deploy --only hosting",
     "v": "node --version"
