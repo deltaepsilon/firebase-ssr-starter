@@ -17,6 +17,10 @@
   },
   "scripts": {
     "start": "next",
-    "deploy:functions": "firebase deploy --only functions"
+    "build": "next build",
+    "export": "next export",
+    "deploy:functions": "firebase deploy --only functions",
+    "deploy:hosting": "firebase deploy --only hosting",
+    "v": "node --version"
   }
 }
