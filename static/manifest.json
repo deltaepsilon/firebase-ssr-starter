@@ -1,0 +1,27 @@
+{
+  "short_name": "Firebase SSR",
+  "name": "Firebase SSR",
+  "icons": [
+    {
+      "src": "/static/images/bolt-48px.png",
+      "type": "image/png",
+      "sizes": "48x48"
+    },
+    {
+      "src": "/static/images/bolt-96px.png",
+      "type": "image/png",
+      "sizes": "96x96"
+    },
+    {
+      "src": "/static/images/bolt-144px.png",
+      "type": "image/png",
+      "sizes": "144x144"
+    }
+  ],
+  "start_url": "/",
+  "display": "standalone",
+  "theme_color": "#177f62",
+  "background_color": "#005238",
+  "orientation": "portrait",
+  "gcm_sender_id": "103953800507"
+}

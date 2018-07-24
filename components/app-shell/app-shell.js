@@ -16,6 +16,7 @@ import PermanentDrawer from '../drawer/permanent-drawer';
 import TemporaryDrawer from '../drawer/temporary-drawer';
 import ErrorHandler from '../error-handler/error-handler';
 import Content from './content';
+import Messaging from './messaging';
 
 import './app-shell.css';
 
@@ -37,11 +38,13 @@ export class AppShell extends React.Component {
       <>
         <MetaHead title={title} />
         <FirebaseHead firebaseEnv={this.state.environment.firebase} />
+
         <FontsHead />
         <AppStyle />
         <Provider store={store}>
           <div className="app-shell">
             <Authentication admin={admin} secure={secure} url={url} />
+            <Messaging />
             <ErrorHandler />
             <PrimaryAppBar title={title} />
             <TemporaryDrawer />

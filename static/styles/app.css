@@ -69,6 +69,12 @@ ol.plain {
   height: 100%;
 }
 
+/* Material Icons */
+.material-icons:not(:last-child),
+svg:not(:last-child) {
+  margin-right: 1rem;
+}
+
 /* MDC Patches */
 .mdc-text-field--focused:not(.mdc-text-field--disabled) .mdc-floating-label {
   color: var(--color-text) !important;
