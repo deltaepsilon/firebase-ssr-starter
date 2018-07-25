@@ -20,6 +20,7 @@ const initialState = {
   ...localStorageState,
   // Not overridden by localStorageState 👇
   loaded: false,
+  serviceWorkerRegistered: false,
 };
 
 const store = createStore(initialState);

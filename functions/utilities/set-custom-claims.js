@@ -1,11 +1,5 @@
-module.exports = function setCustomClaims(auth, uid) {
-  return claims => {
-    let promise = Promise.resolve({});
+module.exports = async function setCustomClaims({ auth, uid, claims }) {
+  claims && (await auth.setCustomUserClaims(uid, claims));
 
-    if (claims) {
-      promise = auth.setCustomUserClaims(uid, claims).then(() => claims);
-    }
-
-    return promise;
-  };
+  return claims || {};
 };

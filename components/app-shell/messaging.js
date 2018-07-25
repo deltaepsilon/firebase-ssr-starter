@@ -49,11 +49,13 @@ export class Messaging extends Component {
   }
 
   async registerServiceWorker() {
-    const swFilename = this.props.isDevelopment ? 'sw.dev.js' : 'sw.prod.js';
-    const filepath = `/static/scripts/${swFilename}`;
+    // const swFilename = this.props.isDevelopment ? 'sw.dev.js' : 'sw.prod.js';
+    const filepath = `/sw.js`;
 
-    if ('serviceWorker' in navigator) {
-      const registration = await navigator.serviceWorker.register(filepath);
+    if ('serviceWorker' in navigator && !this.props.serviceWorkerRegistered) {
+      console.log('filepath', filepath);
+      this.props.setServiceWorkerRegistered();
+      const registration = await navigator.serviceWorker.register(filepath, { scope: '/' });
       this.messaging.useServiceWorker(registration);
     }
   }
@@ -77,6 +79,6 @@ export class Messaging extends Component {
 }
 
 export default connect(
-  'isDevelopment,router',
+  'isDevelopment,router,serviceWorkerRegistered',
   actions
 )(Messaging);

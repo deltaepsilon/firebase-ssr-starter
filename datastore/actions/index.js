@@ -5,4 +5,5 @@ export setIsDrawerOpen from './set-is-drawer-open';
 export setLoaded from './set-loaded';
 export setMessagingToken from './set-messaging-token';
 export setRouter from './set-router';
+export setServiceWorkerRegistered from './set-service-worker-registered';
 export toggleIsDrawerOpen from './toggle-is-drawer-open';

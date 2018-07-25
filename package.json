@@ -8,6 +8,7 @@
   "dependencies": {
     "@babel/plugin-proposal-export-default-from": "^7.0.0-beta.53",
     "@zeit/next-css": "^0.2.0",
+    "firebase-tools": "^4.0.0",
     "md5": "^2.2.1",
     "next": "^6.0.3",
     "react": "^16.4.1",
@@ -15,11 +16,18 @@
     "rmwc": "^1.8.0",
     "unistore": "^3.0.6"
   },
+  "engines": {
+    "node": "8.11.1"
+  },
   "scripts": {
-    "start": "next",
+    "start": "node server.js",
     "build": "next build",
-    "export": "next export",
+    "export": "next export && cp ./sw.js ./out//sw.js",
+    "export:windows": "rmdir /S /Y out & next export & copy sw.js out\\sw.js",
+    "test:windows": "cd functions & yarn test:prod",
     "deploy": "npm run build && npm run export && firebase deploy",
+    "deploy:windows": "npm run build & npm run export:windows & firebase deploy",
+    "deploy:firestore": "firebase deploy --only firestore",
     "deploy:functions": "firebase deploy --only functions",
     "deploy:hosting": "firebase deploy --only hosting",
     "v": "node --version"

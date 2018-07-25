@@ -1,20 +1,17 @@
-module.exports = function getCustomClaimsByEmail(ref, email) {
-  return () =>
-    Promise.resolve()
-      .then(() => ref.once('value'))
-      .then(snap => {
-        const claimsMap = snap.val();
-        let claims;
+module.exports = async function getCustomClaimsByEmail(ref, email) {
+  const snap = await ref.once('value');
 
-        for (let key in claimsMap) {
-          const userClaims = claimsMap[key];
+  const claimsMap = snap.val();
+  let claims;
 
-          if (userClaims.email == email) {
-            claims = userClaims.claims;
-            break;
-          }
-        }
+  for (let key in claimsMap) {
+    const userClaims = claimsMap[key];
 
-        return claims;
-      });
+    if (userClaims.email == email) {
+      claims = userClaims.claims;
+      break;
+    }
+  }
+
+  return claims;
 };
