@@ -12,9 +12,12 @@ app.prepare().then(() => {
     const parsedUrl = parse(req.url, true);
     const { pathname } = parsedUrl;
 
-    if (pathname === '/sw.js') {
+    if (pathname == '/sw.js') {
       res.setHeader('content-type', 'text/javascript');
       createReadStream('./sw.js').pipe(res);
+    } else if (pathname == '/environment.sw.js') {
+      res.setHeader('content-type', 'text/javascript');
+      createReadStream('./environments/environment.sw.js').pipe(res);
     } else {
       handle(req, res, parsedUrl);
     }
