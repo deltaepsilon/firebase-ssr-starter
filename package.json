@@ -22,8 +22,8 @@
   "scripts": {
     "start": "node server.js",
     "build": "next build",
-    "export": "next export && cp ./sw.js ./out//sw.js",
-    "export:windows": "rmdir /S /Y out & next export & copy sw.js out\\sw.js",
+    "export": "next export && cp ./sw.js ./out//sw.js && cp ./environments/environment.sw.js ./out//environment.sw.js",
+    "export:windows": "rmdir /S /Y out & next export & copy sw.js out\\sw.js & copy environments\\environment.sw.js out\\environment.sw.js",
     "test:windows": "cd functions & yarn test:prod",
     "deploy": "npm run build && npm run export && firebase deploy",
     "deploy:windows": "npm run build & npm run export:windows & firebase deploy",
