@@ -2,7 +2,7 @@
 
 Firebase + Next.js + AMP = 🐱‍👓; In other words, built for MAXIMUM SEO and MAXIMUM FLEXIBILITY with no compromises (or ragerts)
 
-## Environments
+# Environments
 
 There are three type of environments required for this app to run.
 
@@ -112,3 +112,36 @@ environment = {
   },
 };
 ```
+
+# Deploying
+
+## Get a Firebase CI token
+
+Run `yarn global add firebase-tools` if you don't have `firebase-tools` on your machine.
+
+Run `firebase login:ci` and follow the prompts to generate a Firebase CI token. Use `firebase login:ci --no-localhost` if you're having trouble.
+
+Copy `./env.list.dist` to `env.list` and replace `FIREBASE_TOKEN=XXXXX` with `FIREBASE_TOKEN=YOUR-TOKEN-HERE`.
+
+## Install Docker
+
+Install Docker using the [Docker Community Edition(CE) Install Guide](https://docs.docker.com/install/).
+
+## Build Docker image to deploy
+
+For Bash run `./bin/build.sh`.
+
+For Powershell run `.\bin\build.ps1`.
+
+## OPTIONAL: Run the deploy image interactively
+
+For Bash run `./bin/interactive.sh`.
+
+For Powershell run `.\bin\interactive.ps1`.
+
+## Deploy the built code
+
+For Bash run `./bin/deploy.sh`.
+
+For Powershell run `.\bin\deploy.ps1`.
+

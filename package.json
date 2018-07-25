@@ -17,16 +17,17 @@
     "unistore": "^3.0.6"
   },
   "engines": {
-    "node": "8.11.1"
+    "node": "8"
   },
   "scripts": {
     "start": "node server.js",
+    "build:export": "npm run build && npm run export",
     "build": "next build",
     "export": "next export && cp ./sw.js ./out//sw.js && cp ./environments/environment.sw.js ./out//environment.sw.js",
     "export:windows": "rmdir /S /Y out & next export & copy sw.js out\\sw.js & copy environments\\environment.sw.js out\\environment.sw.js",
     "test:windows": "cd functions & yarn test:prod",
-    "deploy": "npm run build && npm run export && firebase deploy",
-    "deploy:windows": "npm run build & npm run export:windows & firebase deploy",
+    "deploy": "sh bin/build.sh && sh bin/deploy.sh",
+    "deploy:windows": "powershell .\\bin\\build.ps1 & powershell .\\bin\\deploy.ps1",
     "deploy:firestore": "firebase deploy --only firestore",
     "deploy:functions": "firebase deploy --only functions",
     "deploy:hosting": "firebase deploy --only hosting",

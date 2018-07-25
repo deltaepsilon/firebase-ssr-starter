@@ -65,3 +65,4 @@ typings/
 service-account.json
 out
 *.swp
+env.list

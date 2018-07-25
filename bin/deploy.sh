@@ -1,0 +1,1 @@
+docker run --env-file .\env.list firebase-ssr-starter sh bin/firebase-deploy.sh
