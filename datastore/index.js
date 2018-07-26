@@ -19,6 +19,7 @@ const initialState = {
   router: {},
   ...localStorageState,
   // Not overridden by localStorageState 👇
+  pathname: '/',
   loaded: false,
   serviceWorkerRegistered: false,
 };

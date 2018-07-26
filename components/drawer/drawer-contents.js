@@ -10,7 +10,7 @@ import { Icon } from 'rmwc/Icon';
 import md5 from 'md5';
 import './drawer-contents.css';
 
-export function DrawerContents({ claims, currentUser, router }) {
+export function DrawerContents({ claims, currentUser, pathname }) {
   return (
     <div className="drawer-contents">
       <DrawerHeader>
@@ -22,7 +22,7 @@ export function DrawerContents({ claims, currentUser, router }) {
       <DrawerContent>
         {claims &&
           claims.isAdmin && (
-            <Active router={router} href="/admin">
+            <Active pathname={pathname} href="/admin">
               <ListItem>
                 <ListItemText>
                   <Link href="/admin" prefetch>
@@ -36,7 +36,7 @@ export function DrawerContents({ claims, currentUser, router }) {
             </Active>
           )}
         {currentUser && (
-          <Active router={router} href="/app/settings">
+          <Active pathname={pathname} href="/app/settings">
             <ListItem>
               <ListItemText>
                 <Link href="/app/settings" prefetch>
@@ -51,7 +51,7 @@ export function DrawerContents({ claims, currentUser, router }) {
         )}
         <ListItem>
           {!currentUser && (
-            <Active router={router} href="/login">
+            <Active pathname={pathname} href="/login">
               <ListItemText>
                 <Link href="/login" prefetch>
                   <a>
@@ -73,7 +73,7 @@ export function DrawerContents({ claims, currentUser, router }) {
         )}
         <hr />
         <h4>Public</h4>
-        <Active router={router} href="/faq">
+        <Active pathname={pathname} href="/faq">
           <ListItem>
             <ListItemText>
               <Link href="/faq" prefetch>
@@ -91,7 +91,7 @@ export function DrawerContents({ claims, currentUser, router }) {
 }
 
 export default connect(
-  'claims, currentUser, router',
+  'claims, currentUser, pathname',
   actions
 )(DrawerContents);
 
@@ -114,9 +114,9 @@ function AccountIcon({ currentUser }) {
 
   return icon;
 }
-function Active({ href, router, children }) {
+function Active({ href, pathname, children }) {
   return (
-    <div disabled={router.pathname == href} onClick={e => e.preventDefault()}>
+    <div disabled={pathname == href} onClick={e => e.preventDefault()}>
       {children}
     </div>
   );
