@@ -116,7 +116,7 @@ svg:not(:last-child) {
 /* https://fonts.googleapis.com/icon?family=Material+Icons */
 /* fallback */
 @font-face {
-  font-display: optional;
+  font-display: auto;
   font-family: 'Material Icons';
   font-style: normal;
   font-weight: 400;

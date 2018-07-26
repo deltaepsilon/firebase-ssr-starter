@@ -1,1 +1,1 @@
-firebase deploy --token $FIREBASE_TOKEN --only
+firebase deploy --token $FIREBASE_TOKEN
