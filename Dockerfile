@@ -1,5 +1,7 @@
 FROM mhart/alpine-node:8
 
+RUN apk update && apk add vim
+
 WORKDIR /app/functions
 
 RUN yarn global add firebase-tools
@@ -10,18 +12,26 @@ RUN yarn
 
 WORKDIR /app
 
-COPY bin bin
-COPY .* ./
 COPY *.json ./
-COPY *.rules ./
-COPY *.js ./
+COPY .* ./
+
 COPY yarn.lock yarn.lock
+
+RUN yarn
+
 COPY static static
 COPY environments environments
 COPY pages pages
 COPY datastore datastore
 COPY components components
 
-RUN yarn
+COPY next.config.js next.config.js
+RUN yarn build && yarn export
 
-RUN yarn build:export
+COPY *.rules ./
+COPY bin/*.sh bin/
+COPY root/* ./out/
+COPY environments/* ./out/
+
+
+

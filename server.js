@@ -14,10 +14,17 @@ app.prepare().then(() => {
 
     if (pathname == '/sw.js') {
       res.setHeader('content-type', 'text/javascript');
-      createReadStream('./sw.js').pipe(res);
+      createReadStream('./root/sw.js').pipe(res);
+    } else if (pathname == '/sw.dev.js') {
+      res.setHeader('content-type', 'text/javascript');
+      createReadStream('./root/sw.dev.js').pipe(res);
     } else if (pathname == '/environment.sw.js') {
       res.setHeader('content-type', 'text/javascript');
       createReadStream('./environments/environment.sw.js').pipe(res);
+    } else if (pathname == '/robots.txt') {
+      createReadStream('./root/robots.txt').pipe(res);
+    } else if (pathname == '/sitemap.txt') {
+      createReadStream('./root/sitemap.txt').pipe(res);
     } else {
       handle(req, res, parsedUrl);
     }

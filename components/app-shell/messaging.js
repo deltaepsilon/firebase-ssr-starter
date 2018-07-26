@@ -49,8 +49,8 @@ export class Messaging extends Component {
   }
 
   async registerServiceWorker() {
-    // const swFilename = this.props.isDevelopment ? 'sw.dev.js' : 'sw.prod.js';
-    const filepath = `/sw.js`;
+    const swFilename = this.props.isDevelopment ? 'sw.dev.js' : 'sw.js';
+    const filepath = `/${swFilename}`;
 
     if ('serviceWorker' in navigator && !this.props.serviceWorkerRegistered) {
       console.log('filepath', filepath);

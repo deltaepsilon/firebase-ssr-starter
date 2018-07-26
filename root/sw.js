@@ -1,7 +1,8 @@
 /* global firebase */
 importScripts('https://www.gstatic.com/firebasejs/5.2.0/firebase-app.js');
 importScripts('https://www.gstatic.com/firebasejs/5.2.0/firebase-messaging.js');
-importScripts('/environment.sw.js')
+importScripts('/environment.sw.js');
+
 
 firebase.initializeApp(environment.firebase);
 
@@ -28,7 +29,7 @@ self.addEventListener('notificationclick', function(e) {
   }
 });
 
-if (!environment.isDevelopment) {
+if (typeof isDevelopment == 'undefined') {
   /**
    * Cacheing
    * 
@@ -37,7 +38,7 @@ if (!environment.isDevelopment) {
 
   //Establish cache
   const CACHE_NAME = 'firebase-ssr-v0.0.0';
-  const urlsToCache = ['/', '/static/styles/app.css'];
+  const urlsToCache = ['/', '/static/styles/app.css', '_next/static/style.css'];
   self.addEventListener('install', event => {
     const promise = caches
       .open(CACHE_NAME)

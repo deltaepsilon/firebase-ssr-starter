@@ -1,6 +1,6 @@
 import React from 'react';
 import { withRouter } from 'next/router';
-import AppShell from '.././components/app-shell/app-shell';
+import AppShell from '../components/app-shell/app-shell';
 
 import EmailView from '../components/authentication/email-view';
 import LoadingView from '../components/authentication/loading-view';

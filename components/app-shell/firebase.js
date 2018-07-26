@@ -1,17 +1,22 @@
 import React from 'react';
-import Head from 'next/head';
 
 export default ({ firebaseEnv }) => {
   return (
-    <Head>
+    <>
       <script src="https://www.gstatic.com/firebasejs/5.2.0/firebase-app.js" />
       <script src="https://www.gstatic.com/firebasejs/5.2.0/firebase-auth.js" />
       <script src="https://www.gstatic.com/firebasejs/5.2.0/firebase-messaging.js" />
       <script
         dangerouslySetInnerHTML={{
-          __html: `firebase.initializeApp(${JSON.stringify(firebaseEnv)})`,
+          __html: `
+            if (typeof firebase == 'undefined') {
+              throw new Error('Firebase SDK not detected.');
+            } else {
+              firebase.initializeApp(${JSON.stringify(firebaseEnv)})
+            }
+          `,
         }}
       />
-    </Head>
+    </>
   );
 };

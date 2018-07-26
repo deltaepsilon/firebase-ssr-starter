@@ -1,0 +1,2 @@
+https://fir-ssr-starter.firebaseapp.com/index.html
+https://fir-ssr-starter.firebaseapp.com/faq.html

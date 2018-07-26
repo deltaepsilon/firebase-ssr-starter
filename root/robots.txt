@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://fir-ssr-starter.firebaseapp.com/sitemap.txt

@@ -36,10 +36,10 @@ export function DrawerContents({ claims, currentUser, router }) {
             </Active>
           )}
         {currentUser && (
-          <Active router={router} href="/settings">
+          <Active router={router} href="/app/settings">
             <ListItem>
               <ListItemText>
-                <Link href="/settings" prefetch>
+                <Link href="/app/settings" prefetch>
                   <a>
                     <Icon use="settings" />
                     <span>Settings</span>
