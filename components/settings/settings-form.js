@@ -1,15 +1,20 @@
 import React from 'react';
 import { connect } from 'unistore/react';
 import { actions } from '../../datastore';
-import { Button } from 'rmwc/Button';
+import { Switch } from 'rmwc/Switch';
 import { Icon } from 'rmwc/Icon';
 import Paper from '../../components/paper/paper';
 import getToken from '../../utilities/messaging/get-token';
 import setSettings from '../../database/settings/set-settings';
 
-import '@material/button/dist/mdc.button.min.css';
+import '@material/switch/dist/mdc.switch.min.css';
 
-export function SettingsForm({ currentUser, environment, settings, setMessagingToken }) {
+export function SettingsForm({
+  currentUser,
+  environment,
+  settings: { messagingToken },
+  setMessagingToken,
+}) {
   const uid = currentUser && currentUser.uid;
 
   return (
@@ -20,29 +25,21 @@ export function SettingsForm({ currentUser, environment, settings, setMessagingT
 
       <p>Enable notifications to receive alerts on your device.</p>
 
-      {settings.messagingToken ? (
-        <Button
-          raised
-          onClick={async () => {
+      <Switch
+        checked={messagingToken || false}
+        onChange={async () => {
+          if (messagingToken) {
             await setSettings(environment, uid)({ messagingToken: null });
             Alert('Messaging disabled');
-          }}
-        >
-          <Icon use="settings" />
-          <span>Disable Notifications</span>
-        </Button>
-      ) : (
-        <Button
-          raised
-          onClick={async () => {
+          } else {
             await getToken({ environment, uid })(setMessagingToken);
             Alert('Messaging enabled');
-          }}
-        >
-          <Icon use="settings" />
-          <span>Enable Notifications</span>
-        </Button>
-      )}
+          }
+        }}
+      >
+        <span>Receive app alerts</span>
+        <Icon use="settings" />
+      </Switch>
     </Paper>
   );
 }
