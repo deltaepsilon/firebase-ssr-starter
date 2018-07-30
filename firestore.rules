@@ -25,15 +25,15 @@ service cloud.firestore {
       allow write: if isAdmin()
     }
 
-    match /user-owned/{type}/{uid} { 
+    match /permission-based/user-owned/{type}/{uid} { 
       allow read, write: if isUser() || isAdmin()
     }
     
-    match /user-writeable/{type}/{uid} { 
+    match /permission-based/user-writeable/{type}/{uid} { 
       allow write: if isUser() || isAdmin()
     }
     
-    match /user-readable/{type}/{uid} { 
+    match /permission-based/user-readable/{type}/{uid} { 
       allow read: if isUser() || isAdmin()
     }
   }

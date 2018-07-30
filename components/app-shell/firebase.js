@@ -6,6 +6,7 @@ export default ({ firebaseEnv }) => {
       <script src="https://www.gstatic.com/firebasejs/5.2.0/firebase-app.js" />
       <script src="https://www.gstatic.com/firebasejs/5.2.0/firebase-auth.js" />
       <script src="https://www.gstatic.com/firebasejs/5.2.0/firebase-messaging.js" />
+      <script src="https://www.gstatic.com/firebasejs/5.2.0/firebase-firestore.js" />
       <script
         dangerouslySetInnerHTML={{
           __html: `
@@ -13,6 +14,7 @@ export default ({ firebaseEnv }) => {
               throw new Error('Firebase SDK not detected.');
             } else {
               firebase.initializeApp(${JSON.stringify(firebaseEnv)})
+              firebase.firestore().settings({ timestampsInSnapshots: true })
             }
           `,
         }}

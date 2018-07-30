@@ -105,7 +105,7 @@ function AccountIcon({ currentUser }) {
   if (currentUser) {
     if (currentUser.photoURL) {
       icon = <Icon strategy="url" use={currentUser.photoURL} />;
-    } else {
+    } else if (currentUser.email) {
       icon = (
         <Icon strategy="url" use={`https://www.gravatar.com/avatar/${md5(currentUser.email)}`} />
       );

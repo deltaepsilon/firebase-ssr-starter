@@ -14,10 +14,14 @@ import Authentication from '../authentication/authentication';
 import PrimaryAppBar from '../app-bar/primary-app-bar';
 import PermanentDrawer from '../drawer/permanent-drawer';
 import TemporaryDrawer from '../drawer/temporary-drawer';
-import ErrorHandler from '../error-handler/error-handler';
+import AlertHandler from '../handlers/alert-handler';
+import ErrorHandler from '../handlers/error-handler';
 import FirebaseScripts from './firebase';
 import Content from './content';
 import Messaging from './messaging';
+
+// Subscriptions
+import SettingsSubscription from './subscriptions/settings-subscription';
 
 import './app-shell.css';
 
@@ -47,11 +51,10 @@ export class AppShell extends React.Component {
         <AppStyle />
         <Provider store={store}>
           <div className="app-shell">
-            <>
-              <Authentication admin={admin} secure={secure} url={url} />
-              <Messaging />
-            </>
-
+            <Authentication admin={admin} secure={secure} url={url} />
+            <Messaging />
+            <SettingsSubscription />
+            <AlertHandler />
             <ErrorHandler />
             <PrimaryAppBar title={title} />
             <TemporaryDrawer />

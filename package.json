@@ -14,7 +14,9 @@
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
     "rmwc": "^1.8.0",
-    "unistore": "^3.0.6"
+    "rxjs": "^6.2.2",
+    "unistore": "^3.0.6",
+    "workerize": "^0.1.7"
   },
   "engines": {
     "node": "8"

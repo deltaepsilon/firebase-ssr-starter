@@ -11,14 +11,16 @@ const localStorageState = getLocalStorage() || {};
 
 const initialState = {
   claims: {},
-  environment: isDevelopment ? devEnvironment : prodEnvironment,
+  currentUser: {},
   isSSR: typeof window != 'object',
   isDrawerOpen: false,
   isDevelopment: nodeEnv == 'development',
   nodeEnv,
   router: {},
+  settings: {},
   ...localStorageState,
   // Not overridden by localStorageState 👇
+  environment: isDevelopment ? devEnvironment : prodEnvironment,
   pathname: '/',
   loaded: false,
   serviceWorkerRegistered: false,

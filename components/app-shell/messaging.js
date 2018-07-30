@@ -3,6 +3,8 @@ import React, { Component } from 'react';
 import { connect } from 'unistore/react';
 import { actions } from '../../datastore';
 
+import getToken from '../../utilities/messaging/get-token';
+
 import { Snackbar } from 'rmwc/Snackbar';
 
 export class Messaging extends Component {
@@ -30,18 +32,10 @@ export class Messaging extends Component {
   }
 
   async getToken() {
-    let messagingToken;
-    try {
-      await this.messaging.requestPermission();
-
-      messagingToken = await this.messaging.getToken();
-    } catch (e) {
-      alert(
-        'Unblock notifications to enable. See https://support.google.com/chrome/answer/3220216?co=GENIE.Platform%3DDesktop&hl=en'
-      );
-    }
-
-    this.props.setMessagingToken(messagingToken);
+    const { currentUser, setMessagingToken } = this.props;
+    const uid = currentUser.uid;
+    
+    return getToken({ uid, setMessagingToken })();
   }
 
   showMessage({ message, noteId }) {
@@ -79,6 +73,6 @@ export class Messaging extends Component {
 }
 
 export default connect(
-  'isDevelopment,router,serviceWorkerRegistered',
+  'currentUser,isDevelopment,router,serviceWorkerRegistered',
   actions
 )(Messaging);
