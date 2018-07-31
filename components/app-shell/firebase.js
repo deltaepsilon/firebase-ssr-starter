@@ -7,6 +7,7 @@ export default ({ firebaseEnv }) => {
       <script src="https://www.gstatic.com/firebasejs/5.2.0/firebase-auth.js" />
       <script src="https://www.gstatic.com/firebasejs/5.2.0/firebase-messaging.js" />
       <script src="https://www.gstatic.com/firebasejs/5.2.0/firebase-firestore.js" />
+      <script src="https://www.gstatic.com/firebasejs/5.2.0/firebase-database.js" />
       <script
         dangerouslySetInnerHTML={{
           __html: `

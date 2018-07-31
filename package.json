@@ -31,6 +31,7 @@
     "copy:windows": "powershell .\\bin\\copy.ps1",
     "test:windows": "cd functions & yarn test:prod",
     "deploy:windows": "powershell .\\bin\\build.ps1 & powershell .\\bin\\deploy.ps1",
+    "deploy:database": "firebase deploy --only database",
     "deploy:firestore": "firebase deploy --only firestore",
     "deploy:functions": "firebase deploy --only functions",
     "deploy:hosting": "firebase deploy --only hosting",

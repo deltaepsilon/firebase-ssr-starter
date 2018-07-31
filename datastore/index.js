@@ -10,6 +10,7 @@ const isDevelopment = nodeEnv == 'development';
 const localStorageState = getLocalStorage() || {};
 
 const initialState = {
+  adminTabIndex: 0,
   claims: {},
   currentUser: {},
   isSSR: typeof window != 'object',
@@ -23,6 +24,7 @@ const initialState = {
   environment: isDevelopment ? devEnvironment : prodEnvironment,
   pathname: '/',
   loaded: false,
+  presense: false,
   serviceWorkerRegistered: false,
 };
 

@@ -1,6 +1,9 @@
 {
   "rules": {
-    ".read": "auth != null",
-    ".write": "auth != null"
+    "presense": {
+      "$uid": {
+        ".write": "auth.uid == $uid"
+      }
+    }
   }
 }

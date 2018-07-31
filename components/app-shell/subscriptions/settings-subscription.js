@@ -7,17 +7,32 @@ import subscribeSettings from '../../../database/settings/subscribe-settings';
 
 export class SettingsSubscription extends React.Component {
   componentDidMount() {
-    const {
-      currentUser: { uid },
-      environment,
-      setSettings,
-    } = this.props;
+    this.subscribe();
+  }
 
-    this.subscription = subscribeSettings({ environment, uid }).subscribe(setSettings);
+  componentDidUpdate() {
+    this.subscribe();
   }
 
   componentWillUnmount() {
-    this.subscription.unsubscribe();
+    this.unsubscribe();
+  }
+
+  subscribe() {
+    const { currentUser, environment, setSettings } = this.props;
+
+    if (!this.subscription && currentUser && currentUser.uid) {
+      this.subscription = subscribeSettings({ environment, uid: currentUser.uid }).subscribe(
+        setSettings
+      );
+    } else {
+      this.unsubscribe();
+    }
+  }
+
+  unsubscribe() {
+    this.subscription && this.subscription.unsubscribe();
+    this.subscription = null;
   }
 
   render() {

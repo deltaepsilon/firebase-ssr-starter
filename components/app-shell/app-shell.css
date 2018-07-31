@@ -14,6 +14,7 @@
 
 .app-shell main {
   flex: 1;
+  max-width: 100vw;
 }
 
 .app-shell .permanent-drawer {
@@ -24,5 +25,11 @@
 @media all and (max-width: 1024px) {
   .app-shell .permanent-drawer {
     margin-left: calc(-1 * var(--drawer-width));
+  }
+}
+
+@media (min-width: 1024px) {
+  .app-shell main {
+    max-width: calc(100vw - var(--drawer-width));
   }
 }

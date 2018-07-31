@@ -1,0 +1,31 @@
+.form .form-row {
+  padding: 1rem;
+}
+
+.form .form-row:not(:last-child) {
+  /* border-bottom: 1px solid var(--color-form-border); */
+}
+
+.switch {
+  display: flex;
+  align-items: center;
+}
+
+.switch .mdc-form-field {
+  display: flex;
+  align-items: center;
+  flex: 1;
+  flex-direction: row-reverse;
+}
+
+.switch label {
+  display: flex;
+  align-items: center;
+  flex: 1;
+
+  margin-left: 1rem;
+}
+
+.switch label > *:not(:last-child) {
+  margin-right: 1rem;
+}
