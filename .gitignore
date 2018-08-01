@@ -61,7 +61,7 @@ typings/
 .next
 
 .vscode
-**/environments/***
+**/environments/environment.*
 service-account.json
 out
 *.swp

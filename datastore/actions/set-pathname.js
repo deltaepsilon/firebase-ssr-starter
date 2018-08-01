@@ -1,1 +1,1 @@
-export default (state, pathname) => ({ pathname });
+export default (state, pathname) => ({ pathname, isDrawerOpen: false });

@@ -14,7 +14,6 @@ const initialState = {
   claims: {},
   currentUser: {},
   isSSR: typeof window != 'object',
-  isDrawerOpen: false,
   isDevelopment: nodeEnv == 'development',
   nodeEnv,
   router: {},
@@ -25,6 +24,7 @@ const initialState = {
   ...localStorageState,
   // Not overridden by localStorageState 👇
   environment: isDevelopment ? devEnvironment : prodEnvironment,
+  isDrawerOpen: false,
   pathname: '/',
   loaded: false,
   presense: false,
