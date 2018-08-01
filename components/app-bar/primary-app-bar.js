@@ -10,13 +10,14 @@ import {
   TopAppBarActionItem,
   TopAppBarTitle,
 } from 'rmwc/TopAppBar';
+import { Icon } from 'rmwc/Icon';
 
 import '@material/top-app-bar/dist/mdc.top-app-bar.min.css';
 import './primary-app-bar.css';
 
-export function PrimaryAppBar({ title, toggleIsDrawerOpen }) {
+export function PrimaryAppBar({ presense, title, toggleIsDrawerOpen }) {
   return (
-    <div className="primary-app-bar">
+    <div className={`primary-app-bar ${presense ? 'online' : 'offline'}`}>
       <TopAppBar style={{ top: 0 }}>
         <TopAppBarRow>
           <TopAppBarSection alignStart>
@@ -24,15 +25,16 @@ export function PrimaryAppBar({ title, toggleIsDrawerOpen }) {
               <TopAppBarNavigationIcon use="menu" onClick={toggleIsDrawerOpen} />
             </div>
             <TopAppBarTitle>{title}</TopAppBarTitle>
+
+            {!presense && (
+              <div className="offline">
+                <Icon use="offline_bolt" />
+                <span>offline</span>
+              </div>
+            )}
           </TopAppBarSection>
 
           <TopAppBarSection alignEnd>
-            <TopAppBarActionItem aria-label="Download" alt="Download">
-              file_download
-            </TopAppBarActionItem>
-            <TopAppBarActionItem aria-label="Print this page" alt="Print this page">
-              print
-            </TopAppBarActionItem>
             <TopAppBarActionItem aria-label="Bookmark this page" alt="Bookmark this page">
               bookmark
             </TopAppBarActionItem>
@@ -44,6 +46,6 @@ export function PrimaryAppBar({ title, toggleIsDrawerOpen }) {
 }
 
 export default connect(
-  '',
+  'presense',
   actions
 )(PrimaryAppBar);

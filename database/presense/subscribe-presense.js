@@ -9,6 +9,7 @@ export default function SubscribePresense({ environment, currentUser }) {
     const connectionsRef = ref.child('connections');
     const lastOnlineRef = ref.child('lastOnline');
     const emailRef = ref.child('email');
+    let connectionRef;
 
     const handler = connectedRef.on('value', function(snap) {
       const connected = snap.val();
@@ -16,7 +17,7 @@ export default function SubscribePresense({ environment, currentUser }) {
       observer.next(connected);
 
       if (connected) {
-        const connectionRef = connectionsRef.push();
+        connectionRef = connectionsRef.push();
 
         connectionRef.onDisconnect().remove();
         connectionRef.set(true);
@@ -27,6 +28,7 @@ export default function SubscribePresense({ environment, currentUser }) {
     });
 
     return function() {
+      connectionRef && connectionRef.remove();
       connectedRef.off('value', handler);
     };
   });

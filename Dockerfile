@@ -23,7 +23,9 @@ COPY static static
 COPY environments environments
 COPY pages pages
 COPY datastore datastore
+COPY database database
 COPY components components
+COPY utilities utilities
 
 COPY next.config.js next.config.js
 RUN yarn build && yarn export

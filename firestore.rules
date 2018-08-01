@@ -1,40 +1,35 @@
 service cloud.firestore {
   match /databases/{database}/documents {
-    match /users/{uid} {
-      allow read: if request.auth.uid == uid
-    }
-
-    function isUser() {
-      return request.auth.uid == uid
+    function isUser(uid) {
+      return request.auth.uid == uid;
     }
 
     function isAdmin() {
-      return request.auth.token.isAdmin == true
+      return request.auth.token.isAdmin == true;
     }
 
     function isModerator() {
-      return request.auth.token.isModerator == true
+      return request.auth.token.isModerator == true;
     }
 
     match /admin/{document=**} { 
-      allow read, write: if isAdmin()
+      allow read, write: if isAdmin();
     }
 
     match /users/{uid} { 
-      allow read, write: if isUser() || isAdmin()
-      allow write: if isAdmin()
+      allow read, write: if isUser() || isAdmin();
     }
 
     match /permission-based/user-owned/{type}/{uid} { 
-      allow read, write: if isUser() || isAdmin()
+      allow read, write: if isUser(uid) || isAdmin()
     }
     
     match /permission-based/user-writeable/{type}/{uid} { 
-      allow write: if isUser() || isAdmin()
+      allow write: if isUser(uid) || isAdmin()
     }
     
     match /permission-based/user-readable/{type}/{uid} { 
-      allow read: if isUser() || isAdmin()
+      allow read: if isUser(uid) || isAdmin()
     }
   }
 }

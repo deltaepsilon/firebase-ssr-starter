@@ -5,7 +5,7 @@
   --border-radius-large: 4px;
 
   /* Theme */
-  /* https://material.io/tools/color/#!/?view.left=0&view.right=1&primary.color=424242&secondary.color=BDBDBD */
+  /* https://material.io/tools/color/#!/?view.left=0&view.right=1&primary.color=177f62&secondary.color=BDBDBD */
 
   --mdc-theme-primary: #424242;
   --mdc-theme-primary-light: #6d6d6d;
@@ -24,8 +24,9 @@
   --color-google: #db3236;
   --color-facebook: #3b5998;
   --color-loader: var(--mdc-theme-secondary);
-  --color-border: #999;
+  --color-border: #e4e4e4;
   --color-form-border: #eee;
+  --color-offline: #d3133f;
 }
 
 body {

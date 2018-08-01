@@ -1,6 +1,6 @@
 .drawer-contents .mdc-drawer__header {
-  background: var(--mdc-theme-secondary-dark);
-  color: var(--mdc-theme-secondary-text);
+  /* background: var(--mdc-theme-primary);
+  color: var(--mdc-theme-secondary-text); */
 }
 
 .drawer-contents [disabled] * {

@@ -19,6 +19,9 @@ export function DrawerContents({ claims, currentUser, pathname }) {
           {currentUser && <span>{currentUser.displayName || currentUser.email}</span>}
         </div>
       </DrawerHeader>
+
+      <hr/>
+
       <DrawerContent>
         {claims &&
           claims.isAdmin && (
@@ -35,6 +38,7 @@ export function DrawerContents({ claims, currentUser, pathname }) {
               </ListItem>
             </Active>
           )}
+
         {currentUser && (
           <Active pathname={pathname} href="/app/settings">
             <ListItem>
@@ -49,6 +53,7 @@ export function DrawerContents({ claims, currentUser, pathname }) {
             </ListItem>
           </Active>
         )}
+
         <ListItem>
           {!currentUser && (
             <Active pathname={pathname} href="/login">
@@ -62,6 +67,7 @@ export function DrawerContents({ claims, currentUser, pathname }) {
               </ListItemText>
             </Active>
           )}
+
         </ListItem>
         {currentUser && (
           <ListItem onClick={signOut}>
@@ -71,8 +77,9 @@ export function DrawerContents({ claims, currentUser, pathname }) {
             </ListItemText>
           </ListItem>
         )}
-        <hr />
+
         <h4>Public</h4>
+
         <Active pathname={pathname} href="/faq">
           <ListItem>
             <ListItemText>
@@ -85,6 +92,7 @@ export function DrawerContents({ claims, currentUser, pathname }) {
             </ListItemText>
           </ListItem>
         </Active>
+
       </DrawerContent>
     </div>
   );
