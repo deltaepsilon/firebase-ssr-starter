@@ -21,7 +21,7 @@ export default class BaseSubscription extends React.Component {
   attemptSubscription() {
     if (!this.subscription && this.canSubscribe) {
       this.subscription = this.subscribe();
-    } else {
+    } else if (!this.canSubscribe) {
       this.unsubscribe();
     }
   }
@@ -29,8 +29,10 @@ export default class BaseSubscription extends React.Component {
   subscribe() {}
 
   unsubscribe() {
-    this.subscription && this.subscription.unsubscribe();
-    this.subscription = null;
+    if (this.subscription) {
+      this.subscription && this.subscription.unsubscribe();
+      this.subscription = null;
+    }
   }
 
   render() {

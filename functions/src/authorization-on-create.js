@@ -8,9 +8,11 @@ module.exports = ({ admin, environment }) => async user => {
   const auth = admin.auth();
   const email = extractEmailFromUser(user);
 
-  const claims = await getCustomClaimsByEmail(customClaimsRef, email)
+  const claims = await getCustomClaimsByEmail(customClaimsRef, email) || {};
 
-  await setCustomClaims({auth, uid: auth.uid, claims})
+  db.settings({ timestampsInSnapshots: true });
+
+  await setCustomClaims({ auth, uid: user.uid, claims });
 
   const update = mapUserUpdate(claims, user);
 
@@ -26,10 +28,14 @@ function mapUserUpdate(claims, user) {
     emailVerified: user.emailVerified,
     lastSignInTime: user.metadata.lastSignInTime,
     creationTime: user.metadata.creationTime,
-    providerData: user.providerData,
+    providerData: user.providerData.map(removeFunctions),
   };
 }
 
 function extractEmailFromUser(user) {
   return user.email || user.providerData.find(({ email }) => email).email;
+}
+
+function removeFunctions(obj) {
+  return JSON.parse(JSON.stringify(obj));
 }

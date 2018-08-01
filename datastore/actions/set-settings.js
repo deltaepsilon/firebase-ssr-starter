@@ -1,1 +1,1 @@
-export default (state, settings) => ({ settings });
+export default (state, settings = {}) => ({ settings });

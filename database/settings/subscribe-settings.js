@@ -1,12 +1,5 @@
-/* globals firebase */
-import { Observable } from 'rxjs';
-import isBrowser from '../../utilities/is-browser';
+import baseDocSubscriber from "../base-doc-subscriber";
 
-export default isBrowser(function SubscribeSettings({ environment, uid }) {
-  return Observable.create(observer => {
-    const db = firebase.firestore();
-    const doc = environment.schema.settings(db, uid);
-    
-    return doc.onSnapshot(doc => observer.next(doc.data()));
-  });
-});
+export default function SubscribeUser({environment, uid}) {
+  return baseDocSubscriber(environment, 'settings', uid);
+};

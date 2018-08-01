@@ -15,6 +15,7 @@ export function AdminTabs({ adminTabIndex, setAdminTabIndex }) {
         <Tab>Dashboard</Tab>
         <Tab>Transactions</Tab>
         <Tab>Subscriptions</Tab>
+        <Tab>Users</Tab>
       </TabBar>
     </TabBarScroller>
   );

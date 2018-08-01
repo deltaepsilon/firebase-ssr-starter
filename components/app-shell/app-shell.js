@@ -23,6 +23,7 @@ import Messaging from './messaging';
 // Subscriptions
 import PresenseSubscription from './subscriptions/presense-subscription';
 import SettingsSubscription from './subscriptions/settings-subscription';
+import UserSubscription from './subscriptions/user-subscription';
 
 import './app-shell.css';
 
@@ -56,6 +57,7 @@ export class AppShell extends React.Component {
             <Messaging />
             <PresenseSubscription />
             <SettingsSubscription />
+            <UserSubscription />
             <AlertHandler />
             <ErrorHandler />
             <PrimaryAppBar title={title} />

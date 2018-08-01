@@ -17,7 +17,7 @@ service cloud.firestore {
     }
 
     match /users/{uid} { 
-      allow read, write: if isUser() || isAdmin();
+      allow read, write: if isUser(uid) || isAdmin();
     }
 
     match /permission-based/user-owned/{type}/{uid} { 

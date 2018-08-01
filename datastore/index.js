@@ -19,6 +19,9 @@ const initialState = {
   nodeEnv,
   router: {},
   settings: {},
+  user: {
+    claims: {},
+  },
   ...localStorageState,
   // Not overridden by localStorageState 👇
   environment: isDevelopment ? devEnvironment : prodEnvironment,

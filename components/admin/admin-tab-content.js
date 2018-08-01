@@ -4,10 +4,11 @@ import { actions } from '../../datastore';
 
 import ActiveTab from '../../components/tabs/active-tab';
 import AdminDashboard from './admin-dashboard';
-import AdminTransactions from './admin-transactions';
 import AdminSubscriptions from './admin-subscriptions';
+import AdminTransactions from './admin-transactions';
+import AdminUsers from './admin-users';
 
-const tabs = [<AdminDashboard />, <AdminTransactions />, <AdminSubscriptions />];
+const tabs = [<AdminDashboard />, <AdminTransactions />, <AdminSubscriptions />, <AdminUsers />];
 
 export function AdminTabContent({ adminTabIndex }) {
   return tabs.map((tab, index) => (

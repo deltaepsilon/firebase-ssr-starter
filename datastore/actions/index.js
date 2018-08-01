@@ -11,3 +11,4 @@ export setRouter from './set-router';
 export setServiceWorkerRegistered from './set-service-worker-registered';
 export setSettings from './set-settings';
 export toggleIsDrawerOpen from './toggle-is-drawer-open';
+export setUser from './set-user';
