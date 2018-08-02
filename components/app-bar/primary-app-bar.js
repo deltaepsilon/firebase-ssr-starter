@@ -15,9 +15,9 @@ import { Icon } from 'rmwc/Icon';
 import '@material/top-app-bar/dist/mdc.top-app-bar.min.css';
 import './primary-app-bar.css';
 
-export function PrimaryAppBar({ currentUser, presense, title, toggleIsDrawerOpen }) {
+export function PrimaryAppBar({ currentUser, presence, title, toggleIsDrawerOpen }) {
   return (
-    <div className={`primary-app-bar ${presense ? 'online' : 'offline'}`}>
+    <div className={`primary-app-bar ${presence ? 'online' : 'offline'}`}>
       <TopAppBar style={{ top: 0 }}>
         <TopAppBarRow>
           <TopAppBarSection alignStart>
@@ -27,7 +27,7 @@ export function PrimaryAppBar({ currentUser, presense, title, toggleIsDrawerOpen
             <TopAppBarTitle>{title}</TopAppBarTitle>
 
             {currentUser &&
-              !presense && (
+              !presence && (
                 <div className="offline">
                   <Icon use="offline_bolt" />
                   <span>offline</span>
@@ -47,6 +47,6 @@ export function PrimaryAppBar({ currentUser, presense, title, toggleIsDrawerOpen
 }
 
 export default connect(
-  'currentUser,presense',
+  'currentUser,presence',
   actions
 )(PrimaryAppBar);

@@ -4,6 +4,8 @@ const functions = require('firebase-functions');
 
 admin.initializeApp();
 
+admin.firestore().settings({ timestampsInSnapshots: true });
+
 const { AuthorizationOnCreate } = require('./src');
 const context = { admin, environment };
 

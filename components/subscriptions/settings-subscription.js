@@ -1,12 +1,12 @@
 /* globals firebase */
 import { connect } from 'unistore/react';
-import { actions } from '../../../datastore';
+import { actions } from '../../datastore';
 
 import BaseSubscription from './base-subscription';
 
-import subscribeSettings from '../../../database/settings/subscribe-settings';
+import subscribeSettings from '../../database/settings/subscribe-settings';
 
-export class PresenseSubscription extends BaseSubscription {
+export class PresenceSubscription extends BaseSubscription {
   get canSubscribe() {
     const { currentUser } = this.props;
 
@@ -23,4 +23,4 @@ export class PresenseSubscription extends BaseSubscription {
 export default connect(
   'currentUser,environment',
   actions
-)(PresenseSubscription);
+)(PresenceSubscription);

@@ -27,7 +27,7 @@ const initialState = {
   isDrawerOpen: false,
   pathname: '/',
   loaded: false,
-  presense: false,
+  presence: false,
   serviceWorkerRegistered: false,
 };
 

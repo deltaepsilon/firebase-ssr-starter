@@ -1,5 +1,6 @@
 const getCustomClaimsByEmail = require('../utilities/get-custom-claims-by-email');
 const setCustomClaims = require('../utilities/set-custom-claims');
+const omitEmptyValues = require('../utilities/omit-empty-values');
 
 module.exports = ({ admin, environment }) => async user => {
   const db = admin.firestore();
@@ -8,9 +9,7 @@ module.exports = ({ admin, environment }) => async user => {
   const auth = admin.auth();
   const email = extractEmailFromUser(user);
 
-  const claims = await getCustomClaimsByEmail(customClaimsRef, email) || {};
-
-  db.settings({ timestampsInSnapshots: true });
+  const claims = (await getCustomClaimsByEmail(customClaimsRef, email)) || {};
 
   await setCustomClaims({ auth, uid: user.uid, claims });
 
@@ -22,14 +21,14 @@ module.exports = ({ admin, environment }) => async user => {
 function mapUserUpdate(claims, user) {
   const email = extractEmailFromUser(user);
 
-  return {
+  return omitEmptyValues({
     claims,
     email,
     emailVerified: user.emailVerified,
     lastSignInTime: user.metadata.lastSignInTime,
     creationTime: user.metadata.creationTime,
     providerData: user.providerData.map(removeFunctions),
-  };
+  });
 }
 
 function extractEmailFromUser(user) {

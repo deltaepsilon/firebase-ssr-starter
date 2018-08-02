@@ -21,9 +21,9 @@ import Content from './content';
 import Messaging from './messaging';
 
 // Subscriptions
-import PresenseSubscription from './subscriptions/presense-subscription';
-import SettingsSubscription from './subscriptions/settings-subscription';
-import UserSubscription from './subscriptions/user-subscription';
+import PresenceSubscription from '../subscriptions/presence-subscription';
+import SettingsSubscription from '../subscriptions/settings-subscription';
+import UserSubscription from '../subscriptions/user-subscription';
 
 import './app-shell.css';
 
@@ -55,7 +55,7 @@ export class AppShell extends React.Component {
           <div className="app-shell">
             <Authentication admin={admin} secure={secure} url={url} />
             <Messaging />
-            <PresenseSubscription />
+            <PresenceSubscription />
             <SettingsSubscription />
             <UserSubscription />
             <AlertHandler />

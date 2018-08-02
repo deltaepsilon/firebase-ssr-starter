@@ -7,7 +7,7 @@ export setIsDrawerOpen from './set-is-drawer-open';
 export setLoaded from './set-loaded';
 export setMessagingToken from './set-messaging-token';
 export setPathname from './set-pathname';
-export setPresense from './set-presense';
+export setPresence from './set-presence';
 export setRouter from './set-router';
 export setServiceWorkerRegistered from './set-service-worker-registered';
 export setSettings from './set-settings';

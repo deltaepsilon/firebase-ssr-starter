@@ -1,10 +1,10 @@
 /* globals firebase */
 import { connect } from 'unistore/react';
-import { actions } from '../../../datastore';
+import { actions } from '../../datastore';
 
 import BaseSubscription from './base-subscription';
 
-import subscribeUsers from '../../../database/user/subscribe-user';
+import subscribeUsers from '../../database/user/subscribe-user';
 
 export class UserSubscription extends BaseSubscription {
   get auth() {

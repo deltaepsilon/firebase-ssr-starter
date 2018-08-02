@@ -57,6 +57,8 @@ Client-side environments come in two flavors, `environment.js` and `environment.
 ### Sample /environments/environment.js
 
 ```
+import schema from './schema';
+
 export default {
   firebase: {
     apiKey: 'AIzaSyBRLf1WkEBxAw5owXqTTlFIIjYNR1hoatg',
@@ -66,19 +68,7 @@ export default {
     storageBucket: '',
     messagingSenderId: '58348257612',
   },
-  schema: {
-    users: (db, uid) => {
-      return db
-        .collection('user')
-        .doc(uid);
-    },
-    preferences: (db, uid) => {
-      return db
-        .collection('user-owned')
-        .collection('preferences')
-        .doc(uid);
-    },
-  },
+  schema,
 };
 ```
 
@@ -144,4 +134,3 @@ For Powershell run `.\bin\interactive.ps1`.
 For Bash run `./bin/deploy.sh`.
 
 For Powershell run `.\bin\deploy.ps1`.
-

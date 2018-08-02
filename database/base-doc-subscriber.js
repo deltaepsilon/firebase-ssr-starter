@@ -8,6 +8,6 @@ export default (environment, schemaName, ...schemaArgs) =>
       const db = firebase.firestore();
       const doc = environment.schema[schemaName].apply(null, [db, ...schemaArgs]);
 
-      return doc.onSnapshot(doc => observer.next(doc.data()))
+      return doc.onSnapshot(doc => observer.next(doc.data()));
     })
   );

@@ -2,6 +2,14 @@
 import React from 'react';
 
 export default class BaseSubscription extends React.Component {
+  constructor() {
+    super();
+
+    this.state = {
+      items: [],
+    };
+  }
+
   get canSubscribe() {
     return true;
   }
@@ -33,6 +41,10 @@ export default class BaseSubscription extends React.Component {
       this.subscription && this.subscription.unsubscribe();
       this.subscription = null;
     }
+  }
+
+  addItem(item) {
+    this.setState({ items: this.state.items.concat(item) });
   }
 
   render() {
