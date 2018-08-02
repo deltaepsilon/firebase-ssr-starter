@@ -1,3 +1,4 @@
+export handleSignOut from './handle-sign-out';
 export setAdminTabIndex from './set-admin-tab-index';
 export setClaims from './set-claims';
 export setCurrentUser from './set-current-user';

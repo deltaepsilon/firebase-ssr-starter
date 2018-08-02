@@ -10,7 +10,7 @@ import { Icon } from 'rmwc/Icon';
 import md5 from 'md5';
 import './drawer-contents.css';
 
-export function DrawerContents({ claims, currentUser, pathname }) {
+export function DrawerContents({ claims, currentUser, pathname, handleSignOut }) {
   return (
     <div className="drawer-contents">
       <DrawerHeader>
@@ -20,7 +20,7 @@ export function DrawerContents({ claims, currentUser, pathname }) {
         </div>
       </DrawerHeader>
 
-      <hr/>
+      <hr />
 
       <DrawerContent>
         {claims &&
@@ -67,13 +67,14 @@ export function DrawerContents({ claims, currentUser, pathname }) {
               </ListItemText>
             </Active>
           )}
-
         </ListItem>
         {currentUser && (
-          <ListItem onClick={signOut}>
+          <ListItem onClick={signOut(handleSignOut)}>
             <ListItemText>
-              <Icon use="power_settings_new" />
-              <span>Sign out</span>
+              <a>
+                <Icon use="power_settings_new" />
+                <span>Sign out</span>
+              </a>
             </ListItemText>
           </ListItem>
         )}
@@ -92,7 +93,6 @@ export function DrawerContents({ claims, currentUser, pathname }) {
             </ListItemText>
           </ListItem>
         </Active>
-
       </DrawerContent>
     </div>
   );
@@ -103,8 +103,11 @@ export default connect(
   actions
 )(DrawerContents);
 
-function signOut() {
-  window.firebase.auth().signOut();
+function signOut(handleSignOut) {
+  return () => {
+    handleSignOut();
+    window.firebase.auth().signOut();
+  };
 }
 
 function AccountIcon({ currentUser }) {
