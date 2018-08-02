@@ -8,14 +8,24 @@ export default class AdminUsers extends React.Component {
   constructor() {
     super();
 
-    this.state = { users: [] };
+    const noop = async args => console.log(args);
+
+    this.state = { users: [], next: noop };
   }
+
+  handleSubscribed({ next }) {
+    this.setState({ next });
+  }
+
   render() {
     return (
       <>
         <Paper>
-          <UsersSubscription setUsers={users => this.setState({ users })} />
-          <UsersTable users={this.state.users} />
+          <UsersSubscription
+            setUsers={users => this.setState({ users })}
+            onSubscribed={this.handleSubscribed.bind(this)}
+          />
+          <UsersTable users={this.state.users} next={this.state.next} />
         </Paper>
       </>
     );

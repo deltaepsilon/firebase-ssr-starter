@@ -2,12 +2,13 @@ import React from 'react';
 import Link from 'next/link';
 import { connect } from 'unistore/react';
 import { actions } from '../../datastore';
-import { DrawerHeader, DrawerContent } from 'rmwc/Drawer';
 
+import { DrawerHeader, DrawerContent } from 'rmwc/Drawer';
 import { ListItem, ListItemText } from 'rmwc/List';
 import { Icon } from 'rmwc/Icon';
 
-import md5 from 'md5';
+import AccountIcon from '../user/account-icon';
+
 import './drawer-contents.css';
 
 export function DrawerContents({ claims, currentUser, pathname, handleSignOut }) {
@@ -54,8 +55,8 @@ export function DrawerContents({ claims, currentUser, pathname, handleSignOut })
           </Active>
         )}
 
-        <ListItem>
-          {!currentUser && (
+        {!currentUser && (
+          <ListItem>
             <Active pathname={pathname} href="/login">
               <ListItemText>
                 <Link href="/login" prefetch>
@@ -66,8 +67,9 @@ export function DrawerContents({ claims, currentUser, pathname, handleSignOut })
                 </Link>
               </ListItemText>
             </Active>
-          )}
-        </ListItem>
+          </ListItem>
+        )}
+
         {currentUser && (
           <ListItem onClick={signOut(handleSignOut)}>
             <ListItemText>
@@ -110,21 +112,6 @@ function signOut(handleSignOut) {
   };
 }
 
-function AccountIcon({ currentUser }) {
-  let icon = <Icon use="account_circle" />;
-
-  if (currentUser) {
-    if (currentUser.photoURL) {
-      icon = <Icon strategy="url" use={currentUser.photoURL} />;
-    } else if (currentUser.email) {
-      icon = (
-        <Icon strategy="url" use={`https://www.gravatar.com/avatar/${md5(currentUser.email)}`} />
-      );
-    }
-  }
-
-  return icon;
-}
 function Active({ href, pathname, children }) {
   return (
     <div disabled={pathname == href} onClick={e => e.preventDefault()}>

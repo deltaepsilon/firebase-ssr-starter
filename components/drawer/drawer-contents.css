@@ -10,6 +10,7 @@
 .drawer-contents [disabled] .mdc-list-item__text {
   background: var(--mdc-theme-secondary-light);
   color: var(--mdc-theme-secondary-text);
+  width: 100%;
 }
 
 .drawer-contents .drawer-header .material-icons {
