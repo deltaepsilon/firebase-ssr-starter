@@ -24,23 +24,22 @@ export function DrawerContents({ claims, currentUser, pathname, handleSignOut })
       <hr />
 
       <DrawerContent>
-        {claims &&
-          claims.isAdmin && (
-            <Active pathname={pathname} href="/admin">
-              <ListItem>
-                <ListItemText>
-                  <Link href="/admin" prefetch>
-                    <a>
-                      <Icon use="supervisor_account" />
-                      <span>Admin</span>
-                    </a>
-                  </Link>
-                </ListItemText>
-              </ListItem>
-            </Active>
-          )}
+        {claims && claims.isAdmin ? (
+          <Active pathname={pathname} href="/admin">
+            <ListItem>
+              <ListItemText>
+                <Link href="/admin" prefetch>
+                  <a>
+                    <Icon use="supervisor_account" />
+                    <span>Admin</span>
+                  </a>
+                </Link>
+              </ListItemText>
+            </ListItem>
+          </Active>
+        ) : null}
 
-        {currentUser && (
+        {currentUser ? (
           <Active pathname={pathname} href="/app/settings">
             <ListItem>
               <ListItemText>
@@ -53,9 +52,9 @@ export function DrawerContents({ claims, currentUser, pathname, handleSignOut })
               </ListItemText>
             </ListItem>
           </Active>
-        )}
+        ) : null}
 
-        {!currentUser && (
+        {!currentUser ? (
           <ListItem>
             <Active pathname={pathname} href="/login">
               <ListItemText>
@@ -68,7 +67,7 @@ export function DrawerContents({ claims, currentUser, pathname, handleSignOut })
               </ListItemText>
             </Active>
           </ListItem>
-        )}
+        ) : null}
 
         {currentUser && (
           <ListItem onClick={signOut(handleSignOut)}>
@@ -114,8 +113,8 @@ function signOut(handleSignOut) {
 
 function Active({ href, pathname, children }) {
   return (
-    <div disabled={pathname == href} onClick={e => e.preventDefault()}>
+    <span className="active" disabled={pathname == href} onClick={e => e.preventDefault()}>
       {children}
-    </div>
+    </span>
   );
 }

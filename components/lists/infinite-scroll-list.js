@@ -45,7 +45,8 @@ export default class InfiniteScrollList extends React.Component {
     this.debounceTimer && clearTimeout(this.debounceTimer);
 
     this.debounceTimer = setTimeout(() => {
-      !this.props.isFinished && this.props.next();
+      console.log('debounced this.props', this.props);
+      // !this.props.isFinished && this.props.next();
     }, debounceMillis);
   }
 

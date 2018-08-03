@@ -6,57 +6,59 @@ export default (environment, schemaName, queryOptions) =>
   isBrowser(
     Observable.create(async observer => {
       const db = firebase.firestore();
-      const getCollection = withCollection(environment, schemaName);
+      const getCollection = withCollection({ db, environment, schemaName });
       const loadCollection = withObserver(observer);
 
-      
+      getLoader(getCollection, loadCollection, queryOptions)();
 
-      getLoader(getCollection, loadCollection)();
+      function getLoader(getCollection, loadCollection, queryOptions) {
+        return async () => {
+          const collection = getCollection(queryOptions);
 
-      function getLoader(getCollection, loadCollection) {
-        return () => {
-        const collection = getCollection(queryOptions)
+          const snapshot = await loadCollection(collection);
 
-        const snapshot = await loadCollection(collection)();
-
-        const cursor = getCursor(snapshot);
-
-        if (snapshot.length < queryOptions.limit) {
-
-          observer.complete();
-        } else {
-          observer.next({next: getLoader(getCollection, loadCollection(getCollection))})
-        }
-      }
+          if (snapshot.length < queryOptions.limit) {
+            observer.complete();
+          } else {
+            const cursor = getCursor(snapshot);
+            const nextQueryOptions = { ...queryOptions, cursor };
+            console.log('nextQueryOptions', nextQueryOptions);
+            debugger
+            // observer.next({
+            //   next: getLoader(getCollection, loadCollection, nextQueryOptions),
+            // });
+          }
+        };
       }
     })
   );
 
-
-
-function withCollection(environment, schemaName) {
+function withCollection({ db, environment, schemaName }) {
   return ({ orderBy = [], limit = 50, cursor }) => {
-
     let collection = environment.schema[schemaName](db);
-  
-        orderBy.forEach(({ name, sort = 'desc' }) => (collection = collection.orderBy(name, sort)));
-  
-        collection = collection.limit(limit);
-  }
+
+    orderBy.forEach(({ name, sort = 'desc' }) => (collection = collection.orderBy(name, sort)));
+
+    collection = collection.limit(limit);
+
+    if (cursor) {
+      collection = collection.startAt(cursor);
+    }
+
+    return collection;
+  };
 }
 
 function withObserver(observer) {
-  return collection => () => {
-
-
+  return async collection => {
     const snapshot = await collection.get();
-  
+
     snapshot.forEach(doc => observer.next({ __id: doc.id, ...doc.data() }));
-  
+
     return snapshot;
-  }
+  };
 }
 
 function getCursor(snapshot) {
-  return snapshot.docs[snapshot.docs.length -1];
+  return snapshot.docs[snapshot.docs.length - 1];
 }
