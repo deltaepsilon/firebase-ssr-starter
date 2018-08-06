@@ -11,6 +11,7 @@
     "logs": "firebase functions:log"
   },
   "dependencies": {
+    "algoliasearch": "^3.30.0",
     "firebase-admin": "~5.13.1",
     "firebase-functions": "^2.0.0"
   },

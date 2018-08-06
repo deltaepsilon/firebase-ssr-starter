@@ -1,4 +1,5 @@
 const getCustomClaimsByEmail = require('../utilities/get-custom-claims-by-email');
+const extractEmailFromUser = require('../utilities/extract-email-from-user');
 const setCustomClaims = require('../utilities/set-custom-claims');
 const omitEmptyValues = require('../utilities/omit-empty-values');
 
@@ -29,10 +30,6 @@ function mapUserUpdate(claims, user) {
     creationTime: user.metadata.creationTime,
     providerData: user.providerData.map(removeFunctions),
   });
-}
-
-function extractEmailFromUser(user) {
-  return user.email || user.providerData.find(({ email }) => email).email;
 }
 
 function removeFunctions(obj) {

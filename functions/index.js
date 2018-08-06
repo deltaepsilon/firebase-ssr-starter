@@ -6,8 +6,13 @@ admin.initializeApp();
 
 admin.firestore().settings({ timestampsInSnapshots: true });
 
-const { AuthorizationOnCreate } = require('./src');
+const { AuthorizationOnCreate, UsersOnWrite } = require('./src');
 const context = { admin, environment };
 
 // authorization-on-create
 exports.authorizationOnCreate = functions.auth.user().onCreate(AuthorizationOnCreate(context));
+
+// users-on-write
+exports.usersOnWrite = functions.firestore
+  .document(`${environment.schema.users}/{uid}`)
+  .onWrite(UsersOnWrite(context));
