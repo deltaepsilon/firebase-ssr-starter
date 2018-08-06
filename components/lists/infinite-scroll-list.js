@@ -20,11 +20,15 @@ export default class InfiniteScrollList extends React.Component {
   }
 
   get loaderTop() {
-    return this.loader.current.getBoundingClientRect().top;
+    return this.loader.current && this.loader.current.getBoundingClientRect().top;
   }
 
   get isLoaderVisible() {
     return this.loaderTop < this.viewportHeight;
+  }
+
+  get debounceMillis() {
+    return this.props.debounce || 1 * 1000;
   }
 
   componentDidMount() {
@@ -40,14 +44,13 @@ export default class InfiniteScrollList extends React.Component {
   }
 
   evaluateLoader() {
-    const debounceMillis = this.props.debounce || 1 * 1000;
-
     this.debounceTimer && clearTimeout(this.debounceTimer);
 
-    this.debounceTimer = setTimeout(() => {
-      console.log('debounced this.props', this.props);
-      // !this.props.isFinished && this.props.next();
-    }, debounceMillis);
+    this.debounceTimer =
+      this.isLoaderVisible &&
+      setTimeout(() => {
+        !this.props.isFinished && this.props.next();
+      }, this.debounceMillis);
   }
 
   render() {

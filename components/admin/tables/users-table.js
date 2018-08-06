@@ -14,10 +14,10 @@ import FromNow from '../../dates/from-now';
 
 import '@material/list/dist/mdc.list.min.css';
 
-export default function UsersTable({ users, next }) {
+export default function UsersTable({ finished, users, next }) {
   return (
     <>
-      <InfiniteScrollList next={next}>
+      <InfiniteScrollList isFinished={finished} next={next}>
         {users.map(user => <UserListItem key={user.__id} user={user} />)}
       </InfiniteScrollList>
     </>

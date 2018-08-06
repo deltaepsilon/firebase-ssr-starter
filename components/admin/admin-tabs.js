@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'unistore/react';
 import { actions } from '../../datastore';
-import { TabBar, Tab, TabIcon, TabIconText, TabBarScroller } from 'rmwc/Tabs';
+import { TabBar, Tab, TabBarScroller } from 'rmwc/Tabs';
 
 import '@material/tabs/dist/mdc.tabs.min.css';
 

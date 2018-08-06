@@ -10,11 +10,7 @@ export default class AdminUsers extends React.Component {
 
     const noop = async args => console.log(args);
 
-    this.state = { users: [], next: noop };
-  }
-
-  handleSubscribed({ next }) {
-    this.setState({ next });
+    this.state = { users: [], next: noop, finished: false };
   }
 
   render() {
@@ -22,10 +18,15 @@ export default class AdminUsers extends React.Component {
       <>
         <Paper>
           <UsersSubscription
+            onFinished={() => this.setState({ finished: true })}
+            onSubscribed={({ next }) => this.setState({ next })}
             setUsers={users => this.setState({ users })}
-            onSubscribed={this.handleSubscribed.bind(this)}
           />
-          <UsersTable users={this.state.users} next={this.state.next} />
+          <UsersTable
+            users={this.state.users}
+            next={this.state.next}
+            finished={this.state.finished}
+          />
         </Paper>
       </>
     );

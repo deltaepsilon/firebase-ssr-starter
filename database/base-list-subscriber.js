@@ -17,13 +17,12 @@ export default (environment, schemaName, queryOptions) =>
 
           const snapshot = await loadCollection(collection);
 
-          if (snapshot.length < queryOptions.limit) {
+          if (snapshot.docs.length < queryOptions.limit) {
             observer.complete();
           } else {
             const cursor = getCursor(snapshot);
             const nextQueryOptions = { ...queryOptions, cursor };
-            console.log('nextQueryOptions', nextQueryOptions);
-            
+
             observer.next({
               next: getLoader(getCollection, loadCollection, nextQueryOptions),
             });
@@ -42,7 +41,7 @@ function withCollection({ db, environment, schemaName }) {
     collection = collection.limit(limit);
 
     if (cursor) {
-      collection = collection.startAt(cursor);
+      collection = collection.startAfter(cursor);
     }
 
     return collection;

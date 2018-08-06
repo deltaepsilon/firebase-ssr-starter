@@ -27,9 +27,13 @@ export class UsersSubscription extends BaseSubscription {
           this.addItem(user);
           setUsers(this.state.items);
         } else if (event.next) {
-          this.props.onSubscribed(next);
+          this.props.onSubscribed(event);
         }
-      }
+      },
+      error => {
+        throw new HandledError(error);
+      },
+      () => this.props.onFinished()
     );
   }
 }
