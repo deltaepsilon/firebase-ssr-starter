@@ -23,6 +23,7 @@ const initialState = {
   },
   ...localStorageState,
   // Not overridden by localStorageState 👇
+  beforeInstallEvent: null,
   environment: isDevelopment ? devEnvironment : prodEnvironment,
   isDrawerOpen: false,
   pathname: '/',

@@ -1,6 +1,7 @@
 export handleSignOut from './handle-sign-out';
 export setAdminTabIndex from './set-admin-tab-index';
 export setClaims from './set-claims';
+export setBeforeInstallEvent from './set-before-install-event';
 export setCurrentUser from './set-current-user';
 export setEnvironment from './set-environment';
 export setIsDrawerOpen from './set-is-drawer-open';

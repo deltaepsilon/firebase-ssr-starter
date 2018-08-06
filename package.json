@@ -10,7 +10,6 @@
     "@zeit/next-css": "^0.2.0",
     "firebase-tools": "^4.0.0",
     "md5": "^2.2.1",
-    "moment": "^2.22.2",
     "next": "^6.0.3",
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
@@ -19,12 +18,18 @@
     "unistore": "^3.0.6",
     "workerize": "^0.1.7"
   },
+  "devDependencies": {
+    "@zeit/next-source-maps": "^0.0.2",
+    "stats-webpack-plugin": "^0.6.2",
+    "webpack-bundle-analyzer": "^2.13.1"
+  },
   "engines": {
     "node": "8"
   },
   "scripts": {
     "start": "node server.js",
-    "build": "next build",
+    "build": "next build --stats",
+    "stats": "webpack-bundle-analyzer ./.next/server/stats.json",
     "export": "next export",
     "copy": "sh bin/copy.sh",
     "deploy": "sh bin/build.sh && sh bin/deploy.sh",

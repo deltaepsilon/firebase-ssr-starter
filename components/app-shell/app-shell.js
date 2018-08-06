@@ -19,6 +19,7 @@ import ErrorHandler from '../handlers/error-handler';
 import FirebaseScripts from './firebase';
 import Content from './content';
 import Messaging from './messaging';
+import PWA from './pwa';
 
 // Subscriptions
 import PresenceSubscription from '../subscriptions/presence-subscription';
@@ -55,16 +56,17 @@ export class AppShell extends React.Component {
           <div className="app-shell">
             <Authentication admin={admin} secure={secure} url={url} />
             <Messaging />
+            <PWA/>
             <PresenceSubscription />
             <SettingsSubscription />
             <UserSubscription />
             <AlertHandler />
             <ErrorHandler />
             <PrimaryAppBar title={title} />
-            <TemporaryDrawer />
+            <TemporaryDrawer beforeInstallEvent={this.state.beforeInstallEvent} />
             <Content>
               <div className="permanent-drawer">
-                <PermanentDrawer />
+                <PermanentDrawer beforeInstallEvent={this.state.beforeInstallEvent} />
               </div>
               <main>{children}</main>
             </Content>

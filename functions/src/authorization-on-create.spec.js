@@ -11,8 +11,6 @@ const removeCustomClaimsByEmail = RemoveCustomClaimsByEmail(context);
 const Func = require('./authorization-on-create');
 const db = admin.firestore();
 
-db.settings({ timestampsInSnapshots: true });
-
 const usersCollection = db.collection(environment.schema.users);
 
 describe('AuthorizationOnCreate', () => {

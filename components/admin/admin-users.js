@@ -14,9 +14,7 @@ export default class AdminUsers extends React.Component {
   }
 
   handleSubscribed({ next }) {
-    console.log('next', next);
-    debugger
-    // this.setState({ next });
+    this.setState({ next });
   }
 
   render() {

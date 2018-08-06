@@ -29,6 +29,13 @@ export default class BaseSubscription extends React.Component {
   attemptSubscription() {
     if (!this.subscription && this.canSubscribe) {
       this.subscription = this.subscribe();
+
+      if (!this.subscription) {
+        this.subscription = true;
+        throw new Error(
+          'Subscription failed to return an unsubscribe function! Abort!!!! Infinite loop ahead.'
+        );
+      }
     } else if (!this.canSubscribe) {
       this.unsubscribe();
     }
@@ -37,7 +44,7 @@ export default class BaseSubscription extends React.Component {
   subscribe() {}
 
   unsubscribe() {
-    if (this.subscription) {
+    if (this.subscription && typeof this.subscription === 'function') {
       this.subscription && this.subscription.unsubscribe();
       this.subscription = null;
     }

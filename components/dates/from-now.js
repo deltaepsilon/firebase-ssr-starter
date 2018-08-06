@@ -1,6 +1,6 @@
 import React from 'react';
-import moment from 'moment';
+// import moment from 'moment';
 
 export default ({ datetime }) => {
-  return <span>{datetime ? moment(datetime).fromNow() : '∞'}</span>;
+  return <span>{datetime ? new Date(datetime).toString() : '∞'}</span>;
 };

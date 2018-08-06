@@ -1,1 +1,1 @@
-firebase deploy --token $FIREBASE_TOKEN
+firebase deploy --token $FIREBASE_TOKEN --only hosting

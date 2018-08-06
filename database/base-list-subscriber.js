@@ -23,10 +23,10 @@ export default (environment, schemaName, queryOptions) =>
             const cursor = getCursor(snapshot);
             const nextQueryOptions = { ...queryOptions, cursor };
             console.log('nextQueryOptions', nextQueryOptions);
-            debugger
-            // observer.next({
-            //   next: getLoader(getCollection, loadCollection, nextQueryOptions),
-            // });
+            
+            observer.next({
+              next: getLoader(getCollection, loadCollection, nextQueryOptions),
+            });
           }
         };
       }

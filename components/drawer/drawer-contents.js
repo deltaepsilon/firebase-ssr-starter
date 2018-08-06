@@ -6,12 +6,22 @@ import { actions } from '../../datastore';
 import { DrawerHeader, DrawerContent } from 'rmwc/Drawer';
 import { ListItem, ListItemText } from 'rmwc/List';
 import { Icon } from 'rmwc/Icon';
+import { Button } from 'rmwc/Button';
+
+import '@material/button/dist/mdc.button.min.css';
 
 import AccountIcon from '../user/account-icon';
 
 import './drawer-contents.css';
+import { AlertHandler } from '../handlers/alert-handler';
 
-export function DrawerContents({ claims, currentUser, pathname, handleSignOut }) {
+export function DrawerContents({
+  beforeInstallEvent,
+  claims,
+  currentUser,
+  pathname,
+  handleSignOut,
+}) {
   return (
     <div className="drawer-contents">
       <DrawerHeader>
@@ -94,13 +104,24 @@ export function DrawerContents({ claims, currentUser, pathname, handleSignOut })
             </ListItemText>
           </ListItem>
         </Active>
+
+        {beforeInstallEvent && (
+          <ListItem>
+            <ListItemText>
+              <Button className="full-width" raised onClick={installToDesktop(beforeInstallEvent)}>
+                <Icon use="get_app" />
+                <span>Install App</span>
+              </Button>
+            </ListItemText>
+          </ListItem>
+        )}
       </DrawerContent>
     </div>
   );
 }
 
 export default connect(
-  'claims, currentUser, pathname',
+  'beforeInstallEvent,claims,currentUser,pathname',
   actions
 )(DrawerContents);
 
@@ -117,4 +138,18 @@ function Active({ href, pathname, children }) {
       {children}
     </span>
   );
+}
+
+function installToDesktop(e) {
+  return () => {
+    e.prompt();
+
+    e.userChoice.then(({ outcome }) => {
+      if (outcome == 'dismissed') {
+        Alert('Installation rejected');
+      } else {
+        Alert('Installating...');
+      }
+    });
+  };
 }

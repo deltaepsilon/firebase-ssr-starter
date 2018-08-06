@@ -20,7 +20,7 @@ export class UsersSubscription extends BaseSubscription {
   subscribe() {
     const { environment, setUsers } = this.props;
 
-    subscribeUsers({ environment }).subscribe(
+    return subscribeUsers({ environment }).subscribe(
       event => {
         if (event.__id) {
           const user = event;

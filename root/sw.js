@@ -3,7 +3,6 @@ importScripts('https://www.gstatic.com/firebasejs/5.3.0/firebase-app.js');
 importScripts('https://www.gstatic.com/firebasejs/5.3.0/firebase-messaging.js');
 importScripts('/environment.sw.js');
 
-
 firebase.initializeApp(environment.firebase);
 
 var messaging = firebase.messaging();
@@ -39,6 +38,8 @@ if (typeof isDevelopment == 'undefined') {
   //Establish cache
   const CACHE_NAME = 'firebase-ssr-v0.0.0';
   const urlsToCache = ['/', '/static/styles/app.css', '_next/static/style.css'];
+
+  console.log(`Attempting to establish cache ${CACHE_NAME}`);
   self.addEventListener('install', event => {
     const promise = caches
       .open(CACHE_NAME)
