@@ -1,9 +1,9 @@
-jest.mock('../utilities/algolia');
+jest.mock('../utilities/algolia-utilities');
 
 const admin = require('../utilities/test-admin');
 const environment = require('../environments/environment.test');
 const context = { admin, environment };
-const algolia = require('../utilities/algolia');
+const algolia = require('../utilities/algolia-utilities');
 const { usersIndex, saveObject, deleteObject } = algolia(context);
 
 const Func = require('./users-on-write');

@@ -1,0 +1,20 @@
+.table em {
+  font-style: inherit;
+  font-weight: bold;
+}
+
+.table .mdc-list-item__text {
+  width: 100%;
+}
+
+.table .mdc-list-item__secondary-text {
+  display: flex;
+}
+
+.table .mdc-list-item__secondary-text > *:not(:last-child) {
+  margin-right: 1rem;
+}
+
+.table .mdc-list-item__secondary-text .flex {
+  flex: 1;
+}

@@ -1,4 +1,4 @@
-const algolia = require('../utilities/algolia');
+const algolia = require('../utilities/algolia-utilities');
 
 module.exports = ({ environment }) => {
   const { usersIndex, saveObject, deleteObject } = algolia({ environment });

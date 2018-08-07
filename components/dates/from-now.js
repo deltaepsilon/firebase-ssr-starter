@@ -1,6 +1,6 @@
 import React from 'react';
-// import moment from 'moment';
+import fromNow from 'from-now';
 
 export default ({ datetime }) => {
-  return <span>{datetime ? new Date(datetime).toString() : '∞'}</span>;
+  return <span>{datetime ? fromNow(datetime) : '∞'}</span>;
 };

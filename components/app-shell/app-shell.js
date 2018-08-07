@@ -17,6 +17,7 @@ import TemporaryDrawer from '../drawer/temporary-drawer';
 import AlertHandler from '../handlers/alert-handler';
 import ErrorHandler from '../handlers/error-handler';
 import FirebaseScripts from './firebase';
+import AlgoliaScripts from './algolia';
 import Content from './content';
 import Messaging from './messaging';
 import PWA from './pwa';
@@ -44,7 +45,7 @@ export class AppShell extends React.Component {
   }
 
   render() {
-    const { admin, children, secure, url } = this.props;
+    const { admin, algolia, children, secure, url } = this.props;
     const title = 'Firebase SSR';
 
     return (
@@ -56,7 +57,7 @@ export class AppShell extends React.Component {
           <div className="app-shell">
             <Authentication admin={admin} secure={secure} url={url} />
             <Messaging />
-            <PWA/>
+            <PWA />
             <PresenceSubscription />
             <SettingsSubscription />
             <UserSubscription />
@@ -73,6 +74,7 @@ export class AppShell extends React.Component {
           </div>
         </Provider>
         <FirebaseScripts firebaseEnv={this.state.environment.firebase} />
+        {algolia && <AlgoliaScripts />}
       </>
     );
   }

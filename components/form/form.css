@@ -6,7 +6,8 @@
   /* border-bottom: 1px solid var(--color-form-border); */
 }
 
-.switch {
+.switch,
+.text-field {
   display: flex;
   align-items: center;
 }
@@ -28,4 +29,13 @@
 
 .switch label > *:not(:last-child) {
   margin-right: 1rem;
+}
+
+.text-field .mdc-text-field {
+  flex: 1;
+}
+
+.text-field.centered .mdc-text-field__input {
+  padding-top: 10px;
+  padding-bottom: 10px;
 }
