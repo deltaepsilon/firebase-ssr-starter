@@ -15,20 +15,22 @@ import FromNow from '../../dates/from-now';
 import '../../tables/tables.css';
 import '@material/list/dist/mdc.list.min.css';
 
-export default function UsersTable({ finished, searchResults, users, next }) {
+export default function UsersTable({ finished, searchResults, users, next, onUserSelection }) {
   const hasSearchResults = !!searchResults.length;
   const items = hasSearchResults ? searchResults : users;
 
   return (
     <div className="table">
       <InfiniteScrollList isFinished={hasSearchResults || finished} next={next}>
-        {items.map(user => <UserListItem key={user.__id} user={user} />)}
+        {items.map(user => (
+          <UserListItem key={user.__id} user={user} onUserSelection={onUserSelection} />
+        ))}
       </InfiniteScrollList>
     </div>
   );
 }
 
-function UserListItem({ user }) {
+function UserListItem({ user, onUserSelection }) {
   const isSearch = !!user._highlightResult;
   let email = isSearch ? user._highlightResult.email.value : user.email;
   let displayName =
@@ -39,7 +41,7 @@ function UserListItem({ user }) {
       : user.providerData && user.providerData[0] && user.providerData[0].displayName;
 
   return (
-    <ListItem>
+    <ListItem onClick={() => onUserSelection(user.__id)}>
       <ListItemGraphic>
         <AccountIcon currentUser={user} />
       </ListItemGraphic>

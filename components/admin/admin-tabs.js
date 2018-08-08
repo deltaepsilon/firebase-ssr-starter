@@ -13,9 +13,9 @@ export function AdminTabs({ adminTabIndex, setAdminTabIndex }) {
         onChange={evt => setAdminTabIndex(evt.detail.activeTabIndex)}
       >
         <Tab>Dashboard</Tab>
+        <Tab>Users</Tab>
         <Tab>Transactions</Tab>
         <Tab>Subscriptions</Tab>
-        <Tab>Users</Tab>
       </TabBar>
     </TabBarScroller>
   );

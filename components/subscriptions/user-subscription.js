@@ -4,7 +4,7 @@ import { actions } from '../../datastore';
 
 import BaseSubscription from './base-subscription';
 
-import subscribeUsers from '../../database/user/subscribe-user';
+import subscribeUser from '../../database/user/subscribe-user';
 
 export class UserSubscription extends BaseSubscription {
   get auth() {
@@ -20,7 +20,7 @@ export class UserSubscription extends BaseSubscription {
   subscribe() {
     const { currentUser, environment, setUser } = this.props;
 
-    return subscribeUsers({ environment, uid: currentUser.uid }).subscribe(async user => {
+    return subscribeUser({ environment, uid: currentUser.uid }).subscribe(async user => {
       const claimsHaveChanged = user && this.claimsHaveChanged(this.props.user, user);
 
       setUser(user);

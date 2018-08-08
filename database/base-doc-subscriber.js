@@ -8,6 +8,12 @@ export default (environment, schemaName, ...schemaArgs) =>
       const db = firebase.firestore();
       const doc = environment.schema[schemaName].apply(null, [db, ...schemaArgs]);
 
-      return doc.onSnapshot(doc => observer.next(doc.data()));
+      return doc.onSnapshot(doc => {
+        if (doc.exists) {
+          observer.next({ __id: doc.id, ...doc.data() });
+        } else {
+          console.log('doc missing', schemaName, schemaArgs, doc && doc.ref && doc.ref.path);
+        }
+      });
     })
   );

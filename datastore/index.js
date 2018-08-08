@@ -13,6 +13,7 @@ const initialState = {
   adminTabIndex: 0,
   claims: {},
   currentUser: {},
+  detailUserId: '',
   isSSR: typeof window != 'object',
   isDevelopment: nodeEnv == 'development',
   nodeEnv,

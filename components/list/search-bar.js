@@ -4,6 +4,7 @@ import Form from '../form/form';
 import TextField from '../form/text-field';
 import { TextFieldIcon } from 'rmwc/TextField';
 import { IconButton } from 'rmwc/IconButton';
+
 import algoliasearch from 'algoliasearch/lite';
 
 import '@material/icon-button/dist/mdc.icon-button.min.css';

@@ -1,0 +1,8 @@
+.mdc-card section {
+  padding: 0 1rem 1rem 1rem;
+}
+
+.mdc-card .row {
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+}

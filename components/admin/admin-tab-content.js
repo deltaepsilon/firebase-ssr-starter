@@ -8,7 +8,7 @@ import AdminSubscriptions from './admin-subscriptions';
 import AdminTransactions from './admin-transactions';
 import AdminUsers from './admin-users';
 
-const tabs = [<AdminDashboard />, <AdminTransactions />, <AdminSubscriptions />, <AdminUsers />];
+const tabs = [<AdminDashboard />, <AdminUsers />, <AdminTransactions />, <AdminSubscriptions />];
 
 export function AdminTabContent({ adminTabIndex }) {
   return tabs.map((tab, index) => (
