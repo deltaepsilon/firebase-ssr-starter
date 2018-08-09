@@ -28,7 +28,6 @@ export class SyncQueryParams extends React.Component {
       return params;
     }, {});
 
-    console.log('params', params);
     for (let param in params) {
       this.props[queryParamsMap[param]](params[param]);
     }

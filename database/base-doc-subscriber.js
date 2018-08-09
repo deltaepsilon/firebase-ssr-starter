@@ -12,7 +12,7 @@ export default (environment, schemaName, ...schemaArgs) =>
         if (doc.exists) {
           observer.next({ __id: doc.id, ...doc.data() });
         } else {
-          console.log('doc missing', schemaName, schemaArgs, doc && doc.ref && doc.ref.path);
+          console.info('doc missing', schemaName, schemaArgs, doc && doc.ref && doc.ref.path);
         }
       });
     })

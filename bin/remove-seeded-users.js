@@ -9,10 +9,10 @@ async function removeSeededUsers(users) {
   while (i--) {
     const user = users[i];
     await admin.auth().deleteUser(user.uid);
-    console.log('deleted', user);
+    console.info('deleted', user);
   }
 
-  console.log('complete!');
+  console.info('complete!');
 
   process.exit();
 }

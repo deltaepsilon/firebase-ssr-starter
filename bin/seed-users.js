@@ -9,10 +9,10 @@ async function seedUsers(users) {
   while (i--) {
     const user = users[i];
     await admin.auth().createUser(user);
-    console.log('created', user);
+    console.info('created', user);
   }
 
-  console.log('complete!');
+  console.info('complete!');
 
   process.exit();
 }

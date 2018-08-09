@@ -39,16 +39,16 @@ if (typeof isDevelopment == 'undefined') {
   const CACHE_NAME = 'firebase-ssr-v0.0.0';
   const urlsToCache = ['/', '/static/styles/app.css', '_next/static/style.css'];
 
-  console.log(`Attempting to establish cache ${CACHE_NAME}`);
+  console.info(`Attempting to establish cache ${CACHE_NAME}`);
   self.addEventListener('install', event => {
     const promise = caches
       .open(CACHE_NAME)
       .then(cache => {
         return cache.addAll(urlsToCache);
       })
-      .catch(error => console.log('sw install error: optimistic caching', error))
+      .catch(error => console.info('sw install error: optimistic caching', error))
       .then(() => {
-        console.log('sw install successful');
+        console.info('sw install successful');
       });
 
     event.waitUntil(promise);
@@ -86,11 +86,11 @@ if (typeof isDevelopment == 'undefined') {
           cacheNames.map(cacheName => cacheName != CACHE_NAME && caches.delete(cacheName))
         )
       )
-      .catch(error => console.log('sw activation error', error))
-      .then(() => console.log('sw activation successful'));
+      .catch(error => console.info('sw activation error', error))
+      .then(() => console.info('sw activation successful'));
 
     event.waitUntil(promise);
   });
 } else {
-  console.log('sw cacheing disabled for development');
+  console.info('sw cacheing disabled for development');
 }

@@ -19,8 +19,6 @@ export function getToken({ environment, uid }) {
       );
     }
 
-    console.log('messagingToken', messagingToken);
-
     await set({ messagingToken });
 
     return cb(messagingToken);

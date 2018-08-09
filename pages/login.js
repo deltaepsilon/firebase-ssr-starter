@@ -111,7 +111,7 @@ export default withRouter(class Login extends React.Component {
   }
 
   async handleError(error) {
-    console.log('error', error);
+    console.info('error', error);
     await this.returnFromLoading();
 
     throw new HandledError(error);
