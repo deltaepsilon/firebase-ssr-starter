@@ -4,10 +4,14 @@ export default function extractUserEmail(user) {
   let email = '';
 
   if (user) {
-    const providerWithEmail = user.providerData && user.providerData.find(({ email }) => !!email);
+    if (user.email) {
+      email = user.email;
+    } else if (user.providerData) {
+      const providerWithEmail = user.providerData.find(({ email }) => !!email);
 
-    if (providerWithEmail || user.email) {
-      email = providerWithEmail ? providerWithEmail.email : user.email;
+      if (providerWithEmail && providerWithEmail.email) {
+        email = providerWithEmail.email;
+      }
     }
   }
 

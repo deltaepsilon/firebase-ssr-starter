@@ -4,13 +4,14 @@ export default function extractUserDisplayName(user) {
   let displayName = extractUserEmail(user);
 
   if (user) {
-    const providerWithDisplayName =
-      user.providerData && user.providerData.find(({ displayName }) => !!displayName);
+    if (user.displayName) {
+      displayName = user.displayName;
+    } else if (user.providerData) {
+      const providerWithDisplayName = user.providerData.find(({ displayName }) => !!displayName);
 
-    if (providerWithDisplayName || user.displayName) {
-      displayName = providerWithDisplayName
-        ? providerWithDisplayName.displayName
-        : user.displayName;
+      if (providerWithDisplayName && providerWithDisplayName.displayName) {
+        displayName = providerWithDisplayName.displayName;
+      }
     }
   }
 

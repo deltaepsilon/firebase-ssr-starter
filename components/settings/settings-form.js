@@ -7,6 +7,7 @@ import { Icon } from 'rmwc/Icon';
 import Paper from '../../components/paper/paper';
 import getToken from '../../utilities/messaging/get-token';
 import setSettings from '../../database/settings/set-settings';
+import SaveableTextField from '../form/saveable-text-field';
 
 export function SettingsForm({ currentUser, environment, settings, setMessagingToken }) {
   const uid = currentUser && currentUser.uid;
@@ -18,6 +19,12 @@ export function SettingsForm({ currentUser, environment, settings, setMessagingT
       <hr />
 
       <Form>
+        <SaveableTextField
+          value={settings.displayName}
+          label="Full Name"
+          onSave={async displayName => await setSettings(environment, uid)({ displayName })}
+        />
+
         <Switch
           checked={settings.messagingToken || false}
           onChange={async () => {
@@ -33,6 +40,7 @@ export function SettingsForm({ currentUser, environment, settings, setMessagingT
           <Icon use="message" />
           <span>In-app alerts</span>
         </Switch>
+
         <Switch
           checked={settings.optInEmail || false}
           onChange={async () => {
@@ -46,6 +54,7 @@ export function SettingsForm({ currentUser, environment, settings, setMessagingT
           <Icon use="email" />
           <span>Email alerts</span>
         </Switch>
+
         <Switch
           checked={settings.optInMarketing || false}
           onChange={async () => {
