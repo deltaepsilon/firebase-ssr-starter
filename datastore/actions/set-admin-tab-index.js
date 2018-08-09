@@ -1,1 +1,1 @@
-export default (state, adminTabIndex) => ({ adminTabIndex });
+export default (state, adminTabIndex = 0) => ({ adminTabIndex });

@@ -20,7 +20,7 @@ import FirebaseScripts from './firebase';
 import AlgoliaScripts from './algolia';
 import Content from './content';
 import Messaging from './messaging';
-import ProcessQueryParams from './process-query-params';
+import SyncQueryParams from './sync-query-params';
 import PWA from './pwa';
 
 // Subscriptions
@@ -58,7 +58,7 @@ export class AppShell extends React.Component {
           <div className="app-shell">
             <Authentication admin={admin} secure={secure} url={url} />
             <Messaging />
-            <ProcessQueryParams />
+            <SyncQueryParams />
             <PWA />
             <PresenceSubscription />
             <SettingsSubscription />

@@ -8,6 +8,7 @@ import SearchBar from '../list/search-bar';
 import UserDetail from '../user/user-detail';
 import UsersSubscription from '../subscriptions/users-subscription';
 import UsersTable from './tables/users-table';
+import SetQueryParams from '../url/set-query-params';
 
 export class AdminUsers extends React.Component {
   constructor() {
@@ -25,17 +26,18 @@ export class AdminUsers extends React.Component {
     };
   }
 
-  handleUserSelection(userId) {
+  handleUserSelection(userId) {    
     this.props.setDetailUserId(userId);
   }
 
   render() {
-    const { detailUserId, environment } = this.props;
+    const { adminTabIndex, detailUserId, environment } = this.props;
 
     return (
       <>
         {detailUserId ? (
           <>
+            <SetQueryParams params={{ adminTabIndex, detailUserId }} />
             <AdminUserSubscription
               environment={environment}
               userId={detailUserId}
@@ -51,6 +53,7 @@ export class AdminUsers extends React.Component {
           </>
         ) : (
           <Paper>
+            <SetQueryParams params={{ adminTabIndex }} />
             <UsersSubscription
               onFinished={() => this.setState({ finished: true })}
               onSubscribed={({ next }) => this.setState({ next })}
@@ -79,6 +82,6 @@ export class AdminUsers extends React.Component {
 }
 
 export default connect(
-  'detailUserId,environment',
+  'adminTabIndex,detailUserId,environment',
   actions
 )(AdminUsers);

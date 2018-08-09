@@ -10,6 +10,5 @@ export default function createLink(root, params) {
     link = `${link}?${parts.join('&')}`;
   }
 
-  
   return link;
 }

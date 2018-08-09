@@ -21,10 +21,10 @@ import copyToClipboard from '../../utilities/copy-to-clipboard';
 import './card.css';
 import '@material/card/dist/mdc.card.min.css';
 
-export default ({ environment, user }) => {
+export default ({ adminTabIndex, environment, user }) => {
   const email = extractUserEmail(user);
   const photoUrl = extractUserPhotoUrl(user);
-  const userLink = createLink(location.href, { adminTabIndex: 1, detailUserId: user.__id });
+  const userLink = createLink(location.href, { adminTabIndex, detailUserId: user.__id });
 
   return (
     <Card style={{ width: '21rem' }}>

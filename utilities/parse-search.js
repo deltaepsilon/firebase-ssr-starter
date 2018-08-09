@@ -1,13 +1,12 @@
-/* globals location */
-export default (state, search) => {
+module.exports = function parseSearch(search) {
   const parts = search.slice(1).split('&');
-  let update = {};
+  let result = {};
 
   parts.forEach(part => {
     const [key, value] = part.split('=');
 
-    update[key] = value;
+    result[key] = value;
   });
 
-  return update;
+  return result;
 };

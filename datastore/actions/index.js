@@ -1,5 +1,4 @@
 export handleSignOut from './handle-sign-out';
-export processQueryParams from './process-query-params';
 export setAdminTabIndex from './set-admin-tab-index';
 export setClaims from './set-claims';
 export setBeforeInstallEvent from './set-before-install-event';
@@ -16,3 +15,4 @@ export setServiceWorkerRegistered from './set-service-worker-registered';
 export setSettings from './set-settings';
 export toggleIsDrawerOpen from './toggle-is-drawer-open';
 export setUser from './set-user';
+export updateQueryParams from './update-query-params';
