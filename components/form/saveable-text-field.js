@@ -60,7 +60,7 @@ export default class SaveableTextField extends React.Component {
           value={this.state.currentValue}
           onChange={this.handleChange.bind(this)}
         >
-          <Button raised disabled={!this.isDirty} onClick={console.log}>
+          <Button raised disabled={!this.isDirty}>
             {this.props.children || 'Save'}
           </Button>
         </TextField>

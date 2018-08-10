@@ -8,7 +8,7 @@ const { usersIndex, saveObject, deleteObject } = algolia(context);
 
 const Func = require('./users-on-write');
 
-describe('AuthorizationOnCreate', () => {
+describe('UsersOnWrite', () => {
   const email = 'tester@chrisesplin.com';
 
   let func;

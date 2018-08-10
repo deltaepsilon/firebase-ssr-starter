@@ -1,9 +1,9 @@
 const BAD_KEYS_REGEXP = /[\.|\/|$|#|\[|\]]/g;
 
-module.exports = ({ admin, environment }) => user => {
+module.exports = ({ admin, environment }) => (user, options = {}) => {
   return admin
     .firestore()
     .collection(environment.schema.users)
-    .child(user.uid)
-    .set(user);
+    .doc(user.uid)
+    .set(user, options);
 };
