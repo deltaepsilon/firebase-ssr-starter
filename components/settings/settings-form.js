@@ -4,13 +4,16 @@ import { actions } from '../../datastore';
 import Form from '../form/form';
 import Switch from '../form/switch';
 import { Icon } from 'rmwc/Icon';
+
 import Paper from '../../components/paper/paper';
 import getToken from '../../utilities/messaging/get-token';
 import setSettings from '../../database/settings/set-settings';
 import SaveableTextField from '../form/saveable-text-field';
+import ProfileImage from './profile-image';
 
 export function SettingsForm({ currentUser, environment, settings, setMessagingToken }) {
   const uid = currentUser && currentUser.uid;
+  const settingsSetter = setSettings(environment, uid);
 
   return uid && settings ? (
     <Paper>
@@ -19,17 +22,26 @@ export function SettingsForm({ currentUser, environment, settings, setMessagingT
       <hr />
 
       <Form>
+
         <SaveableTextField
           value={settings.displayName}
           label="Full Name"
-          onSave={async displayName => await setSettings(environment, uid)({ displayName })}
+          onSave={async displayName => settingsSetter({ displayName })}
         />
+
+        <h4>Profile Image</h4>
+
+        <ProfileImage settings={settings} setSettings={settingsSetter} />
+
+        <hr />
+
+        <h3>Options</h3>
 
         <Switch
           checked={settings.messagingToken || false}
           onChange={async () => {
             if (settings.messagingToken) {
-              await setSettings(environment, uid)({ messagingToken: null });
+              await settingsSetter({ messagingToken: null });
               Alert('Messaging disabled');
             } else {
               await getToken({ environment, uid })(setMessagingToken);
@@ -45,9 +57,9 @@ export function SettingsForm({ currentUser, environment, settings, setMessagingT
           checked={settings.optInEmail || false}
           onChange={async () => {
             if (settings.optInEmail) {
-              await setSettings(environment, uid)({ optInEmail: false });
+              await settingsSetter({ optInEmail: false });
             } else {
-              await setSettings(environment, uid)({ optInEmail: true });
+              await settingsSetter({ optInEmail: true });
             }
           }}
         >
@@ -59,9 +71,9 @@ export function SettingsForm({ currentUser, environment, settings, setMessagingT
           checked={settings.optInMarketing || false}
           onChange={async () => {
             if (settings.optInMarketing) {
-              await setSettings(environment, uid)({ optInMarketing: false });
+              await settingsSetter({ optInMarketing: false });
             } else {
-              await setSettings(environment, uid)({ optInMarketing: true });
+              await settingsSetter({ optInMarketing: true });
             }
           }}
         >

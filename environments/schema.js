@@ -15,4 +15,10 @@ export default {
   presence: (db, uid) => {
     return db.ref('presence').child(uid);
   },
+  userUploads: (storage, uid, hash) => {
+    return storage
+      .ref('user-uploads')
+      .child(uid)
+      .child(hash);
+  },
 };

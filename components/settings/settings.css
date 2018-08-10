@@ -1,0 +1,18 @@
+.profile-image {
+  /* background: gold; */
+}
+
+.profile-image img {
+  max-width: 100%;
+}
+
+.profile-image .form-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  flex-wrap: wrap;
+}
+
+.profile-image .form-row button {
+  margin-top: 1rem;
+}
