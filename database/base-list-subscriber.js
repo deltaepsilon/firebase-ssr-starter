@@ -2,11 +2,11 @@
 import { Observable } from 'rxjs';
 import isBrowser from '../utilities/is-browser';
 
-export default (environment, schemaName, queryOptions) =>
+export default (environment, schemaName, args = [], queryOptions) =>
   isBrowser(
     Observable.create(async observer => {
       const db = firebase.firestore();
-      const getCollection = withCollection({ db, environment, schemaName });
+      const getCollection = withCollection({ args, db, environment, schemaName });
       const loadCollection = withObserver(observer);
 
       getLoader(getCollection, loadCollection, queryOptions)();
@@ -17,7 +17,7 @@ export default (environment, schemaName, queryOptions) =>
 
           const snapshot = await loadCollection(collection);
 
-          if (snapshot.docs.length < queryOptions.limit) {
+          if (snapshot.docs.length < queryOptions.limit && !queryOptions.listenForNew) {
             observer.complete();
           } else {
             const cursor = getCursor(snapshot);
@@ -32,9 +32,9 @@ export default (environment, schemaName, queryOptions) =>
     })
   );
 
-function withCollection({ db, environment, schemaName }) {
+function withCollection({ args, db, environment, schemaName }) {
   return ({ orderBy = [], limit = 50, cursor }) => {
-    let collection = environment.schema[schemaName](db);
+    let collection = environment.schema[schemaName].apply(this, [db, ...args]);
 
     orderBy.forEach(({ name, sort = 'desc' }) => (collection = collection.orderBy(name, sort)));
 

@@ -12,6 +12,14 @@ export default {
       .collection('settings')
       .doc(uid);
   },
+  userMessages: (db, uid) => {
+    return db
+      .collection('permission-based')
+      .doc('user-owned')
+      .collection('messages')
+      .doc(uid)
+      .collection('messages');
+  },
   presence: (db, uid) => {
     return db.ref('presence').child(uid);
   },
@@ -20,5 +28,11 @@ export default {
       .ref('user-uploads')
       .child(uid)
       .child(hash);
+  },
+  messageLogs: db => {
+    return db
+      .collection('admin')
+      .doc('logs')
+      .collection('messages');
   },
 };

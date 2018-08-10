@@ -1,0 +1,28 @@
+.user-messages,
+.user-messages .paper {
+  height: 100%;
+}
+
+.user-messages .paper > div,
+.user-messages .paper .contents {
+  height: calc(100% - 1rem);
+}
+
+.user-messages hr {
+  width: 100%;
+}
+
+.user-messages .paper .contents {
+  display: flex;
+  flex-direction: column;
+}
+
+.user-messages .wrapper {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.user-messages .messages-table {
+  flex: 1;
+}

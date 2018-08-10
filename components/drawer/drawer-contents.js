@@ -50,6 +50,21 @@ export function DrawerContents({
         ) : null}
 
         {currentUser ? (
+          <Active pathname={pathname} href="/app/messages">
+            <ListItem>
+              <ListItemText>
+                <Link href="/app/messages" prefetch>
+                  <a>
+                    <Icon className="messages" use="messages" />
+                    <span>Messages</span>
+                  </a>
+                </Link>
+              </ListItemText>
+            </ListItem>
+          </Active>
+        ) : null}
+
+        {currentUser ? (
           <Active pathname={pathname} href="/app/settings">
             <ListItem>
               <ListItemText>

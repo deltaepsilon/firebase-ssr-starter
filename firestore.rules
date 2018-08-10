@@ -23,6 +23,10 @@ service cloud.firestore {
     match /permission-based/user-owned/{type}/{uid} { 
       allow read, write: if isUser(uid) || isAdmin()
     }
+
+    match /permission-based/user-owned/{type}/{uid}/messages/{messageId} { 
+      allow read, write: if isUser(uid) || isAdmin()
+    }
     
     match /permission-based/user-writeable/{type}/{uid} { 
       allow write: if isUser(uid) || isAdmin()

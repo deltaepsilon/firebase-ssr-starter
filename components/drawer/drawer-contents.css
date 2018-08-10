@@ -60,3 +60,7 @@
 .drawer-contents .full-width {
   width: 100%;
 }
+
+.drawer-contents .messages {
+  width: 24px;
+}
