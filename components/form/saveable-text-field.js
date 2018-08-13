@@ -8,7 +8,11 @@ export default class SaveableTextField extends React.Component {
   constructor() {
     super();
 
-    this.state = {
+    this.state = this.defaultState;
+  }
+
+  get defaultState() {
+    return {
       incomingValue: '',
       currentValue: '',
     };
@@ -45,6 +49,8 @@ export default class SaveableTextField extends React.Component {
     e.stopPropagation();
 
     this.props.onSave(this.state.currentValue);
+
+    this.props.clearOnSave && this.setState(this.defaultState);
   }
 
   render() {
@@ -52,6 +58,7 @@ export default class SaveableTextField extends React.Component {
 
     delete filteredProps.onSave;
     delete filteredProps.value;
+    delete filteredProps.clearOnSave;
 
     return (
       <form onSubmit={this.handleSubmit.bind(this)}>

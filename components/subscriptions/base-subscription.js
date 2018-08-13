@@ -51,7 +51,14 @@ export default class BaseSubscription extends React.Component {
   }
 
   addItem(item) {
-    this.setState({ items: this.state.items.concat(item) });
+    let items = [...this.state.items];
+    if (item.__isNewRecord) {
+      items.unshift(item);
+    } else {
+      items.push(item);
+    }
+
+    this.setState({ items });
   }
 
   render() {

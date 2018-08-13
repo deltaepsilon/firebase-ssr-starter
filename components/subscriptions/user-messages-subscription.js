@@ -28,12 +28,13 @@ export class UserMessagesSubscription extends BaseSubscription {
           setUserMessages(this.state.items);
         } else if (event.next) {
           this.props.onSubscribed(event);
+        } else if (event.finished) {
+          this.props.onFinished();
         }
       },
       error => {
         throw new HandledError(error);
-      },
-      () => this.props.onFinished()
+      }
     );
   }
 }

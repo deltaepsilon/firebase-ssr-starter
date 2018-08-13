@@ -23,6 +23,42 @@
   flex: 1;
 }
 
-.user-messages .messages-table {
+.user-messages .table > * {
+  flex: 1;
+
+  height: calc(100vh - 20rem);
+  overflow-y: scroll;
+}
+
+.user-messages .table .mdc-list-item__text {
+  display: flex;
+  flex: 1;
+}
+
+.user-messages .table .primary-text {
+  flex: 1;
+}
+
+.user-messages .table .secondary-text {
+  text-align: right;
+}
+
+.user-messages .table .mdc-list-item__secondary-text > *:not(:last-child) {
+  margin-right: 1rem;
+}
+
+.message-form {
+  display: flex;
+  align-items: center;
+
+  border: 1px solid var(--color-form-border);
+  border-radius: var(--border-radius-large);
+}
+
+.message-form > button {
+  margin-left: 1rem;
+}
+
+.message-form .form {
   flex: 1;
 }
