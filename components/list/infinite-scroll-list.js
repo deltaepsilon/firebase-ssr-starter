@@ -52,8 +52,25 @@ export default class InfiniteScrollList extends React.Component {
 
     if (this.props.autoScroll) {
       const el = this.wrapper.current;
+      const listNodes = [...el.querySelectorAll('.mdc-list > *')];
+      const scrollTargetIndex = this.props.scrollTargetIndex || 0;
+      const adjustedScrollTargetIndex = this.props.inverseScroll
+        ? listNodes.length - 1 - scrollTargetIndex
+        : scrollTargetIndex;
+      const scrollTargetNode = listNodes[adjustedScrollTargetIndex];
 
-      el.scrollTop = el.scrollHeight;
+      if (scrollTargetNode) {
+        const headroom = 111;
+        const offset =
+          el.scrollTop -
+          el.getBoundingClientRect().top +
+          scrollTargetNode.getBoundingClientRect().top -
+          headroom;
+
+        scrollTargetNode && scrollTargetNode.focus();
+
+        el.scrollTop = offset;
+      }
     }
   }
 
@@ -73,7 +90,7 @@ export default class InfiniteScrollList extends React.Component {
   }
 
   render() {
-    const { children, name, next, inverseScroll, isFinished } = this.props;
+    const { children, name, inverseScroll, isFinished } = this.props;
 
     const Loader = () =>
       !isFinished && (

@@ -6,7 +6,7 @@ export default class BaseSubscription extends React.Component {
     super();
 
     this.state = {
-      items: [],
+      items: []
     };
   }
 
@@ -51,7 +51,8 @@ export default class BaseSubscription extends React.Component {
   }
 
   addItem(item) {
-    let items = [...this.state.items];
+    const items = [...this.state.items];
+
     if (item.__isNewRecord) {
       items.unshift(item);
     } else {

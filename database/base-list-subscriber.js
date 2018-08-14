@@ -25,11 +25,11 @@ export default (environment, schemaName, args = [], queryOptions) =>
 
       getLoader(getCollection, loadCollection, queryOptions)();
 
-      function getLoader(getCollection, loadCollection, queryOptions) {
+      function getLoader(getCollection, loadCollection, queryOptions, page = 0) {
         return async () => {
           const collection = getCollection(queryOptions);
 
-          const snapshot = await loadCollection(collection);
+          const snapshot = await loadCollection(collection, page);
 
           if (snapshot.docs.length < queryOptions.limit) {
             observer.next({ finished: true });
@@ -40,7 +40,7 @@ export default (environment, schemaName, args = [], queryOptions) =>
             const nextQueryOptions = { ...queryOptions, cursor };
 
             observer.next({
-              next: getLoader(getCollection, loadCollection, nextQueryOptions),
+              next: getLoader(getCollection, loadCollection, nextQueryOptions, ++page),
             });
           }
         };
@@ -73,9 +73,9 @@ function withCollection({ args, db, environment, schemaName }) {
 }
 
 function withObserver(observer) {
-  return async collection => {
+  return async (collection, page) => {
     const snapshot = await collection.get();
-    const docProcessor = processDoc(observer);
+    const docProcessor = processDoc(observer, false, page);
 
     snapshot.forEach(docProcessor);
 
@@ -128,8 +128,8 @@ function withOrderBy({ collection, orderBy = [] }) {
   return collection;
 }
 
-function processDoc(observer, isNewRecord) {
-  return doc => observer.next({ __id: doc.id, __isNewRecord: isNewRecord, ...doc.data() });
+function processDoc(observer, __isNewRecord, __page) {
+  return doc => observer.next({ __id: doc.id, __isNewRecord, __page, ...doc.data() });
 }
 
 function getCursor(snapshot) {

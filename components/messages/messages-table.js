@@ -8,15 +8,16 @@ import FromNow from '../dates/from-now';
 
 import './messages.css';
 
-export default ({ autoScroll, finished, messages, next }) => {
+export default ({ finished, messages, next, scrollTargetIndex }) => {
   return (
     <div className="table">
       <InfiniteScrollList
-        autoScroll={autoScroll}
+        autoScroll
         inverseScroll
         isFinished={finished}
         name="messages-table"
         next={next}
+        scrollTargetIndex={scrollTargetIndex}
       >
         {messages.map(message => (
           <MessageListItem key={message.__id} message={message} />

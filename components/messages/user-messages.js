@@ -21,15 +21,15 @@ export class UserMessages extends React.Component {
     const noop = async args => console.info(args);
 
     this.state = {
-      autoScroll: false,
       finished: false,
       next: noop,
+      scrollTargetIndex: 0,
       userMessages: [],
     };
   }
 
   get debounceMillis() {
-    return 1000 * 0.2;
+    return 1000 * 0;
   }
 
   async sendMessage(text) {
@@ -50,12 +50,14 @@ export class UserMessages extends React.Component {
 
   handleUserMessages(userMessages) {
     this.debounce(() => {
-      this.setState({ autoScroll: true });
+      const first = userMessages[0];
+      const last = userMessages[userMessages.length - 1];
+      const isNewPage = !!last && first.__page < last.__page;
+      const scrollTargetIndex = isNewPage ? getLastIndexByPage(userMessages, last.__page - 1) : 0;
 
-      this.debounce(() => this.setState({ autoScroll: false }));
+      this.setState({ scrollTargetIndex });
+      this.setState({ userMessages });
     });
-
-    this.setState({ userMessages });
   }
 
   debounce(fn) {
@@ -86,16 +88,13 @@ export class UserMessages extends React.Component {
 
             <div className="wrapper">
               <MessagesTable
-                autoScroll={this.state.autoScroll}
                 finished={this.state.finished}
+                next={this.state.next}
                 messages={this.state.userMessages}
+                scrollTargetIndex={this.state.scrollTargetIndex}
               />
 
-              <MessageForm
-                user={user}
-                onMessage={this.sendMessage.bind(this)}
-                next={this.state.next}
-              />
+              <MessageForm user={user} onMessage={this.sendMessage.bind(this)} />
             </div>
           </Paper>
         </div>
@@ -108,3 +107,7 @@ export default connect(
   'environment,user',
   actions
 )(UserMessages);
+
+function getLastIndexByPage(items, page) {
+  return items.map(item => item.__page).lastIndexOf(page);
+}
