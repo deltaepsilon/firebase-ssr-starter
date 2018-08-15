@@ -34,102 +34,118 @@ export function DrawerContents({
       <hr />
 
       <DrawerContent>
-        {claims && claims.isAdmin ? (
-          <Active pathname={pathname} href="/admin">
-            <ListItem>
-              <ListItemText>
-                <Link href="/admin" prefetch>
-                  <a>
-                    <Icon use="supervisor_account" />
-                    <span>Admin</span>
-                  </a>
-                </Link>
-              </ListItemText>
-            </ListItem>
-          </Active>
-        ) : null}
-
-        {currentUser ? (
-          <Active pathname={pathname} href="/app/messages">
-            <ListItem>
-              <ListItemText>
-                <Link href="/app/messages" prefetch>
-                  <a>
-                    <Icon className="messages" use="messages" />
-                    <span>Messages</span>
-                  </a>
-                </Link>
-              </ListItemText>
-            </ListItem>
-          </Active>
-        ) : null}
-
-        {currentUser ? (
-          <Active pathname={pathname} href="/app/settings">
-            <ListItem>
-              <ListItemText>
-                <Link href="/app/settings" prefetch>
-                  <a>
-                    <Icon use="settings" />
-                    <span>Settings</span>
-                  </a>
-                </Link>
-              </ListItemText>
-            </ListItem>
-          </Active>
-        ) : null}
-
-        {!currentUser ? (
-          <ListItem>
-            <Active pathname={pathname} href="/login">
-              <ListItemText>
-                <Link href="/login" prefetch>
-                  <a>
-                    <Icon use="input" />
-                    <span>Sign in</span>
-                  </a>
-                </Link>
-              </ListItemText>
+        <div>
+          {claims && claims.isAdmin ? (
+            <Active pathname={pathname} href="/admin">
+              <ListItem>
+                <ListItemText>
+                  <Link href="/admin" prefetch>
+                    <a>
+                      <Icon use="supervisor_account" />
+                      <span>Admin</span>
+                    </a>
+                  </Link>
+                </ListItemText>
+              </ListItem>
             </Active>
-          </ListItem>
-        ) : null}
+          ) : null}
+        </div>
 
-        {currentUser && (
-          <ListItem onClick={signOut(handleSignOut)}>
-            <ListItemText>
-              <a>
-                <Icon use="power_settings_new" />
-                <span>Sign out</span>
-              </a>
-            </ListItemText>
-          </ListItem>
-        )}
+        <div>
+          {currentUser ? (
+            <Active pathname={pathname} href="/app/messages">
+              <ListItem>
+                <ListItemText>
+                  <Link href="/app/messages" prefetch>
+                    <a className="messages">
+                      <Icon use="messages" />
+                      <span>Messages</span>
+                    </a>
+                  </Link>
+                </ListItemText>
+              </ListItem>
+            </Active>
+          ) : null}
+        </div>
+
+        <div>
+          {currentUser ? (
+            <Active pathname={pathname} href="/app/settings">
+              <ListItem>
+                <ListItemText>
+                  <Link href="/app/settings" prefetch>
+                    <a>
+                      <Icon use="settings" />
+                      <span>Settings</span>
+                    </a>
+                  </Link>
+                </ListItemText>
+              </ListItem>
+            </Active>
+          ) : null}
+        </div>
+
+        <div>
+          {!currentUser ? (
+            <ListItem>
+              <Active pathname={pathname} href="/login">
+                <ListItemText>
+                  <Link href="/login" prefetch>
+                    <a>
+                      <Icon use="input" />
+                      <span>Sign in</span>
+                    </a>
+                  </Link>
+                </ListItemText>
+              </Active>
+            </ListItem>
+          ) : null}
+
+          {currentUser && (
+            <ListItem onClick={signOut(handleSignOut)}>
+              <ListItemText>
+                <a>
+                  <Icon use="power_settings_new" />
+                  <span>Sign out</span>
+                </a>
+              </ListItemText>
+            </ListItem>
+          )}
+        </div>
 
         <h4>Public</h4>
 
-        <Active pathname={pathname} href="/faq">
-          <ListItem>
-            <ListItemText>
-              <Link href="/faq" prefetch>
-                <a>
-                  <Icon use="info" />
-                  <span>FAQ</span>
-                </a>
-              </Link>
-            </ListItemText>
-          </ListItem>
-        </Active>
+        <div>
+          <Active pathname={pathname} href="/faq">
+            <ListItem>
+              <ListItemText>
+                <Link href="/faq" prefetch>
+                  <a>
+                    <Icon use="info" />
+                    <span>FAQ</span>
+                  </a>
+                </Link>
+              </ListItemText>
+            </ListItem>
+          </Active>
+        </div>
 
-        {beforeInstallEvent && (
-          <ListItem>
-            <ListItemText>
-              <Button className="full-width" raised onClick={installToDesktop(beforeInstallEvent)}>
-                <Icon use="get_app" />
-                <span>Install App</span>
-              </Button>
-            </ListItemText>
-          </ListItem>
-        )}
+        <div>
+          {beforeInstallEvent && (
+            <ListItem>
+              <ListItemText>
+                <Button
+                  className="full-width"
+                  raised
+                  onClick={installToDesktop(beforeInstallEvent)}
+                >
+                  <Icon use="get_app" />
+                  <span>Install App</span>
+                </Button>
+              </ListItemText>
+            </ListItem>
+          )}
+        </div>
       </DrawerContent>
     </div>
   );
