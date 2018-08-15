@@ -24,7 +24,7 @@ export default async function resizeImage(src, el, targetDimensions) {
   const blob = await pica.toBlob(result, stats.mimeType);
   const dataUrl = await blobToDataURL(blob);
 
-  return { blob, src: dataUrl };
+  return { blob, dimensions: newDimensions, src: dataUrl };
 }
 
 async function getImageStats(image) {
@@ -43,7 +43,9 @@ function getNewDimensions(dimensions, targetDimensions) {
   const ratio = dimensions.width / dimensions.height;
   let result = {};
 
-  if (ratio > 1) {
+  if (dimensions.width <= targetDimensions.width && dimensions.height <= targetDimensions.height) {
+    result = dimensions;
+  } else if (ratio > 1) {
     result.height = targetDimensions.width / ratio;
     result.width = targetDimensions.width;
   } else if (ratio < 1) {
@@ -55,7 +57,10 @@ function getNewDimensions(dimensions, targetDimensions) {
     result.width = minDimension;
   }
 
-  return result;
+  return {
+    height: Math.floor(result.height),
+    width: Math.floor(result.width),
+  };
 }
 
 async function blobToDataURL(blob) {

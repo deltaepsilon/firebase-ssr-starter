@@ -2,8 +2,7 @@ import React from 'react';
 import { connect } from 'unistore/react';
 import { actions } from '../../datastore';
 
-import Backdrop from '../loaders/backdrop';
-import CubeGridLoader from '../loaders/cube-grid-loader';
+import ImageDetail from '../images/image-detail';
 
 export class Content extends React.Component {
   constructor() {
@@ -26,18 +25,16 @@ export class Content extends React.Component {
   }
 
   render() {
-    const { children, loaded } = this.props;
-    const { transitioning } = this.state;
-
     return (
       <div className="content">
-        {children}
+        {this.props.children}
+        <ImageDetail src={this.props.imageDetailSrc} />
       </div>
     );
   }
 }
 
 export default connect(
-  'loaded',
+  'imageDetailSrc',
   actions
 )(Content);

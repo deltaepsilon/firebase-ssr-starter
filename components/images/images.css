@@ -1,0 +1,43 @@
+.thumbnail {
+  display: inline-block;
+  position: relative;
+}
+
+.thumbnail .material-icons {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.8);
+  border-radius: 0 0 3px 0;
+  color: white;
+  font-size: 14px;
+  padding: 2px;
+}
+
+.image-detail {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 4;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background: var(--color-overlay-background);
+}
+
+.image-detail img {
+  max-height: calc(100vh - 2rem);
+  max-width: calc(100vw - 2rem);
+}
+
+.image-detail .mdc-menu-anchor {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+
+  z-index: 1;
+}

@@ -32,7 +32,7 @@ export class ImageUpload extends React.Component {
     const promises = [...target.files].map(async file => {
       const originalSrc = await getFileSrc(file);
 
-      const { blob, src } = await resizeImage(
+      const { blob, dimensions, src } = await resizeImage(
         originalSrc,
         this.resizeContainer.current,
         this.props.options
@@ -40,6 +40,7 @@ export class ImageUpload extends React.Component {
 
       return {
         blob,
+        dimensions,
         file,
         src,
         progress: 0,
@@ -103,6 +104,7 @@ export class ImageUpload extends React.Component {
               key={i}
               src={upload.src}
               progress={upload.progress}
+              dimensions={upload.dimensions}
               height={height}
               width={width}
             />
@@ -152,11 +154,16 @@ export default connect(
   actions
 )(ImageUpload);
 
-function Image({ height, width, progress, src }) {
+function Image({ dimensions, height, width, progress, src }) {
   return (
     <div className="image-wrapper">
-      <img src={src} />
+      <img src={src} style={{ maxHeight: height, maxWidth: width }} />
       <div className="progress-bar" style={{ width: `${progress}%` }} />
+      {dimensions && (
+        <span className="dimensions">
+          {dimensions.width}x{dimensions.height}
+        </span>
+      )}
     </div>
   );
 }

@@ -1,6 +1,8 @@
 import React from 'react';
 import Form from '../form/form';
 import SaveableTextField from '../form/saveable-text-field';
+import ImageUpload from '../form/image-upload';
+
 import { IconButton } from 'rmwc/IconButton';
 
 import '@material/icon-button/dist/mdc.icon-button.min.css';
@@ -21,6 +23,11 @@ export default class MessageForm extends React.Component {
     this.setState({ mode });
   }
 
+  handleComplete(upload) {
+    this.props.onUpload(upload);
+    this.setState({ mode: 'text' });
+  }
+
   render() {
     const { onMessage } = this.props;
     const { mode } = this.state;
@@ -34,9 +41,19 @@ export default class MessageForm extends React.Component {
         />
 
         <Form>
-          <SaveableTextField clearOnSave="true" onSave={onMessage}>
-            Send
-          </SaveableTextField>
+          {isText ? (
+            <SaveableTextField clearOnSave="true" onSave={onMessage}>
+              Send
+            </SaveableTextField>
+          ) : (
+            <ImageUpload
+              multiple
+              height="150px"
+              width="150px"
+              options={{ height: 720, width: 720 }}
+              onComplete={this.handleComplete.bind(this)}
+            />
+          )}
         </Form>
       </div>
     );

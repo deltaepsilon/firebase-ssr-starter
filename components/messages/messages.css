@@ -1,6 +1,6 @@
 .user-messages,
 .user-messages .paper {
-  height: 100%;
+  height: calc(100vh - 5rem);
 }
 
 .user-messages .paper > div,
@@ -23,10 +23,34 @@
   flex: 1;
 }
 
-.user-messages .table > * {
+.user-messages .table {
   flex: 1;
 
-  height: calc(100vh - 20rem);
+  position: relative;
+}
+
+.user-messages .table .mdc-list-item {
+  margin-bottom: 0.5rem;
+  min-height: 48px;
+  height: inherit;
+}
+
+.user-messages .image-message {
+  height: 100px !important;
+}
+
+.user-messages .image-message .primary-text {
+  display: flex;
+  align-content: center;
+}
+
+.user-messages .table > * {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+
   overflow-y: scroll;
 }
 
@@ -36,6 +60,11 @@
 }
 
 .user-messages .table .primary-text {
+  flex: 1;
+  white-space: normal;
+}
+
+.user-messages .table .image {
   flex: 1;
 }
 
@@ -61,4 +90,9 @@
 
 .message-form .form {
   flex: 1;
+}
+
+.message-form .image-upload {
+  border: none;
+  margin: 18px 0;
 }

@@ -5,6 +5,7 @@ export setBeforeInstallEvent from './set-before-install-event';
 export setCurrentUser from './set-current-user';
 export setDetailUserId from './set-detail-user-id';
 export setEnvironment from './set-environment';
+export setImageDetailSrc from './set-image-detail-src';
 export setIsDrawerOpen from './set-is-drawer-open';
 export setLoaded from './set-loaded';
 export setMessagingToken from './set-messaging-token';

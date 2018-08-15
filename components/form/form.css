@@ -41,7 +41,7 @@
 
 .text-field .mdc-text-field {
   margin-right: 1rem;
-  min-width: 200px;
+  min-width: 130px;
   flex: 1;
 }
 
@@ -99,4 +99,15 @@
 
   height: 2px;
   background: green;
+}
+
+.image-upload .dimensions {
+  position: absolute;
+  left: 0;
+  z-index: 1;
+
+  background: rgba(0, 0, 0, 0.9);
+  color: var(--color-text-light);
+  font-size: 0.75rem;
+  padding: 4px;
 }

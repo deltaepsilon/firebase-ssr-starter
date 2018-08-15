@@ -32,20 +32,35 @@ export class UserMessages extends React.Component {
     return 1000 * 0;
   }
 
-  async sendMessage(text) {
+  get addUserMessage() {
     const { environment, user } = this.props;
     const uid = user.__id;
-    const addUserMessage = AddUserMessage({ environment, uid });
-    const message = {
+    return AddUserMessage({ environment, uid });
+  }
+
+  async sendMessage(text) {
+    const userMessage = this.getUserMessage();
+    const message = { ...userMessage, text };
+
+    return this.addUserMessage(message);
+  }
+
+  async sendUpload({ path, url }) {
+    const userMessage = this.getUserMessage();
+    const message = { ...userMessage, path, url };
+
+    return this.addUserMessage(message);
+  }
+
+  getUserMessage() {
+    const { user } = this.props;
+    return {
       created: Date.now(),
       displayName: extractUserDisplayName(user),
       email: extractUserEmail(user),
       photoUrl: extractUserPhotoUrl(user),
-      text,
-      uid,
+      uid: user.__id,
     };
-
-    return addUserMessage(message);
   }
 
   handleUserMessages(userMessages) {
@@ -82,10 +97,6 @@ export class UserMessages extends React.Component {
         />
         <div className="user-messages">
           <Paper>
-            <h1>Messages</h1>
-
-            <hr />
-
             <div className="wrapper">
               <MessagesTable
                 finished={this.state.finished}
@@ -94,7 +105,11 @@ export class UserMessages extends React.Component {
                 scrollTargetIndex={this.state.scrollTargetIndex}
               />
 
-              <MessageForm user={user} onMessage={this.sendMessage.bind(this)} />
+              <MessageForm
+                user={user}
+                onMessage={this.sendMessage.bind(this)}
+                onUpload={this.sendUpload.bind(this)}
+              />
             </div>
           </Paper>
         </div>
