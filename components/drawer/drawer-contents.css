@@ -1,5 +1,6 @@
 .drawer-contents {
   height: 100vh;
+  margin-bottom: -4rem;
   overflow-y: auto;
 }
 
