@@ -21,6 +21,7 @@ export class AdminUsers extends React.Component {
             adminTabIndex={adminTabIndex}
             detailUserId={detailUserId}
             environment={environment}
+            setDetailUserId={setDetailUserId}
           />
         ) : (
           <UsersView
@@ -49,7 +50,7 @@ class UserView extends React.Component {
   }
 
   render() {
-    const { adminTabIndex, detailUserId, environment } = this.props;
+    const { adminTabIndex, detailUserId, environment, setDetailUserId } = this.props;
 
     return (
       <>
@@ -63,7 +64,7 @@ class UserView extends React.Component {
           <UserDetail
             environment={environment}
             user={this.state.user}
-            onBack={() => this.handleUserSelection()}
+            onBack={() => setDetailUserId()}
           />
         </Paper>
       </>

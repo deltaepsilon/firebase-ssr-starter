@@ -79,20 +79,28 @@
 .message-form {
   display: flex;
   align-items: center;
+  position: relative;
 
   border: 1px solid var(--color-form-border);
   border-radius: var(--border-radius-large);
 }
 
 .message-form > button {
-  margin-left: 1rem;
+  margin: 0 0 0 6px !important;
 }
 
 .message-form .form {
   flex: 1;
+  max-width: calc(100% - 3rem);
+}
+
+.message-form .text-field {
+  position: relative;
+  top: -6px;
 }
 
 .message-form .image-upload {
   border: none;
-  margin: 18px 0;
+  max-width: calc(100% - 2rem);
+  padding: 4.5px;
 }

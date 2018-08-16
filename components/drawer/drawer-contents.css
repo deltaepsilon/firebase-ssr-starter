@@ -1,3 +1,8 @@
+.drawer-contents {
+  height: 100vh;
+  overflow-y: auto;
+}
+
 .drawer-contents .mdc-drawer__header {
   /* background: var(--mdc-theme-primary);
   color: var(--mdc-theme-secondary-text); */

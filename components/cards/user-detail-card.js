@@ -27,7 +27,7 @@ export default ({ adminTabIndex, environment, user }) => {
   const userLink = createLink(location.href, { adminTabIndex, detailUserId: user.__id });
 
   return (
-    <Card style={{ width: '21rem' }}>
+    <Card style={{ width: '21rem', maxWidth: 'calc(100vw - 4rem)' }}>
       <CardPrimaryAction>
         <CardMedia
           sixteenByNine

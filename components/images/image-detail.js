@@ -53,7 +53,7 @@ function handleSelected({ src, setImageDetailSrc }) {
         copyToClipboard(src);
         break;
       default:
-        setTimeout(() => setImageDetailSrc(), 100);
+        setTimeout(() => setImageDetailSrc(), 300);
     }
   };
 }

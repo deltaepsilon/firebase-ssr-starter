@@ -42,14 +42,12 @@ export default class MessageForm extends React.Component {
 
         <Form>
           {isText ? (
-            <SaveableTextField clearOnSave="true" onSave={onMessage}>
-              Send
-            </SaveableTextField>
+            <SaveableTextField clearOnSave="true" onSave={onMessage} icon="send" />
           ) : (
             <ImageUpload
-              multiple
-              height="150px"
-              width="150px"
+              useIconButton
+              height="75px"
+              width="75px"
               options={{ height: 720, width: 720 }}
               onComplete={this.handleComplete.bind(this)}
             />

@@ -7,6 +7,7 @@ import getUploadObservable from '../../utilities/storage/get-upload-observable';
 import resizeImage from '../../utilities/storage/resize-image';
 
 import { Button } from 'rmwc/Button';
+import { IconButton } from 'rmwc/IconButton';
 
 import '@material/button/dist/mdc.button.min.css';
 import './form.css';
@@ -91,27 +92,29 @@ export class ImageUpload extends React.Component {
   }
 
   render() {
-    const { height, width, disabled, url, multiple } = this.props;
+    const { height, width, disabled, multiple, url, useIconButton } = this.props;
     const { uploads, uploading } = this.state;
 
     const id = `image-upload`;
 
     return (
       <div className="image-upload">
-        {uploads.length ? (
-          uploads.map((upload, i) => (
-            <Image
-              key={i}
-              src={upload.src}
-              progress={upload.progress}
-              dimensions={upload.dimensions}
-              height={height}
-              width={width}
-            />
-          ))
-        ) : (
-          <Image src={url} height={height} width={width} />
-        )}
+        <div className="images">
+          {uploads.length ? (
+            uploads.map((upload, i) => (
+              <Image
+                key={i}
+                src={upload.src}
+                progress={upload.progress}
+                dimensions={upload.dimensions}
+                height={height}
+                width={width}
+              />
+            ))
+          ) : (
+            <Image src={url} height={height} width={width} />
+          )}
+        </div>
         <div ref={this.resizeContainer} />
 
         <div className="buttons">
@@ -123,26 +126,42 @@ export class ImageUpload extends React.Component {
             onChange={this.handleInputChange.bind(this)}
           />
           <label htmlFor={id}>
-            <Button
-              raised
-              disabled={disabled || uploading}
-              onClick={() => this.input.current.click()}
-            >
-              {this.props.buttonText ? (
-                <span>{this.props.buttonText}</span>
-              ) : multiple ? (
-                <span>Select file(s)</span>
-              ) : (
-                <span>Select file</span>
-              )}
-              {}
-            </Button>
+            {useIconButton ? (
+              <IconButton
+                use="attachment"
+                disabled={disabled || uploading}
+                onClick={() => this.input.current.click()}
+              />
+            ) : (
+              <Button
+                raised
+                disabled={disabled || uploading}
+                onClick={() => this.input.current.click()}
+              >
+                {this.props.buttonContents ? (
+                  <span>{this.props.buttonContents}</span>
+                ) : multiple ? (
+                  <span>Select file(s)</span>
+                ) : (
+                  <span>Select file</span>
+                )}
+              </Button>
+            )}
           </label>
-          {!!uploads.length && (
-            <Button raised disabled={uploading} onClick={this.handleUploadClick.bind(this)}>
-              Upload
-            </Button>
-          )}
+          {!!uploads.length &&
+            !useIconButton && (
+              <Button raised disabled={uploading} onClick={this.handleUploadClick.bind(this)}>
+                Upload
+              </Button>
+            )}
+          {!!uploads.length &&
+            useIconButton && (
+              <IconButton
+                use="send"
+                disabled={uploading}
+                onClick={this.handleUploadClick.bind(this)}
+              />
+            )}
         </div>
       </div>
     );
@@ -157,7 +176,7 @@ export default connect(
 function Image({ dimensions, height, width, progress, src }) {
   return (
     <div className="image-wrapper">
-      <img src={src} style={{ maxHeight: height, maxWidth: width }} />
+      <img src={src} style={{ height: height, maxWidth: width }} />
       <div className="progress-bar" style={{ width: `${progress}%` }} />
       {dimensions && (
         <span className="dimensions">
