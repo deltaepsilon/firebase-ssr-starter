@@ -12,6 +12,11 @@ const context = { admin, environment };
 // authorization-on-create
 exports.authorizationOnCreate = functions.auth.user().onCreate(AuthorizationOnCreate(context));
 
+// messages-on-write
+exports.messagesOnWrite = functions.firestore
+  .document(`${environment.schema.mesages}/{uid}/messages/{messageId}`)
+  .onWrite(MessagesOnWrite(context));
+
 // settings-on-write
 exports.settingsOnWrite = functions.firestore
   .document(`${environment.schema.settings}/{uid}`)
