@@ -56,7 +56,7 @@ export default class SearchBar extends React.Component {
         const hits = this.mapHits(results.hits);
 
         this.setState({ results });
-        this.props.onSearchResults(hits);
+        this.props.onSearchResults(hits || []);
       }
     });
   }

@@ -22,6 +22,8 @@ export function DrawerContents({
   pathname,
   handleSignOut,
 }) {
+  const showModeratorMessages = claims.isAdmin || claims.isModerator;
+
   return (
     <div className="drawer-contents">
       <DrawerHeader>
@@ -52,14 +54,31 @@ export function DrawerContents({
         </div>
 
         <div>
-          {currentUser ? (
+          {currentUser && !showModeratorMessages ? (
             <Active pathname={pathname} href="/app/messages">
               <ListItem>
                 <ListItemText>
                   <Link href="/app/messages" prefetch>
                     <a className="messages">
-                      <Icon use="messages" />
+                      <Icon use="chat" />
                       <span>Messages</span>
+                    </a>
+                  </Link>
+                </ListItemText>
+              </ListItem>
+            </Active>
+          ) : null}
+        </div>
+
+        <div>
+          {showModeratorMessages ? (
+            <Active pathname={pathname} href="/admin/messages">
+              <ListItem>
+                <ListItemText>
+                  <Link href="/admin/messages" prefetch>
+                    <a className="messages">
+                      <Icon use="messages" />
+                      <span>Moderation</span>
                     </a>
                   </Link>
                 </ListItemText>

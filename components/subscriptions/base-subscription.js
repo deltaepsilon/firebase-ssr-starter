@@ -6,7 +6,7 @@ export default class BaseSubscription extends React.Component {
     super();
 
     this.state = {
-      items: []
+      items: [],
     };
   }
 
@@ -14,11 +14,15 @@ export default class BaseSubscription extends React.Component {
     return true;
   }
 
+  shouldUpdate() {
+    return !this.subscription;
+  }
+
   componentDidMount() {
     this.attemptSubscription();
   }
 
-  componentDidUpdate() {
+  componentDidUpdate(prevState) {
     this.attemptSubscription();
   }
 
@@ -27,7 +31,8 @@ export default class BaseSubscription extends React.Component {
   }
 
   attemptSubscription() {
-    if (!this.subscription && this.canSubscribe) {
+    if (this.canSubscribe && this.shouldUpdate()) {
+      this.unsubscribe();
       this.subscription = this.subscribe();
 
       if (!this.subscription) {
@@ -44,6 +49,8 @@ export default class BaseSubscription extends React.Component {
   subscribe() {}
 
   unsubscribe() {
+    this.setState({ items: [] });
+
     if (this.subscription && typeof this.subscription === 'function') {
       this.subscription && this.subscription.unsubscribe();
       this.subscription = null;

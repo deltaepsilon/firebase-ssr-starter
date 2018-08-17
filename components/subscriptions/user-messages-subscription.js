@@ -12,15 +12,34 @@ export class UserMessagesSubscription extends BaseSubscription {
   }
 
   get canSubscribe() {
-    const { user } = this.props;
+    const { userId } = this.props;
 
-    return user && user.__id;
+    return !!userId;
+  }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.userId != this.state.prevUserId) {
+      this.setState({ prevUserId: prevProps.userId });
+    }
+
+    this.attemptSubscription();
+  }
+
+  shouldUpdate() {
+    const { userId } = this.props;
+    const { prevUserId } = this.state;
+
+    return !this.subscription || (prevUserId && prevUserId != userId);
   }
 
   subscribe() {
-    const { environment, user, setUserMessages } = this.props;
+    const { environment, userId, setUserMessages } = this.props;
 
-    return subscribeUserMessages({ environment, uid: user.__id }).subscribe(
+    this.setState({ items: [] });
+
+    console.log('subscribing', this.state.items.length);
+
+    return subscribeUserMessages({ environment, uid: userId }).subscribe(
       event => {
         if (event.__id) {
           const message = event;
@@ -40,6 +59,6 @@ export class UserMessagesSubscription extends BaseSubscription {
 }
 
 export default connect(
-  'user,environment',
+  'environment',
   actions
 )(UserMessagesSubscription);

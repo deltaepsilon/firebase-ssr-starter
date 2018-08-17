@@ -1,6 +1,6 @@
 .user-messages,
 .user-messages .paper {
-  height: calc(100vh - 5rem);
+  height: calc(100vh - 4rem);
 }
 
 .user-messages .paper > div,
@@ -23,13 +23,13 @@
   flex: 1;
 }
 
-.user-messages .table {
+.user-messages .wrapper .table {
   flex: 1;
 
   position: relative;
 }
 
-.user-messages .table .mdc-list-item {
+.user-messages .wrapper .table .mdc-list-item {
   margin-bottom: 0.5rem;
   min-height: 48px;
   height: inherit;
@@ -44,7 +44,7 @@
   align-content: center;
 }
 
-.user-messages .table > * {
+.user-messages .wrapper .table > * {
   position: absolute;
   top: 0;
   right: 0;
@@ -54,25 +54,25 @@
   overflow-y: scroll;
 }
 
-.user-messages .table .mdc-list-item__text {
+.user-messages .wrapper .table .mdc-list-item__text {
   display: flex;
   flex: 1;
 }
 
-.user-messages .table .primary-text {
+.user-messages .wrapper .table .primary-text {
   flex: 1;
   white-space: normal;
 }
 
-.user-messages .table .image {
+.user-messages .wrapper .table .image {
   flex: 1;
 }
 
-.user-messages .table .secondary-text {
+.user-messages .wrapper .table .secondary-text {
   text-align: right;
 }
 
-.user-messages .table .mdc-list-item__secondary-text > *:not(:last-child) {
+.user-messages .wrapper .table .mdc-list-item__secondary-text > *:not(:last-child) {
   margin-right: 1rem;
 }
 
@@ -103,4 +103,62 @@
   border: none;
   max-width: calc(100% - 2rem);
   padding: 4.5px;
+}
+
+.moderator-messages {
+  display: flex;
+}
+
+.moderator-messages .user-selection {
+  border-right: 1px solid var(--color-form-border);
+  height: 100%;
+  width: 300px;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.moderator-messages .paper {
+  flex: 1;
+}
+
+.moderator-messages .user-selection .form {
+  background: rgba(255, 255, 255, 0.9);
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+.moderator-messages .user-selection .form .mdc-icon-button {
+  position: absolute;
+  top: 12px;
+  right: 0;
+}
+
+.moderator-messages .user-selection .mdc-list-item__text {
+  display: flex;
+  justify-content: space-between;
+}
+
+.moderator-messages .user-selection .primary-text {
+  line-height: 30px;
+}
+
+.moderator-messages .user-selection .icon {
+  position: relative;
+  color: var(--mdc-theme-secondary);
+}
+
+.moderator-messages .user-selection .icon .material-icons {
+  position: relative;
+  top: 2px;
+}
+
+.moderator-messages .user-selection .icon aside {
+  position: absolute;
+  top: 3px;
+  right: 7px;
+  z-index: 1;
+
+  color: var(--mdc-theme-secondary-text);
+  font-size: 8px;
 }

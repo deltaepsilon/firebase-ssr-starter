@@ -22,8 +22,8 @@ export default ({ finished, messages, next, scrollTargetIndex }) => {
         next={next}
         scrollTargetIndex={scrollTargetIndex}
       >
-        {messages.map(message => (
-          <MessageListItem key={message.__id} message={message} />
+        {messages.map((message, i) => (
+          <MessageListItem key={i} message={message} />
         ))}
       </InfiniteScrollList>
     </div>

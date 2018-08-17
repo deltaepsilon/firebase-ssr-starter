@@ -1,9 +1,10 @@
-import md5 from 'md5';
-
 export default function extractUserEmail(user) {
+  const isSearch = user && !!user._highlightResult;
   let email = '';
 
-  if (user) {
+  if (isSearch) {
+    email = user._highlightResult.email.value;
+  } else if (user) {
     if (user.email) {
       email = user.email;
     } else if (user.providerData) {

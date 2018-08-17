@@ -11,6 +11,8 @@ import {
 import InfiniteScrollList from '../../list/infinite-scroll-list';
 import AccountIcon from '../../user/account-icon';
 import FromNow from '../../dates/from-now';
+import extractUserDisplayName from "../../../utilities/user/extract-user-display-name";
+import extractUserEmail from "../../../utilities/user/extract-user-email";
 
 import '../../tables/tables.css';
 import '@material/list/dist/mdc.list.min.css';
@@ -31,14 +33,9 @@ export default function UsersTable({ finished, searchResults, users, next, onUse
 }
 
 function UserListItem({ user, onUserSelection }) {
-  const isSearch = !!user._highlightResult;
-  let email = isSearch ? user._highlightResult.email.value : user.email;
-  let displayName =
-    isSearch &&
-    user._highlightResult.firstProvider &&
-    user._highlightResult.firstProvider.displayName
-      ? user._highlightResult.firstProvider.displayName.value
-      : user.providerData && user.providerData[0] && user.providerData[0].displayName;
+  let email = extractUserEmail(user);
+  let displayName = extractUserDisplayName(user)
+  
 
   return (
     <ListItem onClick={() => onUserSelection(user.__id)}>
@@ -46,15 +43,11 @@ function UserListItem({ user, onUserSelection }) {
         <AccountIcon currentUser={user} />
       </ListItemGraphic>
       <ListItemText>
-        {isSearch ? <span dangerouslySetInnerHTML={{ __html: email }} /> : <span>{email}</span>}
+        <span dangerouslySetInnerHTML={{ __html: email }} />
 
         <span>
           <ListItemSecondaryText>
-            {isSearch ? (
-              <span dangerouslySetInnerHTML={{ __html: displayName }} />
-            ) : (
-              <span>{displayName}</span>
-            )}
+            <span dangerouslySetInnerHTML={{ __html: displayName }} />
             <span className="flex" />
             {user.lastSignInTime && <FromNow datetime={user.lastSignInTime} />}
           </ListItemSecondaryText>

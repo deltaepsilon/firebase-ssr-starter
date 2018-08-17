@@ -35,4 +35,10 @@ export default {
       .doc('logs')
       .collection('messages');
   },
+  messageStats: db => {
+    return db
+      .collection('admin')
+      .doc('stats')
+      .collection('messages');
+  },
 };
