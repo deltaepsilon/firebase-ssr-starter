@@ -29,6 +29,12 @@ export class ImageUpload extends React.Component {
     return firebase.storage();
   }
 
+  componentDidMount() {
+    if (this.props.autoOpen) {
+      this.input.current.click();
+    }
+  }
+
   async handleInputChange({ target }) {
     const promises = [...target.files].map(async file => {
       const originalSrc = await getFileSrc(file);
@@ -176,7 +182,7 @@ export default connect(
 function Image({ dimensions, height, width, progress, src }) {
   return (
     <div className="image-wrapper">
-      <img src={src} style={{ height: height, maxWidth: width }} />
+      <img src={src} style={{ height: height }} />
       <div className="progress-bar" style={{ width: `${progress}%` }} />
       {dimensions && (
         <span className="dimensions">

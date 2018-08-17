@@ -23,8 +23,8 @@ export default class MessageForm extends React.Component {
     this.setState({ mode });
   }
 
-  handleComplete(upload) {
-    this.props.onUpload(upload);
+  async handleComplete(upload) {
+    await this.props.onUpload(upload);
     this.setState({ mode: 'text' });
   }
 
@@ -45,6 +45,7 @@ export default class MessageForm extends React.Component {
             <SaveableTextField clearOnSave="true" onSave={onMessage} icon="send" />
           ) : (
             <ImageUpload
+              autoOpen
               useIconButton
               height="75px"
               width="75px"

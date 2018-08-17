@@ -15,8 +15,6 @@ export default isBrowser(function uploadRef(ref, fileOrBlob) {
       async () => {
         const url = await uploadTask.snapshot.ref.getDownloadURL();
 
-        console.log('uploadTask.snapshot.ref', uploadTask.snapshot.ref);
-
         observer.next({ progress: 100 });
         observer.next({ url, path: uploadTask.snapshot.ref.toString() });
         observer.complete();

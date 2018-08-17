@@ -11,7 +11,7 @@ import setSettings from '../../database/settings/set-settings';
 import SaveableTextField from '../form/saveable-text-field';
 import ProfileImage from './profile-image';
 
-export function SettingsForm({ currentUser, environment, settings, setMessagingToken }) {
+export function SettingsForm({ currentUser, environment, settings, user, setMessagingToken }) {
   const uid = currentUser && currentUser.uid;
   const settingsSetter = setSettings(environment, uid);
 
@@ -28,6 +28,14 @@ export function SettingsForm({ currentUser, environment, settings, setMessagingT
           label="Full Name"
           onSave={async displayName => settingsSetter({ displayName })}
         />
+
+        <br />
+
+        <h4>Email</h4>
+
+        <p>{user.email}</p>
+
+        <br />
 
         <h4>Profile Image</h4>
 
@@ -86,6 +94,6 @@ export function SettingsForm({ currentUser, environment, settings, setMessagingT
 }
 
 export default connect(
-  'currentUser,environment,settings',
+  'currentUser,environment,settings,user',
   actions
 )(SettingsForm);

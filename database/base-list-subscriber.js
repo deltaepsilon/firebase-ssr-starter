@@ -7,7 +7,6 @@ export default (environment, schemaName, args = [], queryOptions) =>
   isBrowser(
     Observable.create(async observer => {
       const db = firebase.firestore();
-      console.log('args', args);
       const getCollection = withCollection({ args, db, environment, schemaName });
       const loadCollection = withObserver(observer);
 
