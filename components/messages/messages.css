@@ -29,6 +29,8 @@
   position: relative;
 }
 
+/* List */
+
 .user-messages .wrapper .table .mdc-list-item {
   margin-bottom: 0.5rem;
   min-height: 48px;
@@ -54,8 +56,20 @@
   overflow-y: scroll;
 }
 
+.user-messages .datetime {
+  color: var(--mdc-theme-secondary);
+  font-size: 13px;
+  font-weight: 500;
+  text-align: center;
+}
+
+.user-messages .is-me .primary-text {
+  flex-direction: row-reverse;
+  text-align: right;
+}
+
 .user-messages .wrapper .table .mdc-list-item__text {
-  display: flex;
+  /* display: flex; */
   flex: 1;
 }
 
@@ -72,9 +86,15 @@
   text-align: right;
 }
 
+.user-messages .is-me .mdc-list-item__secondary-text {
+  flex-direction: row-reverse;
+}
+
 .user-messages .wrapper .table .mdc-list-item__secondary-text > *:not(:last-child) {
   margin-right: 1rem;
 }
+
+/* Form */
 
 .message-form {
   display: flex;
@@ -108,6 +128,8 @@
 .moderator-messages {
   display: flex;
 }
+
+/* Moderator Messages */
 
 .moderator-messages .user-selection {
   border-right: 1px solid var(--color-form-border);

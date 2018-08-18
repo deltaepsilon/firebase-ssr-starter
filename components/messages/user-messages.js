@@ -103,6 +103,7 @@ export class UserMessages extends React.Component {
                 next={this.state.next}
                 messages={this.state.userMessages}
                 scrollTargetIndex={this.state.scrollTargetIndex}
+                userId={user.__id}
               />
 
               <MessageForm

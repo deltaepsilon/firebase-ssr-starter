@@ -34,9 +34,9 @@ export class ModeratorMessages extends React.Component {
   }
 
   get addUserMessage() {
-    const { environment, user } = this.props;
-    const uid = user.__id;
-    return AddUserMessage({ environment, uid });
+    const { environment, detailUserId } = this.props;
+
+    return AddUserMessage({ environment, uid: detailUserId });
   }
 
   async sendMessage(text) {
@@ -106,6 +106,7 @@ export class ModeratorMessages extends React.Component {
                 next={this.state.next}
                 messages={this.state.userMessages}
                 scrollTargetIndex={this.state.scrollTargetIndex}
+                userId={user.__id}
               />
 
               <MessageForm

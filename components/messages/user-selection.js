@@ -43,7 +43,7 @@ export class UserSelection extends React.Component {
   }
 
   render() {
-    const { detailUserId, environment, setDetailUserId } = this.props;
+    const { detailUserId, environment, user, setDetailUserId } = this.props;
     const { finished, next, searchResults } = this.state;
     const hasSearchResults = !!searchResults.length;
 
@@ -68,8 +68,9 @@ export class UserSelection extends React.Component {
             name="user-selection-table"
             next={next}
           >
-            {this.items.map((userStats, i) => (
+            {this.items.map(userStats => (
               <MessageStatsListItem
+                isMe={userStats.__id == user.__id}
                 selected={userStats.__id == detailUserId}
                 key={userStats.__id}
                 userStats={userStats}
@@ -84,15 +85,19 @@ export class UserSelection extends React.Component {
 }
 
 export default connect(
-  'detailUserId,environment',
+  'detailUserId,environment,user',
   actions
 )(UserSelection);
 
-function MessageStatsListItem({ selected, userStats, setDetailUserId }) {
-  const displayNameHTML = extractUserDisplayName(userStats);
+function MessageStatsListItem({ isMe, selected, userStats, setDetailUserId }) {
+  let displayNameHTML = extractUserDisplayName(userStats);
   const totalMessages = userStats.count || 0;
   const readMessages = userStats.read || 0;
   const unread = totalMessages - readMessages;
+
+  if (isMe) {
+    displayNameHTML += ' (me)';
+  }
 
   return (
     <ListItem onClick={() => setDetailUserId(userStats.__id)} selected={selected}>
