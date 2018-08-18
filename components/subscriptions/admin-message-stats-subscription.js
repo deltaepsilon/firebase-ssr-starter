@@ -1,4 +1,5 @@
 /* globals firebase */
+import React from 'react';
 import { connect } from 'unistore/react';
 import { actions } from '../../datastore';
 
@@ -6,35 +7,50 @@ import BaseSubscription from './base-subscription';
 
 import subscribeAdminMessageStats from '../../database/messages/subscribe-admin-message-stats';
 
-export class AdminMessageStatsSubscription extends BaseSubscription {
+export class AdminMessageStatsSubscription extends React.Component {
   get auth() {
     return firebase.auth();
   }
 
-  get canSubscribe() {
+  get observable() {
+    const { environment, setMessageStats } = this.props;
+
+    return subscribeAdminMessageStats({ environment });
+  }
+
+  get shouldSubscribe() {
     const { claims } = this.props;
 
     return (claims && claims.isAdmin) || claims.isModerator;
   }
 
-  subscribe() {
-    const { environment, setMessageStats } = this.props;
+  getNext({ addItem }) {
+    const { onSubscribed, setMessageStats } = this.props;
 
-    return subscribeAdminMessageStats({ environment }).subscribe(
-      event => {
-        if (event.__id) {
-          const user = event;
-          this.addItem(user);
-          setMessageStats(this.state.items);
-        } else if (event.next) {
-          this.props.onSubscribed(event);
-        }
-      },
-      error => {
-        throw new HandledError(error);
-      },
-      () => this.props.onFinished()
-    );
+    return event => {
+      if (event.__id) {
+        const items = addItem(event);
+        setMessageStats(items);
+      } else if (event.next) {
+        onSubscribed(event);
+      }
+    };
+  }
+
+  getFinished() {
+    return this.props.onFinished;
+  }
+
+  render() {
+    return this.shouldSubscribe ? (
+      <BaseSubscription
+        name="admin-message-stats-subscription"
+        getFinished={this.getFinished.bind(this)}
+        getNext={this.getNext.bind(this)}
+        observable={this.observable}
+        onItemsChanged={this.props.setMessageStats}
+      />
+    ) : null;
   }
 }
 

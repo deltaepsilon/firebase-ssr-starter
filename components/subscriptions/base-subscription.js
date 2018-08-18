@@ -10,19 +10,7 @@ export default class BaseSubscription extends React.Component {
     };
   }
 
-  get canSubscribe() {
-    return true;
-  }
-
-  shouldUpdate() {
-    return !this.subscription;
-  }
-
   componentDidMount() {
-    this.attemptSubscription();
-  }
-
-  componentDidUpdate(prevState) {
     this.attemptSubscription();
   }
 
@@ -30,23 +18,33 @@ export default class BaseSubscription extends React.Component {
     this.unsubscribe();
   }
 
-  attemptSubscription() {
-    if (this.canSubscribe && this.shouldUpdate()) {
+  componentDidUpdate(prevProps) {
+    if (prevProps.identifier != this.props.identifier) {
       this.unsubscribe();
-      this.subscription = this.subscribe();
-
-      if (!this.subscription) {
-        this.subscription = true;
-        throw new Error(
-          'Subscription failed to return an unsubscribe function! Abort!!!! Infinite loop ahead.'
-        );
-      }
-    } else if (!this.canSubscribe) {
-      this.unsubscribe();
+      this.attemptSubscription();
     }
   }
 
-  subscribe() {}
+  attemptSubscription() {
+    const { getFinished, getNext, observable } = this.props;
+
+    // console.log('subscribing', this.props.name);
+
+    this.subscription = observable.subscribe(
+      getNext({ addItem: this.addItem.bind(this) }),
+      error => {
+        throw new HandledError(error);
+      },
+      getFinished ? getFinished() : () => ({})
+    );
+
+    if (!this.subscription) {
+      this.subscription = true;
+      throw new Error(
+        'Subscription failed to return an unsubscribe function! Abort!!!! Infinite loop ahead.'
+      );
+    }
+  }
 
   unsubscribe() {
     this.setState({ items: [] });
@@ -67,6 +65,8 @@ export default class BaseSubscription extends React.Component {
     }
 
     this.setState({ items });
+
+    return this.state.items;
   }
 
   render() {

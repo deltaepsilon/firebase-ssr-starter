@@ -1,4 +1,5 @@
 /* globals firebase */
+import React from 'react';
 import { connect } from 'unistore/react';
 import { actions } from '../../datastore';
 
@@ -6,34 +7,50 @@ import BaseSubscription from './base-subscription';
 
 import subscribeUsers from '../../database/users/subscribe-users';
 
-export class UsersSubscription extends BaseSubscription {
+export class UsersSubscription extends React.Component {
   get auth() {
     return firebase.auth();
   }
 
-  get canSubscribe() {
+  get shouldSubscribe() {
     const { claims } = this.props;
 
     return (claims && claims.isAdmin) || claims.isModerator;
   }
 
-  subscribe() {
-    const { environment, setUsers } = this.props;
+  get observable() {
+    const { environment } = this.props;
 
-    return subscribeUsers({ environment }).subscribe(
-      event => {
-        if (event.__id) {
-          const user = event;
-          this.addItem(user);
-          setUsers(this.state.items);
-        } else if (event.next) {
-          this.props.onSubscribed(event);
-        }
-      },
-      error => {
-        throw new HandledError(error);
-      },
-      () => this.props.onFinished()
+    return subscribeUsers({ environment });
+  }
+
+  getNext({ addItem }) {
+    const { onSubscribed, setUsers } = this.props;
+
+    return event => {
+      if (event.__id) {
+        const items = addItem(event);
+        setUsers(items);
+      } else if (event.next) {
+        onSubscribed(event);
+      }
+    };
+  }
+
+  getFinished() {
+    return this.props.onFinished;
+  }
+
+  render() {
+    return (
+      this.shouldSubscribe && (
+        <BaseSubscription
+          name="users-subscription"
+          getFinished={this.getFinished.bind(this)}
+          getNext={this.getNext.bind(this)}
+          observable={this.observable}
+        />
+      )
     );
   }
 }

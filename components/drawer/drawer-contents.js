@@ -22,7 +22,7 @@ export function DrawerContents({
   pathname,
   handleSignOut,
 }) {
-  const showModeratorMessages = claims.isAdmin || claims.isModerator;
+  const showModeratorMessages = claims && (claims.isAdmin || claims.isModerator);
 
   return (
     <div className="drawer-contents">

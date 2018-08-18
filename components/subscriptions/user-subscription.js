@@ -1,4 +1,5 @@
 /* globals firebase */
+import React from 'react';
 import { connect } from 'unistore/react';
 import { actions } from '../../datastore';
 
@@ -6,21 +7,27 @@ import BaseSubscription from './base-subscription';
 
 import subscribeUser from '../../database/user/subscribe-user';
 
-export class UserSubscription extends BaseSubscription {
+export class UserSubscription extends React.Component {
+  get observable() {
+    const { currentUser, environment } = this.props;
+
+    return currentUser && currentUser.uid && subscribeUser({ environment, uid: currentUser.uid });
+  }
+
   get auth() {
     return firebase.auth();
   }
 
-  get canSubscribe() {
+  get shouldSubscribe() {
     const { currentUser } = this.props;
 
     return !!currentUser && !!currentUser.uid;
   }
 
-  subscribe() {
-    const { currentUser, environment, setUser } = this.props;
+  getNext() {
+    const { setClaims, setUser } = this.props;
 
-    return subscribeUser({ environment, uid: currentUser.uid }).subscribe(async user => {
+    return async user => {
       const claimsHaveChanged = user && this.claimsHaveChanged(this.props.user, user);
 
       setUser(user);
@@ -30,9 +37,9 @@ export class UserSubscription extends BaseSubscription {
 
         const { claims } = await this.auth.currentUser.getIdTokenResult();
 
-        this.props.setClaims(claims);
+        setClaims(claims);
       }
-    });
+    };
   }
 
   claimsHaveChanged(oldUser, newUser) {
@@ -46,6 +53,16 @@ export class UserSubscription extends BaseSubscription {
       .join();
 
     return existingKeys != newKeys;
+  }
+
+  render() {
+    return this.shouldSubscribe ? (
+      <BaseSubscription
+        name="user-subscription"
+        getNext={this.getNext.bind(this)}
+        observable={this.observable}
+      />
+    ) : null;
   }
 }
 
