@@ -43,6 +43,7 @@ export class AppShell extends React.Component {
   componentDidMount() {
     mappedActions.setRouter(this.props.router);
     mappedActions.setPathname(this.props.router.pathname);
+    mappedActions.setQuery(this.props.router.query);
   }
 
   render() {

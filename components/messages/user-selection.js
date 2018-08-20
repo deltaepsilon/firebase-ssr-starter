@@ -4,12 +4,15 @@ import { actions } from '../../datastore';
 
 import { ListItem, ListItemText, ListItemGraphic } from 'rmwc/List';
 import { Icon } from 'rmwc/Icon';
+import { IconButton } from 'rmwc/IconButton';
 
 import AdminMessageStatsSubscription from '../subscriptions/admin-message-stats-subscription';
 import SearchBar from '../list/search-bar';
 import InfiniteScrollList from '../list/infinite-scroll-list';
 import AccountIcon from '../user/account-icon';
 
+import markRead from '../../utilities/messaging/mark-read';
+import setReview from '../../utilities/messaging/set-review';
 import extractUserDisplayName from '../../utilities/user/extract-user-display-name';
 
 import '../tables/tables.css';
@@ -21,6 +24,7 @@ export class UserSelection extends React.Component {
     const noop = async args => console.info(args);
 
     this.state = {
+      activeUser: null,
       isSearching: false,
       searchResults: [],
       messageStats: [],
@@ -35,15 +39,60 @@ export class UserSelection extends React.Component {
     return hasSearchResults ? searchResults : messageStats;
   }
 
-  componentDidUpdate() {
-    const { detailUserId, setDetailUserId } = this.props;
-    if (!detailUserId && this.items.length) {
-      setDetailUserId(this.items[0].__id);
+  componentDidUpdate(prevProps) {
+    this.setDefaultActiveUser();
+
+    if (prevProps.detailUserId != this.props.detailUserId || !this.state.activeUser) {
+      const activeUser = this.items.find(({ __id }) => __id == this.props.detailUserId);
+
+      this.setActiveUser(activeUser);
     }
   }
 
+  setDefaultActiveUser() {
+    const { detailUserId } = this.props;
+
+    if (!detailUserId && this.items.length) {
+      this.setActiveUser(this.items[0]);
+    }
+  }
+
+  setActiveUser(activeUser) {
+    if (activeUser) {
+      this.setState({ activeUser });
+      this.props.setActiveUser(activeUser);
+      this.props.setDetailUserId(activeUser.__id);
+    }
+  }
+
+  getMarkRead(environment) {
+    return userId => async () => {
+      const updatedStats = await markRead(environment, userId);
+
+      this.updateStats(userId, updatedStats);
+    };
+  }
+
+  getSetReview(environment) {
+    return (userId, review) => async () => {
+      setReview(environment, userId, review);
+
+      this.updateStats(userId, { review });
+    };
+  }
+
+  updateStats(userId, updates) {
+    const messageStats = [...this.state.messageStats];
+    const index = messageStats.findIndex(({ __id }) => __id == userId);
+    const stats = messageStats[index];
+
+    messageStats[index] = { __id: userId, ...stats, ...updates };
+
+    this.setState({ messageStats });
+  }
+
   render() {
-    const { detailUserId, environment, user, setDetailUserId } = this.props;
+    const { detailUserId, environment, user } = this.props;
     const { finished, next, searchResults } = this.state;
     const hasSearchResults = !!searchResults.length;
 
@@ -74,7 +123,9 @@ export class UserSelection extends React.Component {
                 selected={userStats.__id == detailUserId}
                 key={userStats.__id}
                 userStats={userStats}
-                setDetailUserId={setDetailUserId}
+                getMarkRead={this.getMarkRead(environment)}
+                setReview={this.getSetReview(environment)}
+                setActiveUser={this.setActiveUser.bind(this)}
               />
             ))}
           </InfiniteScrollList>
@@ -89,30 +140,48 @@ export default connect(
   actions
 )(UserSelection);
 
-function MessageStatsListItem({ isMe, selected, userStats, setDetailUserId }) {
+function MessageStatsListItem({
+  isMe,
+  selected,
+  userStats,
+  getMarkRead,
+  setReview,
+  setActiveUser,
+}) {
   let displayNameHTML = extractUserDisplayName(userStats);
-  const totalMessages = userStats.count || 0;
-  const readMessages = userStats.read || 0;
-  const unread = totalMessages - readMessages;
+  const count = userStats.count || 0;
+  const read = userStats.read || 0;
+  const unread = count - read;
+  const showUnread = !isMe && unread > 0 && !selected;
+  const showMarkRead = !isMe && unread > 0 && selected;
+  const showMarkBookmark = !isMe && unread == 0 && !userStats.review && selected;
+  const showUnmarkBookmark = !isMe && unread == 0 && userStats.review;
 
   if (isMe) {
     displayNameHTML += ' (me)';
   }
 
   return (
-    <ListItem onClick={() => setDetailUserId(userStats.__id)} selected={selected}>
+    <ListItem onClick={() => setActiveUser(userStats)} selected={selected}>
       <ListItemGraphic>
         <AccountIcon currentUser={userStats} />
       </ListItemGraphic>
       <ListItemText>
         <span className="primary-text" dangerouslySetInnerHTML={{ __html: displayNameHTML }} />
-        {unread > 0 && (
+        {showUnread && (
           <span className="icon">
             <aside>{userStats.count}</aside>
             <Icon use="markunread_mailbox" />
           </span>
         )}
       </ListItemText>
+      {showMarkRead && <IconButton use="done_outline" onClick={getMarkRead(userStats.__id)} />}
+      {showMarkBookmark && (
+        <IconButton use="bookmark_border" onClick={setReview(userStats.__id, true)} />
+      )}
+      {showUnmarkBookmark && (
+        <IconButton use="bookmark" onClick={setReview(userStats.__id, false)} />
+      )}
     </ListItem>
   );
 }

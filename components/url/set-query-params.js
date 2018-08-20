@@ -9,10 +9,17 @@ export class SetQueryParams extends React.Component {
     return location.href.split('?')[0];
   }
 
-  componentDidMount() {
-    const { params } = this.props;
+  componentDidUpdate(prevProps) {
+    const prevParams = JSON.stringify(prevProps.params);
+    const params = JSON.stringify(this.props.params);
 
-    // console.log('mounted', params);
+    if (prevParams != params) {
+      this.setParams();
+    }
+  }
+
+  setParams() {
+    const { params } = this.props;
 
     if (this.noUndefinedParams(params) && typeof history == 'object') {
       const link = createLink(this.root, params);
@@ -24,10 +31,6 @@ export class SetQueryParams extends React.Component {
         this.props.router.push(url);
       }
     }
-  }
-
-  componentWillUnmount() {
-    // console.log('unmounting', this.props.params);
   }
 
   noUndefinedParams(params) {

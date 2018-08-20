@@ -16,20 +16,28 @@ export class SyncQueryParams extends React.Component {
     return parseSearch(location.search);
   }
 
-  componentDidUpdate() {
+  componentDidUpdate(prevProps) {
+    if (prevProps.pathname != this.props.pathname) {
+      this.setParams(this.props.query);
+    }
+    
     if (this.props.router.beforePopState) {
       this.props.router.beforePopState(this.syncQueryParams.bind(this));
     }
   }
 
   syncQueryParams() {
-    const params = this.queryParams.reduce((params, key) => {
+    const query = this.queryParams.reduce((params, key) => {
       params[key] = this.params[key] || undefined;
       return params;
     }, {});
 
-    for (let param in params) {
-      this.props[queryParamsMap[param]](params[param]);
+    this.setParams(query);
+  }
+
+  setParams(query) {
+    for (let param in query) {
+      this.props[queryParamsMap[param]](query[param]);
     }
   }
 
@@ -39,6 +47,6 @@ export class SyncQueryParams extends React.Component {
 }
 
 export default connect(
-  'router',
+  'pathname,query,router',
   actions
 )(SyncQueryParams);

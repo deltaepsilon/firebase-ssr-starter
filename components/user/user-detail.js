@@ -5,7 +5,7 @@ import UserDetailCard from '../cards/user-detail-card';
 
 import '@material/icon-button/dist/mdc.icon-button.min.css';
 
-export default function UserDetail({ environment, user, onBack }) {
+export default function UserDetail({ adminTabIndex, environment, user, onBack }) {
   return (
     user && (
       <Paper>
@@ -13,7 +13,7 @@ export default function UserDetail({ environment, user, onBack }) {
           <IconButton onClick={onBack} use="arrow_back" />
         </h6>
 
-        <UserDetailCard environment={environment} user={user} />
+        <UserDetailCard adminTabIndex={adminTabIndex} environment={environment} user={user} />
       </Paper>
     )
   );

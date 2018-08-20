@@ -11,6 +11,7 @@ export setLoaded from './set-loaded';
 export setMessagingToken from './set-messaging-token';
 export setPathname from './set-pathname';
 export setPresence from './set-presence';
+export setQuery from './set-query';
 export setRouter from './set-router';
 export setServiceWorkerRegistered from './set-service-worker-registered';
 export setSettings from './set-settings';

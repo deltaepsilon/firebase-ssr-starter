@@ -62,6 +62,7 @@ class UserView extends React.Component {
         />
         <Paper>
           <UserDetail
+            adminTabIndex={adminTabIndex}
             environment={environment}
             user={this.state.user}
             onBack={() => setDetailUserId()}

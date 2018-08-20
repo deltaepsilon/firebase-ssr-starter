@@ -28,9 +28,10 @@ const initialState = {
   environment: isDevelopment ? devEnvironment : prodEnvironment,
   imageDetailSrc: '',
   isDrawerOpen: false,
-  pathname: '/',
   loaded: false,
+  pathname: '/',
   presence: false,
+  query: {},
   serviceWorkerRegistered: false,
 };
 

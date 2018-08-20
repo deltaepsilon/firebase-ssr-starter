@@ -1,8 +1,12 @@
 import React from 'react';
 import { connect } from 'unistore/react';
 import { actions } from '../../datastore';
+import Link from 'next/link';
 import Paper from '../paper/paper';
 
+import IconButton from 'rmwc/IconButton';
+
+import SetQueryParams from '../url/set-query-params';
 import AddUserMessage from '../../database/messages/add-user-message';
 import extractUserDisplayName from '../../utilities/user/extract-user-display-name';
 import extractUserPhotoUrl from '../../utilities/user/extract-user-photo-url';
@@ -22,6 +26,7 @@ export class ModeratorMessages extends React.Component {
     const noop = async args => console.info(args);
 
     this.state = {
+      activeUser: null,
       finished: false,
       next: noop,
       scrollTargetIndex: 0,
@@ -86,9 +91,12 @@ export class ModeratorMessages extends React.Component {
 
   render() {
     const { detailUserId, environment, user } = this.props;
+    const { activeUser } = this.state;
 
     return (
       <>
+        <SetQueryParams params={{ detailUserId }} />
+
         <UserMessagesSubscription
           environment={environment}
           userId={detailUserId}
@@ -98,13 +106,25 @@ export class ModeratorMessages extends React.Component {
         />
 
         <div className="moderator-messages user-messages">
-          <UserSelection />
+          <UserSelection setActiveUser={activeUser => this.setState({ activeUser })} />
           <Paper>
             <div className="wrapper">
+              {activeUser && (
+                <h2 className="title">
+                  <span> {activeUser.displayName}</span>
+                  <Link href={`/admin?adminTabIndex=1&detailUserId=${detailUserId}`} prefetch>
+                    <a>
+                      <IconButton use="arrow_forward" />
+                    </a>
+                  </Link>
+                </h2>
+              )}
+
               <MessagesTable
                 finished={this.state.finished}
                 next={this.state.next}
                 messages={this.state.userMessages}
+                showMarkRead
                 scrollTargetIndex={this.state.scrollTargetIndex}
                 userId={user.__id}
               />

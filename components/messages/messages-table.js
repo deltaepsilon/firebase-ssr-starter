@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { ListItem, ListItemText, ListItemSecondaryText, ListItemGraphic } from 'rmwc/List';
+import { Button } from "rmwc/Button";
 
 import copyToClipboard from '../../utilities/copy-to-clipboard';
 
@@ -10,6 +11,7 @@ import DateTime from '../dates/date-time';
 import FromNow from '../dates/from-now';
 import Thumbnail from '../images/thumbnail';
 
+import '@material/button/dist/mdc.button.min.css';
 import './messages.css';
 
 export default ({ finished, messages, next, scrollTargetIndex, userId }) => {

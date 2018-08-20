@@ -1,5 +1,6 @@
 /* globals location */
 import React from 'react';
+import Link from 'next/link';
 import {
   Card,
   CardPrimaryAction,
@@ -9,6 +10,7 @@ import {
   CardActionButtons,
   CardActionIcons,
 } from 'rmwc/Card';
+import IconButton from 'rmwc/IconButton';
 
 import { Typography } from 'rmwc/Typography';
 
@@ -24,7 +26,10 @@ import '@material/card/dist/mdc.card.min.css';
 export default ({ adminTabIndex, environment, user }) => {
   const email = extractUserEmail(user);
   const photoUrl = extractUserPhotoUrl(user);
-  const userLink = createLink(location.href, { adminTabIndex, detailUserId: user.__id });
+  const userLink = createLink(`${location.origin}${location.pathname}`, {
+    adminTabIndex,
+    detailUserId: user.__id,
+  });
 
   return (
     <Card style={{ width: '21rem', maxWidth: 'calc(100vw - 4rem)' }}>
@@ -66,6 +71,14 @@ export default ({ adminTabIndex, environment, user }) => {
             <strong>Verification:</strong>
             <span>{user.emailVerified ? 'verified' : 'unverified'}</span>
           </div>
+          <div className="row">
+            <strong>Messages:</strong>
+            <Link href={`/admin/messages?detailUserId=${user.__id}`} prefetch>
+              <a>
+                <IconButton use="arrow_forward" />
+              </a>
+            </Link>
+          </div>
         </section>
       </CardPrimaryAction>
       <CardActions>
@@ -90,7 +103,13 @@ export default ({ adminTabIndex, environment, user }) => {
 };
 
 function Claims({ claims }) {
-  return claims ? <ul>{Object.keys(claims).map(claim => <li key={claim}>{claim}</li>)}</ul> : null;
+  return claims ? (
+    <ul>
+      {Object.keys(claims).map(claim => (
+        <li key={claim}>{claim}</li>
+      ))}
+    </ul>
+  ) : null;
 }
 
 function handleShareClick(userLink) {

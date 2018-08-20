@@ -35,10 +35,12 @@ export default {
       .doc('logs')
       .collection('messages');
   },
-  messageStats: db => {
-    return db
+  messageStats: (db, uid) => {
+    const collection = db
       .collection('admin')
       .doc('stats')
       .collection('messages');
+
+    return uid ? collection.doc(uid) : collection;
   },
 };
