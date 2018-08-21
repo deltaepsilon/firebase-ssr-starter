@@ -12,7 +12,7 @@ import InfiniteScrollList from '../list/infinite-scroll-list';
 import AccountIcon from '../user/account-icon';
 
 import markRead from '../../utilities/messaging/mark-read';
-import setReview from '../../utilities/messaging/set-review';
+import setPriority from '../../utilities/messaging/set-priority';
 import extractUserDisplayName from '../../utilities/user/extract-user-display-name';
 
 import '../tables/tables.css';
@@ -25,11 +25,12 @@ export class UserSelection extends React.Component {
 
     this.state = {
       activeUser: null,
+      finished: false,
       isSearching: false,
       searchResults: [],
       messageStats: [],
       next: noop,
-      finished: false,
+      refreshing: false,
     };
   }
 
@@ -73,11 +74,11 @@ export class UserSelection extends React.Component {
     };
   }
 
-  getSetReview(environment) {
-    return (userId, review) => async () => {
-      setReview(environment, userId, review);
+  getSetPriority(environment) {
+    return (userId, priority) => async () => {
+      setPriority(environment, userId, priority);
 
-      this.updateStats(userId, { review });
+      this.updateStats(userId, { priority });
     };
   }
 
@@ -91,18 +92,26 @@ export class UserSelection extends React.Component {
     this.setState({ messageStats });
   }
 
+  handleRefresh() {
+    this.setState({ messageStats: [], refreshing: true }, () => {
+      this.setState({ refreshing: false });
+    });
+  }
+
   render() {
     const { detailUserId, environment, user } = this.props;
-    const { finished, next, searchResults } = this.state;
+    const { finished, next, refreshing, searchResults } = this.state;
     const hasSearchResults = !!searchResults.length;
 
     return (
       <div className="user-selection">
-        <AdminMessageStatsSubscription
-          onFinished={() => this.setState({ finished: true })}
-          onSubscribed={({ next }) => this.setState({ next })}
-          setMessageStats={messageStats => this.setState({ messageStats })}
-        />
+        {!refreshing && (
+          <AdminMessageStatsSubscription
+            onFinished={() => this.setState({ finished: true })}
+            onSubscribed={({ next }) => this.setState({ next })}
+            setMessageStats={messageStats => this.setState({ messageStats })}
+          />
+        )}
         <SearchBar
           algolia={environment.algolia}
           index="users"
@@ -124,12 +133,17 @@ export class UserSelection extends React.Component {
                 key={userStats.__id}
                 userStats={userStats}
                 getMarkRead={this.getMarkRead(environment)}
-                setReview={this.getSetReview(environment)}
+                setPriority={this.getSetPriority(environment)}
                 setActiveUser={this.setActiveUser.bind(this)}
               />
             ))}
           </InfiniteScrollList>
         </div>
+        <IconButton
+          className="refresh-button"
+          use="refresh"
+          onClick={this.handleRefresh.bind(this)}
+        />
       </div>
     );
   }
@@ -145,7 +159,7 @@ function MessageStatsListItem({
   selected,
   userStats,
   getMarkRead,
-  setReview,
+  setPriority,
   setActiveUser,
 }) {
   let displayNameHTML = extractUserDisplayName(userStats);
@@ -154,8 +168,8 @@ function MessageStatsListItem({
   const unread = count - read;
   const showUnread = !isMe && unread > 0 && !selected;
   const showMarkRead = !isMe && unread > 0 && selected;
-  const showMarkBookmark = !isMe && unread == 0 && !userStats.review && selected;
-  const showUnmarkBookmark = !isMe && unread == 0 && userStats.review;
+  const showMarkBookmark = !isMe && unread == 0 && !userStats.priority && selected;
+  const showUnmarkBookmark = !isMe && unread == 0 && !!userStats.priority;
 
   if (isMe) {
     displayNameHTML += ' (me)';
@@ -170,18 +184,16 @@ function MessageStatsListItem({
         <span className="primary-text" dangerouslySetInnerHTML={{ __html: displayNameHTML }} />
         {showUnread && (
           <span className="icon">
-            <aside>{userStats.count}</aside>
+            <aside>{unread}</aside>
             <Icon use="markunread_mailbox" />
           </span>
         )}
       </ListItemText>
       {showMarkRead && <IconButton use="done_outline" onClick={getMarkRead(userStats.__id)} />}
       {showMarkBookmark && (
-        <IconButton use="bookmark_border" onClick={setReview(userStats.__id, true)} />
+        <IconButton use="bookmark_border" onClick={setPriority(userStats.__id, 1)} />
       )}
-      {showUnmarkBookmark && (
-        <IconButton use="bookmark" onClick={setReview(userStats.__id, false)} />
-      )}
+      {showUnmarkBookmark && <IconButton use="bookmark" onClick={setPriority(userStats.__id, 0)} />}
     </ListItem>
   );
 }

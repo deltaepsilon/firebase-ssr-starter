@@ -34,6 +34,7 @@ COPY *.rules ./
 COPY bin/*.sh bin/
 COPY root/* ./out/
 COPY environments/* ./out/
+COPY bin/firebase-deploy.sh bin/firebase-deploy.sh
 
 
 

@@ -138,6 +138,8 @@
 /* Moderator Messages */
 
 .moderator-messages .user-selection {
+  position: relative;
+
   border-right: 1px solid var(--color-form-border);
   height: 100%;
   width: 300px;
@@ -191,8 +193,14 @@
   font-size: 8px;
 }
 
-.moderator-messages .user-selection button {
+.moderator-messages .user-selection .table button {
   position: absolute;
   right: 5px;
   top: 0px;
+}
+
+.moderator-messages .user-selection .refresh-button {
+  position: absolute;
+  right: 1rem;
+  bottom: 1rem;
 }

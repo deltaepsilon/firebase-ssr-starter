@@ -9,25 +9,30 @@ module.exports = context => async (uid, message) => {
     const stats = statsDoc.data();
 
     const count = (stats && stats.count) || 0;
-    let update;
+
+    let update = {
+      priority: stats && stats.priority || 0,
+      updated: new Date().toString(),
+      uid,
+    };
 
     if (!message) {
       update = {
+        ...update,
         count: Math.max(count - 1, 0),
-        uid,
       };
     } else {
       update = {
+        ...update,
         count: count + 1,
         lastMessage: message.created,
         displayName: message.displayName,
         email: message.email,
         photoUrl: message.photoUrl,
         lastMessage: message.text,
-        uid,
       };
     }
 
-    return t.set(statsRef, update);
+    return t.set(statsRef, update, { merge: true });
   });
 };
