@@ -22,8 +22,8 @@ describe('SettingsOnWrite', () => {
 
     settings = {
       displayName: 'display name',
-      photoUrl: 'photo url',
-      photoUrlPath: 'photo url path',
+      photoURL: 'photo url',
+      photoURLPath: 'photo url path',
     };
 
     addedChange = {
@@ -59,14 +59,14 @@ describe('SettingsOnWrite', () => {
     });
 
     it('should save the object', async () => {
-      expect(user.photoUrl).toEqual(settings.photoUrl);
-      expect(user.photoUrlPath).toEqual(settings.photoUrlPath);
+      expect(user.photoURL).toEqual(settings.photoURL);
+      expect(user.photoURLPath).toEqual(settings.photoURLPath);
     });
 
     it('should save the object', async () => {
       expect(updateJwt).toHaveBeenCalledWith(uid, {
         displayName: settings.displayName,
-        photoUrl: settings.photoUrl,
+        photoURL: settings.photoURL,
       });
     });
   });
@@ -81,15 +81,15 @@ describe('SettingsOnWrite', () => {
     });
 
     it('should save the object', async () => {
-      expect(!!user.photoUrl).toEqual(false);
-      expect(!!user.photoUrlPath).toEqual(false);
+      expect(!!user.photoURL).toEqual(false);
+      expect(!!user.photoURLPath).toEqual(false);
       expect(!!user.updated).toEqual(true);
     });
 
     it('should save the object', async () => {
       expect(updateJwt).toHaveBeenCalledWith(uid, {
         displayName: undefined,
-        photoUrl: undefined,
+        photoURL: undefined,
       });
     });
   });

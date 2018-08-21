@@ -64,7 +64,7 @@ export class ModeratorMessages extends React.Component {
       created: Date.now(),
       displayName: extractUserDisplayName(user),
       email: extractUserEmail(user),
-      photoUrl: extractUserPhotoUrl(user),
+      photoURL: extractUserPhotoUrl(user),
       uid: user.__id,
     };
   }
@@ -110,14 +110,18 @@ export class ModeratorMessages extends React.Component {
           <Paper>
             <div className="wrapper">
               {activeUser && (
-                <h2 className="title">
-                  <span> {activeUser.displayName}</span>
+                <div className="title">
+                  <h2>{activeUser.displayName}</h2>
+                  <span className="flex">
+                    {activeUser.__id}
+                    {activeUser.email}
+                  </span>
                   <Link href={`/admin?adminTabIndex=1&detailUserId=${detailUserId}`} prefetch>
                     <a>
                       <IconButton use="arrow_forward" />
                     </a>
                   </Link>
-                </h2>
+                </div>
               )}
 
               <MessagesTable

@@ -25,7 +25,7 @@ import '@material/card/dist/mdc.card.min.css';
 
 export default ({ adminTabIndex, environment, user }) => {
   const email = extractUserEmail(user);
-  const photoUrl = extractUserPhotoUrl(user);
+  const photoURL = extractUserPhotoUrl(user);
   const userLink = createLink(`${location.origin}${location.pathname}`, {
     adminTabIndex,
     detailUserId: user.__id,
@@ -37,7 +37,7 @@ export default ({ adminTabIndex, environment, user }) => {
         <CardMedia
           sixteenByNine
           style={{
-            backgroundImage: `url(${photoUrl})`,
+            backgroundImage: `url(${photoURL})`,
           }}
         />
         <section>

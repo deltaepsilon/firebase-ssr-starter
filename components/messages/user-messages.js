@@ -58,7 +58,7 @@ export class UserMessages extends React.Component {
       created: Date.now(),
       displayName: extractUserDisplayName(user),
       email: extractUserEmail(user),
-      photoUrl: extractUserPhotoUrl(user),
+      photoURL: extractUserPhotoUrl(user),
       uid: user.__id,
     };
   }

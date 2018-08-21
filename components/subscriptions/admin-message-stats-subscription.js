@@ -21,7 +21,7 @@ export class AdminMessageStatsSubscription extends React.Component {
   get shouldSubscribe() {
     const { claims } = this.props;
 
-    return (claims && claims.isAdmin) || claims.isModerator;
+    return claims ? claims.isAdmin || claims.isModerator : false;
   }
 
   getNext({ addItem }) {

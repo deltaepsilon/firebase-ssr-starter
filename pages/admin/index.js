@@ -6,7 +6,7 @@ import AdminTabContent from '../../components/admin/admin-tab-content';
 
 export default function() {
   return (
-    <AppShell secure admin>
+    <AppShell admin secure>
       <AdminTabs />
       <AdminTabContent />
     </AppShell>

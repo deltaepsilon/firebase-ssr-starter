@@ -38,6 +38,7 @@ export class UserMessagesSubscription extends React.Component {
     return event => {
       if (event.__id) {
         const items = addItem(event);
+
         setUserMessages(items);
       } else if (event.next) {
         onSubscribed(event);

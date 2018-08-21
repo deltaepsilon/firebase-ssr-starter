@@ -1,7 +1,6 @@
 /* globals firebase */
 import { Observable } from 'rxjs';
 import isBrowser from '../utilities/is-browser';
-import { process } from 'ipaddr.js';
 
 export default (environment, schemaName, args = [], queryOptions) =>
   isBrowser(
@@ -46,8 +45,10 @@ export default (environment, schemaName, args = [], queryOptions) =>
         };
       }
 
+      console.log('lastRecordUnsubscribe', lastRecordUnsubscribe);
       return () => {
-        console.log('unsubscribed', schemaName);
+        debugger;
+        console.info('unsubscribed', schemaName);
 
         if (typeof lastRecordUnsubscribe == 'function') {
           lastRecordUnsubscribe();
@@ -95,13 +96,19 @@ function loadNewRecordListener({ args, db, environment, observer, queryOptions, 
   const docProcessor = processDoc(observer, true);
   let isFirstResult = true;
 
-  return lastRecordCollection.onSnapshot(({ docs }) => {
-    if (isFirstResult) {
-      isFirstResult = false;
-    } else {
-      docProcessor(docs.shift());
+  return lastRecordCollection.onSnapshot(
+    ({ docs }) => {
+      if (isFirstResult) {
+        isFirstResult = false;
+      } else {
+        docProcessor(docs.shift());
+      }
+    },
+    error => {
+      console.info('error', schemaName);
+      console.error(error);
     }
-  });
+  );
 }
 
 function getLastRecordCollection({ args, db, environment, queryOptions, schemaName }) {

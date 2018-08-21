@@ -7,12 +7,31 @@ const removeMessageLog = require('../utilities/remove-message-log')(context);
 const getMessageStats = require('../utilities/get-message-stats')(context);
 const updateMessageStats = require('../utilities/update-message-stats')(context);
 const removeMessageStats = require('../utilities/remove-message-stats')(context);
+const getUserNotifications = require('../utilities/get-user-notifications')(context);
+const setUser = require('../utilities/set-user')(context);
+const removeUserByUid = require('../utilities/remove-user-by-uid')(context);
+const getRefs = require('../utilities/get-refs')(context);
 
 const Func = require('./messages-on-write');
 
 describe('MessagesOnWrite', () => {
   const uid = '123456';
   const messageId = '987654';
+  const notificationsRef = getRefs.notifications(uid);
+  const user = {
+    uid,
+    displayName: 'user displayName',
+    email: 'user email',
+    photoURL: 'user photoURL',
+  };
+
+  beforeAll(async () => {
+    await setUser(user);
+  });
+
+  afterAll(async () => {
+    await removeUserByUid(user.uid);
+  });
 
   let func;
   let addedChange;
@@ -27,7 +46,7 @@ describe('MessagesOnWrite', () => {
       created: 'created',
       displayName: 'displayName',
       email: 'email',
-      photoUrl: 'photoUrl',
+      photoURL: 'photoURL',
       text: 'text',
     };
 
@@ -45,6 +64,7 @@ describe('MessagesOnWrite', () => {
   });
 
   afterEach(async () => {
+    await notificationsRef.remove();
     await removeMessageStats(uid);
     return removeMessageLog(messageId);
   });
@@ -56,12 +76,14 @@ describe('MessagesOnWrite', () => {
   describe('with values', () => {
     let result;
     let stats;
+    let notifications;
 
     beforeEach(async () => {
       await func(addedChange, { params: { uid, messageId } });
 
       result = await getMessageLog(messageId);
       stats = await getMessageStats(uid);
+      notifications = await getUserNotifications(uid);
     });
 
     it('should save the object', () => {
@@ -71,6 +93,23 @@ describe('MessagesOnWrite', () => {
     it('should save the stats', () => {
       expect(stats.uid).toEqual(uid);
       expect(stats.count).toEqual(1);
+    });
+
+    it('should not save notification when the sender is also the receiver', () => {
+      expect(!!notifications).toEqual(false);
+    });
+
+    it('should save notification when the sender is not the receiver', async () => {
+      const differentAddedChange = {
+        after: {
+          data: () => ({ ...message, uid: 'fake as fake' }),
+        },
+      };
+
+      await func(differentAddedChange, { params: { uid, messageId } });
+
+      notifications = await getUserNotifications(uid);
+      expect(Object.keys(notifications).length).toEqual(1);
     });
   });
 
@@ -95,7 +134,7 @@ describe('MessagesOnWrite', () => {
 
     it('should have zero count for the stats', async () => {
       await func(deletedChange, { params: { uid, messageId } });
-      
+
       const stats = await getMessageStats(uid);
 
       expect(stats.uid).toEqual(uid);

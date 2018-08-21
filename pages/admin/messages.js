@@ -4,7 +4,7 @@ import ModeratorMessages from '../../components/messages/moderator-messages';
 
 export default function Settings() {
   return (
-    <AppShell secure>
+    <AppShell admin secure>
       <ModeratorMessages />
     </AppShell>
   );

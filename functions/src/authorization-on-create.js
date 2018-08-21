@@ -1,5 +1,7 @@
 const getCustomClaimsByEmail = require('../utilities/get-custom-claims-by-email');
 const extractEmailFromUser = require('../utilities/extract-email-from-user');
+const extractDisplayNameFromUser = require('../utilities/extract-display-name-from-user');
+const extractPhotoURLFromUser = require('../utilities/extract-photo-url-from-user');
 const setCustomClaims = require('../utilities/set-custom-claims');
 const omitEmptyValues = require('../utilities/omit-empty-values');
 
@@ -21,10 +23,14 @@ module.exports = ({ admin, environment }) => async user => {
 
 function mapUserUpdate(claims, user) {
   const email = extractEmailFromUser(user);
+  const displayName = extractDisplayNameFromUser(user);
+  const photoURL = extractPhotoURLFromUser(user);
 
   return omitEmptyValues({
     claims,
+    displayName,
     email,
+    photoURL,
     emailVerified: user.emailVerified,
     lastSignInTime: user.metadata.lastSignInTime,
     creationTime: user.metadata.creationTime,

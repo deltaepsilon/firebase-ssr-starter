@@ -1,4 +1,10 @@
 module.exports = ({ admin, environment }) => ({
+  users: uid => {
+    return admin
+      .firestore()
+      .collection(environment.schema.users)
+      .doc(uid);
+  },
   messageLogs: messageId => {
     const pathParts = environment.schema.messageLogs.split('/');
 
@@ -18,5 +24,11 @@ module.exports = ({ admin, environment }) => ({
       .doc(pathParts[1])
       .collection(pathParts[2])
       .doc(uid);
+  },
+  notifications: uid => {
+    return admin
+      .database()
+      .ref(environment.schema.notifications)
+      .child(uid);
   },
 });

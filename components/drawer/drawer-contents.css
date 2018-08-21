@@ -43,6 +43,7 @@
 .drawer-contents .mdc-list-item__text a {
   display: flex;
   align-items: center;
+  flex: 1;
 
   margin: 0.25rem;
   border-radius: var(--border-radius-large);

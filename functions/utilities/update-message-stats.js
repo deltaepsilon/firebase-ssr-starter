@@ -7,13 +7,12 @@ module.exports = context => async (uid, message) => {
   return context.admin.firestore().runTransaction(async t => {
     const statsDoc = await t.get(statsRef);
     const stats = statsDoc.data();
-
     const count = (stats && stats.count) || 0;
 
     let update = {
-      priority: stats && stats.priority || 0,
-      updated: new Date().toString(),
+      priority: (stats && stats.priority) || 0,
       uid,
+      updated: new Date().toString(),
     };
 
     if (!message) {
@@ -22,13 +21,21 @@ module.exports = context => async (uid, message) => {
         count: Math.max(count - 1, 0),
       };
     } else {
+      const senderIsReceiver = message && message.uid == uid;
+
+      if (senderIsReceiver) {
+        update = {
+          ...update,
+          displayName: message.displayName,
+          email: message.email,
+          photoURL: message.photoURL,
+        };
+      }
+
       update = {
         ...update,
         count: count + 1,
         lastMessage: message.created,
-        displayName: message.displayName,
-        email: message.email,
-        photoUrl: message.photoUrl,
         lastMessage: message.text,
       };
     }

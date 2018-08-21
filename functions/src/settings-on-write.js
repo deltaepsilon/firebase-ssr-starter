@@ -5,7 +5,7 @@ module.exports = context => {
   const setUser = SetUser(context);
   const updateJwt = UpdateJwt(context);
 
-  const { admin, environment } = context;
+  const { admin } = context;
   const deleteValue = admin.firestore.FieldValue.delete();
 
   return async (change, { params: { uid } }) => {
@@ -14,14 +14,14 @@ module.exports = context => {
     const userUpdate = {
       uid,
       displayName: (settings && settings.displayName) || deleteValue,
-      photoUrl: (settings && settings.photoUrl) || deleteValue,
-      photoUrlPath: (settings && settings.photoUrlPath) || deleteValue,
+      photoURL: (settings && settings.photoURL) || deleteValue,
+      photoURLPath: (settings && settings.photoURLPath) || deleteValue,
       updated: new Date().toString(),
     };
 
     const jwtUpdate = {
       displayName: (settings && settings.displayName) || undefined,
-      photoUrl: (settings && settings.photoUrl) || undefined,
+      photoURL: (settings && settings.photoURL) || undefined,
     };
 
     await updateJwt(uid, jwtUpdate);

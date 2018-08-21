@@ -1,7 +1,12 @@
 .user-messages .title {
   display: flex;
   justify-content: space-between;
-  align-content: center;
+  align-items: center;
+}
+
+.user-messages .flex {
+  flex: 1;
+  text-align: right;
 }
 
 .user-messages,

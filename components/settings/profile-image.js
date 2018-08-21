@@ -10,20 +10,20 @@ import './settings.css';
 export default function ProfileImage({ settings, setSettings }) {
   return (
     <div className="profile-image">
-      {settings.photoUrl ? (
+      {settings.photoURL ? (
         <div className="form-row">
-          <img src={settings.photoUrl} alt="profile image" />
-          <Button raised onClick={clearPhotoUrl(setSettings, settings.photoUrlPath)}>
+          <img src={settings.photoURL} alt="profile image" />
+          <Button raised onClick={clearPhotoUrl(setSettings, settings.photoURLPath)}>
             Remove/Replace
           </Button>
         </div>
       ) : (
         <ImageUpload
-          url={settings.photoUrl}
+          url={settings.photoURL}
           height="250px"
           width="250px"
           options={{ height: 250, width: 250 }}
-          onComplete={async ({ url, path }) => setSettings({ photoUrl: url, photoUrlPath: path })}
+          onComplete={async ({ url, path }) => setSettings({ photoURL: url, photoURLPath: path })}
           buttonText="Select profile image"
         />
       )}
@@ -35,7 +35,7 @@ function clearPhotoUrl(setSettings, path) {
   const deleteValue = firebase.firestore.FieldValue.delete();
 
   return async () => {
-    await setSettings({ photoUrl: deleteValue, photoUrlPath: deleteValue });
+    await setSettings({ photoURL: deleteValue, photoURLPath: deleteValue });
     return deleteImage(path);
   };
 }
