@@ -14,6 +14,7 @@ import AccountIcon from '../user/account-icon';
 import markRead from '../../utilities/messaging/mark-read';
 import setPriority from '../../utilities/messaging/set-priority';
 import extractUserDisplayName from '../../utilities/user/extract-user-display-name';
+import setId from '../../utilities/set-id';
 
 import '../tables/tables.css';
 
@@ -87,7 +88,7 @@ export class UserSelection extends React.Component {
     const index = messageStats.findIndex(({ __id }) => __id == userId);
     const stats = messageStats[index];
 
-    messageStats[index] = { __id: userId, ...stats, ...updates };
+    messageStats[index] = setId(userId, { ...stats, ...updates });
 
     this.setState({ messageStats });
   }

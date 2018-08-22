@@ -24,6 +24,7 @@ import SyncQueryParams from './sync-query-params';
 import PWA from './pwa';
 
 // Subscriptions
+import NotificationsSubscription from '../subscriptions/notifications-subscription';
 import PresenceSubscription from '../subscriptions/presence-subscription';
 import SettingsSubscription from '../subscriptions/settings-subscription';
 import UserSubscription from '../subscriptions/user-subscription';
@@ -61,6 +62,7 @@ export class AppShell extends React.Component {
             <Messaging />
             <SyncQueryParams />
             <PWA />
+            <NotificationsSubscription />
             <PresenceSubscription />
             <SettingsSubscription />
             <UserSubscription />

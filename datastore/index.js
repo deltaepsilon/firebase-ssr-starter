@@ -29,6 +29,7 @@ const initialState = {
   imageDetailSrc: '',
   isDrawerOpen: false,
   loaded: false,
+  notifications: [],
   pathname: '/',
   presence: false,
   query: {},

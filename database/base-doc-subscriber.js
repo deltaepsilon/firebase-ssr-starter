@@ -1,6 +1,7 @@
 /* globals firebase */
 import { Observable } from 'rxjs';
 import isBrowser from '../utilities/is-browser';
+import setId from "../utilities/set-id";
 
 export default (environment, schemaName, ...schemaArgs) =>
   isBrowser(
@@ -11,7 +12,7 @@ export default (environment, schemaName, ...schemaArgs) =>
       return doc.onSnapshot(
         doc => {
           if (doc.exists) {
-            observer.next({ __id: doc.id, ...doc.data() });
+            observer.next(setId(doc.id, doc.data()));
           } else {
             console.info('doc missing', schemaName, schemaArgs, doc && doc.ref && doc.ref.path);
           }

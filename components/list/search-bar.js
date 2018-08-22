@@ -7,6 +7,8 @@ import { IconButton } from 'rmwc/IconButton';
 
 import algoliasearch from 'algoliasearch/lite';
 
+import setId from '../../utilities/set-id';
+
 import '@material/icon-button/dist/mdc.icon-button.min.css';
 
 export default class SearchBar extends React.Component {
@@ -62,7 +64,7 @@ export default class SearchBar extends React.Component {
   }
 
   mapHits(hits) {
-    return hits.map(hit => ({ __id: hit.objectID, ...hit }));
+    return hits.map(hit => setId(hit.objectID, hit));
   }
 
   handleKeyUp({ key }) {

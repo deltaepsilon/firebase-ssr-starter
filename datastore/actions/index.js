@@ -9,6 +9,7 @@ export setImageDetailSrc from './set-image-detail-src';
 export setIsDrawerOpen from './set-is-drawer-open';
 export setLoaded from './set-loaded';
 export setMessagingToken from './set-messaging-token';
+export setNotifications from './set-notifications';
 export setPathname from './set-pathname';
 export setPresence from './set-presence';
 export setQuery from './set-query';

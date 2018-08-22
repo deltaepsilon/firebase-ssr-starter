@@ -1,6 +1,7 @@
 /* globals firebase */
 import { Observable } from 'rxjs';
 import isBrowser from '../utilities/is-browser';
+import setId from '../utilities/set-id';
 
 export default (environment, schemaName, args = [], queryOptions) =>
   isBrowser(
@@ -132,7 +133,7 @@ function withOrderBy({ collection, orderBy = [] }) {
 }
 
 function processDoc(observer, __isNewRecord, __page) {
-  return doc => observer.next({ __id: doc.id, __isNewRecord, __page, ...doc.data() });
+  return doc => observer.next(setId(doc.id, { __isNewRecord, __page, ...doc.data() }));
 }
 
 function getCursor(snapshot) {

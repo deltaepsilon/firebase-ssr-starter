@@ -11,18 +11,24 @@ import { Button } from 'rmwc/Button';
 import '@material/button/dist/mdc.button.min.css';
 
 import AccountIcon from '../user/account-icon';
+import NotificationCountBubble from '../notifications/notification-count-bubble';
 
 import './drawer-contents.css';
-import { AlertHandler } from '../handlers/alert-handler';
 
 export function DrawerContents({
   beforeInstallEvent,
   claims,
   currentUser,
+  environment,
+  notifications,
   pathname,
   handleSignOut,
 }) {
   const showModeratorMessages = claims && (claims.isAdmin || claims.isModerator);
+  const messageNotifications = notifications.filter(
+    ({ type }) => type == environment.notifications.MESSAGE
+  );
+  const messageNotificationsCount = messageNotifications.length;
 
   return (
     <div className="drawer-contents">
@@ -36,6 +42,21 @@ export function DrawerContents({
       <hr />
 
       <DrawerContent>
+        <div>
+          <Active pathname={pathname} href="/app/dashboard">
+            <ListItem>
+              <ListItemText>
+                <Link href="/app/dashboard" prefetch>
+                  <a className="dashboard">
+                    <Icon use="dashboard" />
+                    <span>Dashboard</span>
+                  </a>
+                </Link>
+              </ListItemText>
+            </ListItem>
+          </Active>
+        </div>
+
         <div>
           {claims && claims.isAdmin ? (
             <Active pathname={pathname} href="/admin">
@@ -57,6 +78,7 @@ export function DrawerContents({
           {currentUser && !showModeratorMessages ? (
             <Active pathname={pathname} href="/app/messages">
               <ListItem>
+                <NotificationCountBubble count={messageNotificationsCount} />
                 <ListItemText>
                   <Link href="/app/messages" prefetch>
                     <a className="messages">
@@ -171,7 +193,7 @@ export function DrawerContents({
 }
 
 export default connect(
-  'beforeInstallEvent,claims,currentUser,pathname',
+  'beforeInstallEvent,claims,currentUser,environment,notifications,pathname',
   actions
 )(DrawerContents);
 

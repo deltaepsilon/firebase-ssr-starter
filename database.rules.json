@@ -1,5 +1,11 @@
 {
   "rules": {
+    "notifications": {
+      "$uid": {
+        ".read": "auth.uid == $uid",
+        ".write": "auth.uid == $uid"
+      }
+    },
     "presence": {
       "$uid": {
         ".write": "auth.uid == $uid"

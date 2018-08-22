@@ -9,6 +9,10 @@
   color: var(--mdc-theme-secondary-text); */
 }
 
+.drawer-contents .mdc-list-item {
+  padding: 0 0.5rem;
+}
+
 .drawer-contents [disabled] * {
   cursor: default;
 }
@@ -70,4 +74,19 @@
 
 .drawer-contents .messages .material-icons {
   width: 24px;
+}
+
+.drawer-contents .notification-count-bubble {
+  position: absolute;
+  top: 50%;
+  right: 20px;
+  margin-top: -15px;
+}
+
+.drawer-contents .active[disabled] .notification-count-bubble .material-icons {
+  color: var(--mdc-theme-secondary-text);
+}
+
+.drawer-contents .active[disabled] .notification-count-bubble span {
+  color: var(--mdc-theme-secondary);
 }

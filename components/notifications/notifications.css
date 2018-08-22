@@ -1,0 +1,17 @@
+.notification-count-bubble {
+  position: relative;
+}
+
+.notification-count-bubble .material-icons {
+  color: var(--mdc-theme-secondary);
+  font-size: 2rem;
+}
+
+.notification-count-bubble span {
+  position: absolute;
+  top: 4px;
+  right: 0;
+  color: var(--mdc-theme-secondary-text);
+  left: 0;
+  text-align: center;
+}

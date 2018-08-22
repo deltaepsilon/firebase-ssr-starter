@@ -8,6 +8,7 @@ import extractUserDisplayName from '../../utilities/user/extract-user-display-na
 import extractUserPhotoUrl from '../../utilities/user/extract-user-photo-url';
 
 import UserMessagesSubscription from '../subscriptions/user-messages-subscription';
+import AcknowledgeNotifications from '../notifications/acknowledge-notifications';
 import MessagesTable from './messages-table';
 import MessageForm from './message-form';
 
@@ -88,13 +89,16 @@ export class UserMessages extends React.Component {
 
     return (
       <>
-        <UserMessagesSubscription
-          environment={environment}
-          userId={user.__id}
-          onFinished={() => this.setState({ finished: true })}
-          onSubscribed={({ next }) => this.setState({ next })}
-          setUserMessages={this.handleUserMessages.bind(this)}
-        />
+        {user.__id && (
+          <UserMessagesSubscription
+            environment={environment}
+            userId={user.__id}
+            onFinished={() => this.setState({ finished: true })}
+            onSubscribed={({ next }) => this.setState({ next })}
+            setUserMessages={this.handleUserMessages.bind(this)}
+          />
+        )}
+        <AcknowledgeNotifications type={environment.notifications.MESSAGE} />
         <div className="user-messages">
           <Paper>
             <div className="wrapper">
