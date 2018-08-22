@@ -110,12 +110,11 @@ export class ModeratorMessages extends React.Component {
           <Paper>
             <div className="wrapper">
               {activeUser && (
-                <div className="title">
-                  <h2>{activeUser.displayName}</h2>
-                  <span className="flex">
-                    {activeUser.__id}
-                    {activeUser.email}
-                  </span>
+                <div className="header">
+                  <div>
+                    <h2 className="title">{activeUser.displayName}</h2>
+                    <span className="secondary">{activeUser.email}</span>
+                  </div>
                   <Link href={`/admin?adminTabIndex=1&detailUserId=${detailUserId}`} prefetch>
                     <a>
                       <IconButton use="arrow_forward" />

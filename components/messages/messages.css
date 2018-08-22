@@ -1,7 +1,15 @@
-.user-messages .title {
+.user-messages .header {
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+.user-messages .header .title  {
+  margin-bottom: 0;
+}
+
+.user-messages .header .secondary  {
+  font-size: 0.75rem;
 }
 
 .user-messages .flex {
