@@ -1,8 +1,12 @@
 const GetRefs = require('./get-refs');
+const extractDisplayNameFromUser = require('./extract-display-name-from-user');
+const extractEmailFromUser = require('./extract-email-from-user');
+const extractPhotoURLFromUser = require('./extract-photo-url-from-user');
 
 module.exports = context => async (uid, message) => {
   const getRefs = GetRefs(context);
   const statsRef = getRefs.messageStats(uid);
+  const userRef = getRefs.users(uid);
 
   return context.admin.firestore().runTransaction(async t => {
     const statsDoc = await t.get(statsRef);
@@ -29,6 +33,18 @@ module.exports = context => async (uid, message) => {
           displayName: message.displayName,
           email: message.email,
           photoURL: message.photoURL,
+        };
+      }
+
+      if (!update.displayName) {
+        const userDoc = await userRef.get();
+        const user = userDoc.data();
+
+        update = {
+          ...update,
+          displayName: extractDisplayNameFromUser(user),
+          email: extractEmailFromUser(user),
+          photoURL: extractPhotoURLFromUser(user),
         };
       }
 

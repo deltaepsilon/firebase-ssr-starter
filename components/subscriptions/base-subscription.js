@@ -28,10 +28,6 @@ export default class BaseSubscription extends React.Component {
   attemptSubscription() {
     const { getFinished, getNext, observable } = this.props;
 
-    // console.log('subscribing', this.props.name);
-
-    console.log('observable', observable);
-
     this.subscription = observable.subscribe(
       getNext({ addItem: this.addItem.bind(this) }),
       error => {
@@ -52,11 +48,10 @@ export default class BaseSubscription extends React.Component {
     this.setState({ items: [] });
 
     if (this.subscription && typeof this.subscription.unsubscribe === 'function') {
-      console.log('this.subscription.unsubscribe', this.subscription.unsubscribe);
       this.subscription.unsubscribe();
       this.subscription = null;
     } else {
-      console.log('failed to unsubscribe', this.props.name);
+      console.info('failed to unsubscribe', this.props.name);
     }
   }
 
