@@ -19,6 +19,9 @@ export default {
   presence: (rtdb, uid) => {
     return rtdb.ref('presence').child(uid);
   },
+  pushNotifications: (rtdb, uid) => {
+    return rtdb.ref('push-notifications').child(uid);
+  },
   settings: (db, uid) => {
     return db
       .collection('permission-based')

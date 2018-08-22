@@ -28,6 +28,10 @@
   --color-form-border: #eee;
   --color-offline: #d3133f;
   --color-overlay-background: #fff;
+
+  /* Cards */
+  --card-width: 21rem;
+  --card-max-width: calc(100vw - 4rem);
 }
 
 body {

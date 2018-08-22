@@ -1,11 +1,11 @@
 /* gobals firebase */
-export default async function acknowledgeNotificationsByUserAndType({
+export default async function ({
   environment,
-  uid,
+  currentUser,
   type,
 }) {
   const db = firebase.database();
-  const notificationsRef = environment.schema.notifications(db, uid);
+  const notificationsRef = environment.schema.notifications(db, currentUser.uid);
 
   return notificationsRef.transaction(notifications => {
     const result = {};

@@ -9,7 +9,7 @@ export class AcknowledgeNotifications extends React.Component {
     const { currentUser, environment, type } = this.props;
 
     if (currentUser && environment && type) {
-      await acknowledgeNotificationsByUserAndType({ currentUser, environment, type });
+      await acknowledgeNotificationsByUserAndType({ uid: currentUser.uid, environment, type });
     } else {
       console.error(`notification acknowledgement failed: ${type}`);
     }

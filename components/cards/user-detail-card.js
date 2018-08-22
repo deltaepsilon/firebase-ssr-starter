@@ -32,7 +32,7 @@ export default ({ adminTabIndex, environment, user }) => {
   });
 
   return (
-    <Card style={{ width: '21rem', maxWidth: 'calc(100vw - 4rem)' }}>
+    <Card style={{ width: 'var(--card-width)', maxWidth: 'var(--card-max-width)' }}>
       <CardPrimaryAction>
         <CardMedia
           sixteenByNine

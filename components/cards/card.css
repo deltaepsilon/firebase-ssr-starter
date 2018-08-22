@@ -2,8 +2,62 @@
   padding: 0 1rem 1rem 1rem;
 }
 
+.mdc-card section > * {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 .mdc-card .row {
   justify-content: space-between;
   align-items: center;
   margin-bottom: 0.5rem;
+}
+
+.mdc-card .row > *:last-child {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.mdc-card .row > *:not(:last-child) {
+  margin-right: 0.5rem;
+}
+
+.mdc-card .mdc-card__primary-action {
+  flex: 1;
+}
+
+.mdc-card .mdc-card__actions form {
+  width: 100%;
+}
+
+.sixteen-by-nine {
+  position: relative;
+  padding-bottom: 56.25%;
+}
+
+.sixteen-by-nine > div {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  padding: 1rem;
+}
+
+.sixteen-by-nine > div.centered {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.user-push-notifications-card ul {
+  list-style: none;
+  padding: 0;
+  overflow-y: scroll;
+  height: 10rem;
+}
+
+.user-push-notifications-card li {
+  padding: 0.5rem;
 }

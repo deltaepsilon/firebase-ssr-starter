@@ -43,21 +43,6 @@ export function DrawerContents({
 
       <DrawerContent>
         <div>
-          <Active pathname={pathname} href="/app/dashboard">
-            <ListItem>
-              <ListItemText>
-                <Link href="/app/dashboard" prefetch>
-                  <a className="dashboard">
-                    <Icon use="dashboard" />
-                    <span>Dashboard</span>
-                  </a>
-                </Link>
-              </ListItemText>
-            </ListItem>
-          </Active>
-        </div>
-
-        <div>
           {claims && claims.isAdmin ? (
             <Active pathname={pathname} href="/admin">
               <ListItem>
@@ -72,6 +57,23 @@ export function DrawerContents({
               </ListItem>
             </Active>
           ) : null}
+        </div>
+
+        <div>
+          {currentUser && (
+            <Active pathname={pathname} href="/app/dashboard">
+              <ListItem>
+                <ListItemText>
+                  <Link href="/app/dashboard" prefetch>
+                    <a className="dashboard">
+                      <Icon use="dashboard" />
+                      <span>Dashboard</span>
+                    </a>
+                  </Link>
+                </ListItemText>
+              </ListItem>
+            </Active>
+          )}
         </div>
 
         <div>

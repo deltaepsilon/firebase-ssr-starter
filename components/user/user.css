@@ -1,0 +1,9 @@
+.user .cards {
+  display: grid;
+  grid-gap: 1rem;
+  grid-template-columns: repeat(auto-fill, var(--card-width));
+}
+
+.user .cards .mdc-card {
+  /* background: gold; */
+}

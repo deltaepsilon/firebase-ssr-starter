@@ -2,8 +2,14 @@
   "rules": {
     "notifications": {
       "$uid": {
-        ".read": "auth.uid == $uid",
-        ".write": "auth.uid == $uid"
+        ".read": "auth.uid == $uid || auth.token.isAdmin == true",
+        ".write": "auth.uid == $uid || auth.token.isAdmin == true"
+      }
+    },
+    "push-notifications": {
+      "$uid": {
+        ".read": "auth.token.isAdmin == true",
+        ".write": "auth.token.isAdmin == true"
       }
     },
     "presence": {
