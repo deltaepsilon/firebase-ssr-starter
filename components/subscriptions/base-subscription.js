@@ -53,7 +53,7 @@ export default class BaseSubscription extends React.Component {
 
     if (this.subscription && typeof this.subscription.unsubscribe === 'function') {
       console.log('this.subscription.unsubscribe', this.subscription.unsubscribe);
-      this.subscription && this.subscription.unsubscribe();
+      this.subscription.unsubscribe();
       this.subscription = null;
     } else {
       console.log('failed to unsubscribe', this.props.name);

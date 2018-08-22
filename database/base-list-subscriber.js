@@ -4,7 +4,7 @@ import isBrowser from '../utilities/is-browser';
 
 export default (environment, schemaName, args = [], queryOptions) =>
   isBrowser(
-    Observable.create(async observer => {
+    Observable.create(observer => {
       const db = firebase.firestore();
       const getCollection = withCollection({ args, db, environment, schemaName });
       const loadCollection = withObserver(observer);
@@ -45,11 +45,7 @@ export default (environment, schemaName, args = [], queryOptions) =>
         };
       }
 
-      console.log('lastRecordUnsubscribe', lastRecordUnsubscribe);
       return () => {
-        debugger;
-        console.info('unsubscribed', schemaName);
-
         if (typeof lastRecordUnsubscribe == 'function') {
           lastRecordUnsubscribe();
         }
