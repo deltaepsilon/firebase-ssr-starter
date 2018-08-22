@@ -2,6 +2,16 @@
   padding: 0 1rem 1rem 1rem;
 }
 
+.mdc-card .justified {
+  display: flex;
+  justify-items: space-between;
+  align-items: center;
+}
+
+.mdc-card .flex {
+  flex: 1;
+}
+
 .mdc-card section > * {
   overflow: hidden;
   text-overflow: ellipsis;

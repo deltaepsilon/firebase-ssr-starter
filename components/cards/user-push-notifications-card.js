@@ -40,8 +40,9 @@ export default class UserPushNotificationsCard extends React.Component {
   render() {
     const { environment, user } = this.props;
     const { items } = this.state;
-
-    console.log('user', user);
+    const recordLink = `${
+      environment.firebase.databaseURL
+    }/project/fir-ssr-starter/database/fir-ssr-starter/data/push-notifications/${user.__id}`;
 
     return (
       <div className="user-push-notifications-card">
@@ -56,10 +57,18 @@ export default class UserPushNotificationsCard extends React.Component {
             <SixteenByNine centered>
               <Icon use="notifications" style={{ fontSize: '8rem' }} />
             </SixteenByNine>
-            <section>
-              <Typography use="subtitle2" tag="h3" theme="text-secondary-on-background">
-                Push Notifications
+            <section className="justified">
+              <Typography
+                className="flex"
+                use="subtitle2"
+                tag="h3"
+                theme="text-secondary-on-background"
+              >
+                <span> Push Notifications</span>
               </Typography>
+              <a href={recordLink} target="_blank">
+                record
+              </a>
             </section>
 
             <section>
