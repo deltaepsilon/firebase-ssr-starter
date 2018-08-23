@@ -33,6 +33,8 @@ export default class UserPushNotificationsCard extends React.Component {
         type: environment.notifications.ADMIN,
         detail: {
           text,
+          title: 'View',
+          url: `${location.origin}/app/messages`,
         },
       });
   }

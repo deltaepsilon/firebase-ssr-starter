@@ -1,4 +1,4 @@
-/* gobals firebase */
+/* globals firebase */
 import { Observable } from 'rxjs';
 
 export default function SubscribePresence({ environment, currentUser }) {

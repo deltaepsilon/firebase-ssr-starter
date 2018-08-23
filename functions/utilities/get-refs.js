@@ -31,4 +31,20 @@ module.exports = ({ admin, environment }) => ({
       .ref(environment.schema.notifications)
       .child(uid);
   },
+  pushNotifications: uid => {
+    return admin
+      .database()
+      .ref(environment.schema.pushNotifications)
+      .child(uid);
+  },
+  settings: uid => {
+    const pathParts = environment.schema.settings.split('/');
+
+    return admin
+      .firestore()
+      .collection(pathParts[0])
+      .doc(pathParts[1])
+      .collection(pathParts[2])
+      .doc(uid);
+  },
 });

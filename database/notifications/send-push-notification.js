@@ -1,4 +1,4 @@
-/* gobals firebase */
+/* globals firebase */
 export default async function ({
   environment,
   currentUser,

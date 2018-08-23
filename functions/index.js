@@ -6,7 +6,13 @@ admin.initializeApp();
 
 admin.firestore().settings({ timestampsInSnapshots: true });
 
-const { AuthorizationOnCreate, MessagesOnWrite, SettingsOnWrite, UsersOnWrite } = require('./src');
+const {
+  AuthorizationOnCreate,
+  MessagesOnWrite,
+  PushNotificationsOnCreate,
+  SettingsOnWrite,
+  UsersOnWrite,
+} = require('./src');
 const context = { admin, environment };
 
 // authorization-on-create
@@ -16,6 +22,11 @@ exports.authorizationOnCreate = functions.auth.user().onCreate(AuthorizationOnCr
 exports.messagesOnWrite = functions.firestore
   .document(`${environment.schema.messages}/{uid}/messages/{messageId}`)
   .onWrite(MessagesOnWrite(context));
+
+// push-notifications-on-create
+exports.pushNotificationsOnCreate = functions.database
+  .ref(`${environment.schema.pushNotifications}/{uid}/{pushNotificationId}`)
+  .onCreate(PushNotificationsOnCreate(context));
 
 // settings-on-write
 exports.settingsOnWrite = functions.firestore

@@ -34,12 +34,12 @@ export class Messaging extends Component {
   async getToken() {
     const { currentUser, setMessagingToken } = this.props;
     const uid = currentUser.uid;
-    
+
     return getToken({ uid, setMessagingToken })();
   }
 
-  showMessage({ message, noteId }) {
-    this.setState({ message, noteId, title: 'Visit', show: true });
+  showMessage({ text: message, title, url }) {
+    this.setState({ message, title, show: true, url });
   }
 
   async registerServiceWorker() {
