@@ -20,14 +20,11 @@ messaging.setBackgroundMessageHandler(payload => {
 });
 
 self.addEventListener('notificationclick', function(e) {
-  const { noteId } = e.notification.data;
-  const noteUrl = `/note/${noteId}`;
+  const { url } = e.notification.data;
 
   e.notification.close();
 
-  if (noteId) {
-    e.waitUntil(clients.openWindow(noteUrl));
-  }
+  url && e.waitUntil(clients.openWindow(url));
 });
 
 if (typeof isDevelopment == 'undefined') {

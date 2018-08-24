@@ -11,11 +11,7 @@ export async function getMessagingToken() {
 
       await messaging.requestPermission();
       
-      console.log('got permission');
-      
       messagingToken = await messaging.getToken();
-      
-      console.log('messagingToken', messagingToken);
     }
   } catch (e) {
     console.log('e', e);
@@ -25,7 +21,6 @@ export async function getMessagingToken() {
     );
   }
 
-  console.log('messagingToken', messagingToken);
   return messagingToken;
 }
 

@@ -32,8 +32,6 @@ export class Messaging extends Component {
   }
 
   async getToken() {
-
-    console.log('getToken');
     const messagingToken = await getToken();
 
     this.props.setMessagingToken(messagingToken);
