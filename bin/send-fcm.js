@@ -7,7 +7,9 @@ const message = {
     'dDKITtRpUCE:APA91bHv_hGbj7zjhUgr9-yjvOJcmkOmO15qi1AhSvHDo_FCP_v-gQU_asqEsXRUZuhOePo-62Wix5rw1dDMb892bm1DQiAMVZuAAvaoAHZu-mZG8UaHzPmLI2I2DXdbNv__eilrJ6lb',
   data: {
     type: 'admin',
+    title: 'click me',
     text: 'test message',
+    url: 'http://localhost:3000/app/messages',
   },
 };
 

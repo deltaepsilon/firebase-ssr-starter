@@ -200,8 +200,8 @@ export default connect(
 )(DrawerContents);
 
 function signOut(handleSignOut) {
-  return () => {
-    handleSignOut();
+  return async () => {
+    await handleSignOut();
     window.firebase.auth().signOut();
   };
 }

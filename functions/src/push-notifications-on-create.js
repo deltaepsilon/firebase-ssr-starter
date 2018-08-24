@@ -8,7 +8,7 @@ module.exports = context => async (snap, { params: { uid, pushNotificationId } }
   const pushNotification = snap.val();
   const settings = await getSettings(uid);
 
-  if (settings && settings.messagingToken) {
+  if (settings && typeof settings.messagingToken == 'string') {
     const payload = {
       token: settings.messagingToken,
       data: { type: pushNotification.type, ...pushNotification.detail },
@@ -16,7 +16,7 @@ module.exports = context => async (snap, { params: { uid, pushNotificationId } }
     await sendFCMMessage(payload);
     console.log('sent', payload);
   } else {
-    console.log('not sent', uid, pushNotification);
+    console.log('not sent', uid, settings, pushNotification);
   }
 
   await snap.ref.remove();

@@ -1,1 +1,1 @@
-export default (state, presence) => ({ presence });
+export default async (state, presence = false) => ({ presence });

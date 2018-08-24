@@ -1,3 +1,4 @@
+/* globals window */
 import React from 'react';
 import { connect } from 'unistore/react';
 import { actions } from '../../datastore';
@@ -11,31 +12,44 @@ export class AlertHandler extends React.Component {
     this.state = {
       show: false,
       message: '',
+      url: '',
     };
   }
   componentDidMount() {
-    window.Alert = message => {
-      this.setState({ show: true, message });
+    window.Alert = (message, url = '') => {
+      this.setState({ show: true, message, url });
       return false;
     };
   }
 
+  handleClick() {
+    const { url } = this.state;
+
+    this.hide();
+
+    if (url) {
+      window.location = url;
+    }
+  }
+
   hide() {
-    this.setState({ show: false, message: '' });
+    this.setState({ show: false, message: '', url: '' });
   }
 
   render() {
-    const hide = this.hide.bind(this);
+    const { message, show, url } = this.state;
+
     return (
       <Snackbar
         alignStart
-        actionHandler={hide}
+        actionHandler={this.handleClick.bind(this)}
         actionText="dismiss"
         dismissesOnAction
-        message={this.state.message}
+        message={message}
+        actionText={url ? 'Visit' : ''}
         multiline
-        onHide={hide}
-        show={this.state.show}
+        onHide={this.hide.bind(this)}
+        show={show}
         // timeout={1000 * 60}
       />
     );

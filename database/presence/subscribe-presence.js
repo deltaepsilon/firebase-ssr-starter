@@ -14,16 +14,18 @@ export default function SubscribePresence({ environment, currentUser }) {
     const handler = connectedRef.on('value', function(snap) {
       const connected = snap.val();
 
-      observer.next(connected);
-
       if (connected) {
         connectionRef = connectionsRef.push();
         connectionRef.onDisconnect().remove();
         connectionRef.set(true);
 
+        observer.next(connectionRef.key);
+
         emailRef.set(currentUser.providerData[0].email);
 
         lastOnlineRef.onDisconnect().set(firebase.database.ServerValue.TIMESTAMP);
+      } else {
+        observer.next(false);
       }
     });
 

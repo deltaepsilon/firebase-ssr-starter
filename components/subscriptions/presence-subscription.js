@@ -20,6 +20,10 @@ export class PresenceSubscription extends React.Component {
     return subscribePresence({ environment, currentUser });
   }
 
+  componentWillUnmount() {
+    this.props.setPresence();
+  }
+
   getNext() {
     return event => {
       this.props.setPresence(event);

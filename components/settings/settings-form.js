@@ -6,14 +6,22 @@ import Switch from '../form/switch';
 import { Icon } from 'rmwc/Icon';
 
 import Paper from '../../components/paper/paper';
-import getToken from '../../utilities/messaging/get-token';
-import setSettings from '../../database/settings/set-settings';
+import SetSettings from '../../database/settings/set-settings';
+
 import SaveableTextField from '../form/saveable-text-field';
 import ProfileImage from './profile-image';
 
-export function SettingsForm({ currentUser, environment, settings, user, setMessagingToken }) {
+export function SettingsForm({
+  currentUser,
+  environment,
+  isSubscribedToFCM,
+  settings,
+  user,
+  setIsSubscribedToFCM,
+  setMessagingToken,
+}) {
   const uid = currentUser && currentUser.uid;
-  const settingsSetter = setSettings(environment, uid);
+  const setSettings = SetSettings(environment, uid);
 
   return uid && settings ? (
     <Paper>
@@ -22,11 +30,10 @@ export function SettingsForm({ currentUser, environment, settings, user, setMess
       <hr />
 
       <Form>
-
         <SaveableTextField
           value={settings.displayName}
           label="Full Name"
-          onSave={async displayName => settingsSetter({ displayName })}
+          onSave={async displayName => setSettings({ displayName })}
         />
 
         <br />
@@ -39,21 +46,21 @@ export function SettingsForm({ currentUser, environment, settings, user, setMess
 
         <h4>Profile Image</h4>
 
-        <ProfileImage settings={settings} setSettings={settingsSetter} />
+        <ProfileImage settings={settings} setSettings={setSettings} />
 
         <hr />
 
         <h3>Options</h3>
 
         <Switch
-          checked={settings.messagingToken || false}
+          checked={isSubscribedToFCM || false}
           onChange={async () => {
-            if (settings.messagingToken) {
-              await settingsSetter({ messagingToken: null });
+            if (isSubscribedToFCM) {
+              await setIsSubscribedToFCM(false);
+              setMessagingToken(null);
               Alert('Messaging disabled');
             } else {
-              await getToken({ environment, uid })(setMessagingToken);
-              Alert('Messaging enabled');
+              await setIsSubscribedToFCM(true);
             }
           }}
         >
@@ -65,9 +72,9 @@ export function SettingsForm({ currentUser, environment, settings, user, setMess
           checked={settings.optInEmail || false}
           onChange={async () => {
             if (settings.optInEmail) {
-              await settingsSetter({ optInEmail: false });
+              await setSettings({ optInEmail: false });
             } else {
-              await settingsSetter({ optInEmail: true });
+              await setSettings({ optInEmail: true });
             }
           }}
         >
@@ -79,9 +86,9 @@ export function SettingsForm({ currentUser, environment, settings, user, setMess
           checked={settings.optInMarketing || false}
           onChange={async () => {
             if (settings.optInMarketing) {
-              await settingsSetter({ optInMarketing: false });
+              await setSettings({ optInMarketing: false });
             } else {
-              await settingsSetter({ optInMarketing: true });
+              await setSettings({ optInMarketing: true });
             }
           }}
         >
@@ -94,6 +101,6 @@ export function SettingsForm({ currentUser, environment, settings, user, setMess
 }
 
 export default connect(
-  'currentUser,environment,settings,user',
+  'currentUser,environment,isSubscribedToFCM,settings,user',
   actions
 )(SettingsForm);

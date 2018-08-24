@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { connect } from 'unistore/react';
 import { actions } from '../../datastore';
 
-import getToken from '../../utilities/messaging/get-token';
+import getToken from '../../utilities/messaging/get-messaging-token';
 
 import { Snackbar } from 'rmwc/Snackbar';
 
@@ -32,10 +32,12 @@ export class Messaging extends Component {
   }
 
   async getToken() {
-    const { currentUser, setMessagingToken } = this.props;
+    const { currentUser, environment, presence, setMessagingToken } = this.props;
     const uid = currentUser.uid;
 
-    return getToken({ uid, setMessagingToken })();
+    const messagingToken = await getToken();
+
+    setMessagingToken(messagingToken);
   }
 
   showMessage({ text: message, title, url }) {
@@ -72,6 +74,6 @@ export class Messaging extends Component {
 }
 
 export default connect(
-  'currentUser,isDevelopment,router,serviceWorkerRegistered',
+  'currentUser,environment,isDevelopment,presence,router,serviceWorkerRegistered,settings',
   actions
 )(Messaging);
