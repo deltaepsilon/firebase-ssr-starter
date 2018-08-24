@@ -3,9 +3,9 @@ jest.mock('../utilities/send-fcm-message');
 const admin = require('../utilities/test-admin');
 const environment = require('../environments/environment.test');
 const context = { admin, environment };
+const getSettings = require('../utilities/get-settings')(context);
 const setSettings = require('../utilities/set-settings')(context);
 const removeSettings = require('../utilities/remove-settings')(context);
-const getRefs = require('../utilities/get-refs')(context);
 
 const Func = require('./push-notifications-on-create');
 const sendFCMMessage = require('../utilities/send-fcm-message')(context);
@@ -14,9 +14,11 @@ describe('PushNotificationsOnCreate', () => {
   const uid = '123456';
   const pushNotificationId = '987654';
   const messagingToken = 'fake messaging token';
-  const pushNotificationsRef = getRefs.pushNotifications(uid);
   const settings = {
-    messagingToken,
+    messagingTokens: {
+      valid: messagingToken,
+      invalid: 'invalid',
+    },
   };
 
   let func;
@@ -65,11 +67,17 @@ describe('PushNotificationsOnCreate', () => {
     it('should remove the ref', () => {
       expect(snap.ref.remove).toHaveBeenCalled();
     });
+
+    it('should remove the invalid key', async () => {
+      const settings = await getSettings(uid);
+
+      expect(Object.keys(settings.messagingTokens).join()).toEqual('valid');
+    });
   });
 
   describe('without messagingToken', () => {
     it('should not call sendFCMMessage without valid settings', () => {
-      expect(sendFCMMessage).toHaveBeenCalledTimes(1);
+      expect(sendFCMMessage).toHaveBeenCalledTimes(2);
     });
 
     it('should remove the ref both times', () => {

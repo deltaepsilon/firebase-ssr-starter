@@ -57,7 +57,6 @@ export function SettingsForm({
           onChange={async () => {
             if (isSubscribedToFCM) {
               await setIsSubscribedToFCM(false);
-              setMessagingToken(null);
               Alert('Messaging disabled');
             } else {
               await setIsSubscribedToFCM(true);

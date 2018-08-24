@@ -32,12 +32,11 @@ export class Messaging extends Component {
   }
 
   async getToken() {
-    const { currentUser, environment, presence, setMessagingToken } = this.props;
-    const uid = currentUser.uid;
 
+    console.log('getToken');
     const messagingToken = await getToken();
 
-    setMessagingToken(messagingToken);
+    this.props.setMessagingToken(messagingToken);
   }
 
   showMessage({ text: message, title, url }) {

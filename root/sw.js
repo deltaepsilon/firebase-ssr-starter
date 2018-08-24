@@ -1,6 +1,6 @@
 /* global firebase */
-importScripts('https://www.gstatic.com/firebasejs/5.3.0/firebase-app.js');
-importScripts('https://www.gstatic.com/firebasejs/5.3.0/firebase-messaging.js');
+importScripts('https://www.gstatic.com/firebasejs/5.4.1/firebase-app.js');
+importScripts('https://www.gstatic.com/firebasejs/5.4.1/firebase-messaging.js');
 importScripts('/environment.sw.js');
 
 firebase.initializeApp(environment.firebase);
@@ -9,13 +9,15 @@ var messaging = firebase.messaging();
 
 const iconUrl =
   'https://firebasestorage.googleapis.com/v0/b/firelist-react.appspot.com/o/assets%2Fbolt-144px.png?alt=media&token=a747522e-22a4-496d-bcc9-429a007a86fb';
-messaging.setBackgroundMessageHandler(payload =>
-  self.registration.showNotification('Firebase SSR', {
-    body: payload.data.message,
+messaging.setBackgroundMessageHandler(payload => {
+  const notification = {
+    body: payload.data.text,
     data: payload.data,
     icon: iconUrl,
-  })
-);
+  };
+
+  self.registration.showNotification('Firebase SSR', notification);
+});
 
 self.addEventListener('notificationclick', function(e) {
   const { noteId } = e.notification.data;
