@@ -106,7 +106,9 @@ export class ModeratorMessages extends React.Component {
         />
 
         <div className="moderator-messages user-messages">
-          <UserSelection setActiveUser={activeUser => this.setState({ activeUser })} />
+          <UserSelection
+            setActiveUser={activeUser => this.setState({ activeUser, userMessages: [] })}
+          />
           <Paper>
             <div className="wrapper">
               {activeUser && (

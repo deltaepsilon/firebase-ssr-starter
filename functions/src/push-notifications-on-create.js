@@ -17,7 +17,11 @@ module.exports = context => async (snap, { params: { uid, pushNotificationId } }
         const token = settings.messagingTokens[key];
         const payload = {
           token,
-          data: { type: pushNotification.type, ...pushNotification.detail },
+          data: {
+            type: pushNotification.type,
+            created: new Date(pushNotification.created).toString(),
+            ...pushNotification.detail,
+          },
         };
 
         try {
@@ -29,6 +33,7 @@ module.exports = context => async (snap, { params: { uid, pushNotificationId } }
             tokenKeysToDelete.push(key);
           } else {
             console.info({ ...e });
+            console.info('error payload', payload);
           }
         }
       })

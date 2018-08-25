@@ -1,6 +1,6 @@
-/* globals firebase */
+/* globals firebase, window */
 export default ({ environment, uid }) => message => {
   const db = firebase.firestore();
   const userMessagesCollection = environment.schema.userMessages(db, uid);
-  return userMessagesCollection.add(message);
+  return userMessagesCollection.add({ origin: window.location.origin, ...message });
 };

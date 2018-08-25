@@ -12,6 +12,7 @@ const Func = require('./authorization-on-create');
 const db = admin.firestore();
 
 const usersCollection = db.collection(environment.schema.users);
+const uuidv4 = require('uuid/v4');
 
 describe('AuthorizationOnCreate', () => {
   const email = 'tester@chrisesplin.com';
@@ -25,7 +26,7 @@ describe('AuthorizationOnCreate', () => {
     func = Func(context);
 
     user = {
-      uid: '123456',
+      uid: uuidv4(),
       email: null,
       emailVerified: true,
       metadata: {

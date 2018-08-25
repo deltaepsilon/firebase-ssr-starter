@@ -9,6 +9,7 @@ admin.firestore().settings({ timestampsInSnapshots: true });
 const {
   AuthorizationOnCreate,
   MessagesOnWrite,
+  ProcessNotificationsOnPublish,
   PushNotificationsOnCreate,
   SettingsOnWrite,
   UsersOnWrite,
@@ -22,6 +23,11 @@ exports.authorizationOnCreate = functions.auth.user().onCreate(AuthorizationOnCr
 exports.messagesOnWrite = functions.firestore
   .document(`${environment.schema.messages}/{uid}/messages/{messageId}`)
   .onWrite(MessagesOnWrite(context));
+
+// process-notifications-on-publish
+exports.processNotificationsOnPublish = functions.pubsub
+  .topic(environment.pubSub.PROCESS_NOTIFICATIONS)
+  .onPublish(ProcessNotificationsOnPublish(context));
 
 // push-notifications-on-create
 exports.pushNotificationsOnCreate = functions.database

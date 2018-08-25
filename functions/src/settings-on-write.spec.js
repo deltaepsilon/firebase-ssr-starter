@@ -5,11 +5,12 @@ const environment = require('../environments/environment.test');
 const context = { admin, environment };
 const getUser = require('../utilities/get-user')(context);
 const deleteUser = require('../utilities/delete-user')(context);
+const uuidv4 = require('uuid/v4');
 
 const Func = require('./settings-on-write');
 
 describe('SettingsOnWrite', () => {
-  const uid = '123456';
+  const uid = uuidv4();
 
   let func;
   let addedChange;

@@ -11,11 +11,12 @@ const getUserNotifications = require('../utilities/get-user-notifications')(cont
 const setUser = require('../utilities/set-user')(context);
 const removeUserByUid = require('../utilities/remove-user-by-uid')(context);
 const getRefs = require('../utilities/get-refs')(context);
+const uuidv4 = require('uuid/v4');
 
 const Func = require('./messages-on-write');
 
 describe('MessagesOnWrite', () => {
-  const uid = '123456';
+  const uid = uuidv4();
   const messageId = '987654';
   const notificationsRef = getRefs.notifications(uid);
   const user = {
@@ -23,6 +24,7 @@ describe('MessagesOnWrite', () => {
     displayName: 'user displayName',
     email: 'user email',
     photoURL: 'user photoURL',
+    providerData: [],
   };
 
   beforeAll(async () => {

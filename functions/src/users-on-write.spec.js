@@ -5,6 +5,7 @@ const environment = require('../environments/environment.test');
 const context = { admin, environment };
 const algolia = require('../utilities/algolia-utilities');
 const { usersIndex, saveObject, deleteObject } = algolia(context);
+const uuidv4 = require('uuid/v4');
 
 const Func = require('./users-on-write');
 
@@ -24,7 +25,7 @@ describe('UsersOnWrite', () => {
     func = Func(context);
 
     user = {
-      uid: '123456',
+      uid: uuidv4(),
       email: null,
       emailVerified: true,
       lastSignInTime: now,
@@ -62,8 +63,8 @@ describe('UsersOnWrite', () => {
         email: 'tester@chrisesplin.com',
       },
       lastSignInTime: now,
-      objectID: '123456',
-      uid: '123456',
+      objectID: user.uid,
+      uid: user.uid,
     });
   });
 

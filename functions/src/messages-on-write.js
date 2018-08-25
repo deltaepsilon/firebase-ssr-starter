@@ -17,7 +17,8 @@ module.exports = context => {
       await removeMessageLog(messageId);
     } else {
       await setMessageLog(messageId, message, { merge: true });
-      uid != message.uid && (await addUserNotification(uid, { type, detail: message }));
+      uid != message.uid &&
+        (await addUserNotification(uid, { type, created: Date.now(), detail: message }));
     }
 
     return updateMessageStats(uid, message);

@@ -31,6 +31,7 @@ describe('PushNotificationsOnCreate', () => {
 
     pushNotification = {
       type: 'admin',
+      created: new Date().toString(),
       detail: { text: 'push notification text' },
     };
 
@@ -60,7 +61,11 @@ describe('PushNotificationsOnCreate', () => {
     it('should call sendFCMMessage', () => {
       expect(sendFCMMessage).toHaveBeenCalledWith({
         token: messagingToken,
-        data: { type: pushNotification.type, ...pushNotification.detail },
+        data: {
+          type: pushNotification.type,
+          created: pushNotification.created,
+          ...pushNotification.detail,
+        },
       });
     });
 

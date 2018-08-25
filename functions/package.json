@@ -14,7 +14,8 @@
     "algoliasearch": "^3.30.0",
     "firebase-admin": "~5.13.1",
     "firebase-functions": "^2.0.0",
-    "md5": "^2.2.1"
+    "md5": "^2.2.1",
+    "uuid": "^3.3.2"
   },
   "engines": {
     "node": "8"
