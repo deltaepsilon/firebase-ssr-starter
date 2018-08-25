@@ -21,7 +21,7 @@ export function PrimaryAppBar({ currentUser, presence, title, toggleIsDrawerOpen
       <TopAppBar style={{ top: 0 }}>
         <TopAppBarRow>
           <TopAppBarSection alignStart>
-            <div className="menu-icon-wrapper">
+            <div className="menu-icon-wrapper" role="button">
               <TopAppBarNavigationIcon use="menu" onClick={toggleIsDrawerOpen} />
             </div>
             <TopAppBarTitle>{title}</TopAppBarTitle>

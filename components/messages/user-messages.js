@@ -84,6 +84,14 @@ export class UserMessages extends React.Component {
     this.timer = setTimeout(() => fn(), this.debounceMillis);
   }
 
+  scrollToBottom() {
+    window.scrollTo(0, document.body.scrollHeight);
+  }
+
+  scrollToTop() {
+    window.scrollTo(0, 0);
+  }
+
   render() {
     const { environment, user } = this.props;
 
@@ -112,6 +120,8 @@ export class UserMessages extends React.Component {
 
               <MessageForm
                 user={user}
+                onBlur={this.scrollToTop.bind(this)}
+                onFocus={this.scrollToBottom.bind(this)}
                 onMessage={this.sendMessage.bind(this)}
                 onUpload={this.sendUpload.bind(this)}
               />

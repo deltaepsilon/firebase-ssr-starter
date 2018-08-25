@@ -23,6 +23,7 @@ export function DrawerContents({
   notifications,
   pathname,
   handleSignOut,
+  setIsDrawerOpen
 }) {
   const showModeratorMessages = claims && (claims.isAdmin || claims.isModerator);
   const messageNotifications = notifications.filter(
@@ -30,8 +31,14 @@ export function DrawerContents({
   );
   const messageNotificationsCount = messageNotifications.length;
 
+  function handleClick(e) {
+    setIsDrawerOpen(false)
+    console.log('e', e);
+    console.log('setIsDrawerOpen', setIsDrawerOpen);
+  }
+
   return (
-    <div className="drawer-contents">
+    <div className="drawer-contents" onClick={handleClick}>
       <DrawerHeader>
         <div className="drawer-header">
           <AccountIcon currentUser={currentUser} />

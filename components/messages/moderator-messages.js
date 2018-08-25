@@ -1,3 +1,4 @@
+/* globals window, document */
 import React from 'react';
 import { connect } from 'unistore/react';
 import { actions } from '../../datastore';
@@ -89,6 +90,14 @@ export class ModeratorMessages extends React.Component {
     this.timer = setTimeout(() => fn(), this.debounceMillis);
   }
 
+  scrollToBottom() {
+    window.scrollTo(0, document.body.scrollHeight);
+  }
+
+  scrollToTop() {
+    window.scrollTo(0, 0);
+  }
+
   render() {
     const { detailUserId, environment, user } = this.props;
     const { activeUser } = this.state;
@@ -136,10 +145,13 @@ export class ModeratorMessages extends React.Component {
 
               <MessageForm
                 user={user}
+                onBlur={this.scrollToTop.bind(this)}
+                onFocus={this.scrollToBottom.bind(this)}
                 onMessage={this.sendMessage.bind(this)}
                 onUpload={this.sendUpload.bind(this)}
               />
             </div>
+            scrollToTop() 0/> }
           </Paper>
         </div>
       </>

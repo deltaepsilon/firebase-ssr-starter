@@ -29,7 +29,7 @@ export default class MessageForm extends React.Component {
   }
 
   render() {
-    const { onMessage } = this.props;
+    const { onBlur, onFocus, onMessage } = this.props;
     const { mode } = this.state;
     const isText = mode == 'text';
 
@@ -42,7 +42,13 @@ export default class MessageForm extends React.Component {
 
         <Form>
           {isText ? (
-            <SaveableTextField clearOnSave="true" onSave={onMessage} icon="send" />
+            <SaveableTextField
+              clearOnSave="true"
+              onSave={onMessage}
+              icon="send"
+              onBlur={onBlur}
+              onFocus={onFocus}
+            />
           ) : (
             <ImageUpload
               autoOpen

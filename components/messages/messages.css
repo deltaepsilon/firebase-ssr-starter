@@ -19,7 +19,7 @@
 
 .user-messages,
 .user-messages .paper {
-  height: calc(100vh - 4rem);
+  height: calc(100% - 0rem);
 }
 
 .user-messages .paper > div,
