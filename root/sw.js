@@ -16,7 +16,7 @@ messaging.setBackgroundMessageHandler(payload => {
     icon: iconUrl,
   };
 
-  self.registration.showNotification('Firebase SSR', notification);
+  self.registration.showNotification(notification.data.title || 'Firebase SSR', notification);
 });
 
 self.addEventListener('notificationclick', function(e) {
