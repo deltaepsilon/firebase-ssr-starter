@@ -48,10 +48,9 @@ module.exports = {
     MESSAGE: 'message',
   },
   pubSub: {
-    PROCESS_NOTIFICATIONS: 'process-notifications'
-  }
+    PROCESS_NOTIFICATIONS: 'process-notifications',
+  },
 };
-
 ```
 
 ### /functions/environments/environment.test.js
@@ -108,10 +107,10 @@ export default {
 ### Sample /environments/environment.dev.js
 
 ```javascript
-import prodEnvironment from "./environment";
+import prodEnvironment from './environment';
 export default {
   ...prodEnvironment,
-  isDev: true
+  isDev: true,
 };
 ```
 
@@ -170,6 +169,10 @@ For Powershell run `.\bin\deploy.ps1`.
 
 ## Use Google Pub/Sub to trigger push notifications
 
-Process a user's notifications with the following pub-sub command:
+Process a single user's notifications with the following pub-sub command:
 
-`gcloud pubsub topics publish process-notifications --message '{"uid": "123456"}'`
+`gcloud pubsub topics publish process-user-notifications --message '{"uid": "123456"}'`
+
+Process all user notifications with the following pub-sub command:
+
+`gcloud pubsub topics publish process-notifications --message '{}'`

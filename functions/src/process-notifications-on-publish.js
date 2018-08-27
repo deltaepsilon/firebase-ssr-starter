@@ -1,6 +1,6 @@
 /**
  * Trigger pub/sub
- * gcloud pubsub topics publish process-notifications --message '{"uid": "123456"}'
+ * gcloud pubsub topics publish process-notifications --message '{}'
  */
 const GetNotifications = require('../utilities/get-notifications');
 const ProcessUserNotifications = require('../utilities/process-user-notifications');
