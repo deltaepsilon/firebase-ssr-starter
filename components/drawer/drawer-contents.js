@@ -148,7 +148,7 @@ export function DrawerContents({
           {currentUser && (
             <ListItem onClick={signOut(handleSignOut)}>
               <ListItemText>
-                <a>
+                <a tabIndex="0">
                   <Icon use="power_settings_new" />
                   <span>Sign out</span>
                 </a>

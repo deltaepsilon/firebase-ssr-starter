@@ -151,7 +151,6 @@ export class ModeratorMessages extends React.Component {
                 onUpload={this.sendUpload.bind(this)}
               />
             </div>
-            scrollToTop() 0/> }
           </Paper>
         </div>
       </>

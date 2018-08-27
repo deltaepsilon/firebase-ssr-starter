@@ -23,6 +23,10 @@
   transition: margin-left var(--drawer-speed) linear;
 }
 
+.app-shell .permanent-drawer:focus-within {
+  margin-left: 0;
+}
+
 @media all and (max-width: 1024px) {
   .app-shell .permanent-drawer {
     margin-left: calc(-1 * var(--drawer-width));
