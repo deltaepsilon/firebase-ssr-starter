@@ -18,8 +18,13 @@ Here are samples for both:
 
 ### /functions/environments/environment.js
 
-```
+```javascript
 module.exports = {
+  algolia: {
+    applicationId: 'TO2F04TXTS',
+    adminApiKey: '123456789',
+    prefix: 'firebaseSSRStarter',
+  },
   firebase: {
     apiKey: 'AIzaSyBRLf1WkEBxAw5owXqTTlFIIjYNR1hoatg',
     authDomain: 'fir-ssr-starter.firebaseapp.com',
@@ -30,14 +35,28 @@ module.exports = {
   },
   schema: {
     customClaims: 'custom-claims',
+    messages: 'permission-based/user-owned/messages',
+    messageLogs: 'admin/logs/messages',
+    messageStats: 'admin/stats/messages',
+    notifications: 'notifications',
+    pushNotifications: 'push-notifications',
+    settings: 'permission-based/user-owned/settings',
     users: 'users',
   },
+  notifications: {
+    ADMIN: 'admin',
+    MESSAGE: 'message',
+  },
+  pubSub: {
+    PROCESS_NOTIFICATIONS: 'process-notifications'
+  }
 };
+
 ```
 
 ### /functions/environments/environment.test.js
 
-```
+```javascript
 const prodEnvironment = require('./environment');
 
 module.exports = {
@@ -45,6 +64,12 @@ module.exports = {
   isTest: true,
   schema: {
     customClaims: 'test-custom-claims',
+    messages: 'permission-based/user-owned/test-messages',
+    messageLogs: 'admin/logs/test-messages',
+    messageStats: 'admin/stats/test-messages',
+    notifications: 'test-notifications',
+    pushNotifications: 'test-push-notifications',
+    settings: 'permission-based/user-owned/test-settings',
     users: 'test-users',
   },
 };
@@ -56,17 +81,25 @@ Client-side environments come in two flavors, `environment.js` and `environment.
 
 ### Sample /environments/environment.js
 
-```
+```javascript
 import schema from './schema';
-
 export default {
+  algolia: {
+    applicationId: 'TO2F04TXTS',
+    searchOnlyApiKey: 'e37dcec3965d1cabde303b17e65d25f0',
+    prefix: 'firebaseSSRStarter',
+  },
   firebase: {
     apiKey: 'AIzaSyBRLf1WkEBxAw5owXqTTlFIIjYNR1hoatg',
     authDomain: 'fir-ssr-starter.firebaseapp.com',
     databaseURL: 'https://fir-ssr-starter.firebaseio.com',
     projectId: 'fir-ssr-starter',
-    storageBucket: '',
+    storageBucket: 'fir-ssr-starter.appspot.com',
     messagingSenderId: '58348257612',
+  },
+  notifications: {
+    ADMIN: 'admin',
+    MESSAGE: 'message',
   },
   schema,
 };
@@ -74,7 +107,7 @@ export default {
 
 ### Sample /environments/environment.dev.js
 
-```
+```javascript
 import prodEnvironment from "./environment";
 export default {
   ...prodEnvironment,
@@ -90,7 +123,7 @@ This one is a bit different because it's adding `environment` to global scope:
 
 ### Sample /environments/environment.sw.js
 
-```
+```javascript
 environment = {
   firebase: {
     apiKey: 'AIzaSyBRLf1WkEBxAw5owXqTTlFIIjYNR1hoatg',
@@ -134,3 +167,9 @@ For Powershell run `.\bin\interactive.ps1`.
 For Bash run `./bin/deploy.sh`.
 
 For Powershell run `.\bin\deploy.ps1`.
+
+## Use Google Pub/Sub to trigger push notifications
+
+Process a user's notifications with the following pub-sub command:
+
+`gcloud pubsub topics publish process-notifications --message '{"uid": "123456"}'`

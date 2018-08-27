@@ -61,7 +61,7 @@ function setWindowState() {
 
 store.subscribe(() => setLocalStorage(store.getState()));
 store.subscribe(syncMessagingTokens(mappedActions, store));
-// store.subscribe(() => console.log(store.getState()));
+// store.subscribe(() => console.info(store.getState()));
 
 function getLocalStorage() {
   let result = {};

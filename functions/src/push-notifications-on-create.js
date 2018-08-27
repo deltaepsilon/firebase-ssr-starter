@@ -1,13 +1,13 @@
 const GetRefs = require('../utilities/get-refs');
-const GetSettings = require('../utilities/get-settings');
+const GetUserSettings = require('../utilities/get-user-settings');
 const SendFCMMessage = require('../utilities/send-fcm-message');
 
 module.exports = context => async (snap, { params: { uid, pushNotificationId } }) => {
-  const getSettings = GetSettings(context);
+  const getUserSettings = GetUserSettings(context);
   const sendFCMMessage = SendFCMMessage(context);
 
   const pushNotification = snap.val();
-  const settings = await getSettings(uid);
+  const settings = await getUserSettings(uid);
   const tokenKeysToDelete = [];
   let sendCount = 0;
 
@@ -52,7 +52,7 @@ module.exports = context => async (snap, { params: { uid, pushNotificationId } }
 async function deleteMessagingTokens(context, { tokenKeysToDelete, uid }) {
   const db = context.admin.firestore();
   const getRefs = GetRefs(context);
-  const settingsRef = getRefs.settings(uid);
+  const settingsRef = getRefs.userSettings(uid);
 
   return db.runTransaction(async t => {
     const settingsDoc = await t.get(settingsRef);

@@ -1,12 +1,12 @@
 const SetMessageLog = require('../utilities/set-message-log');
 const RemoveMessageLog = require('../utilities/remove-message-log');
-const UpdateMessageStats = require('../utilities/update-message-stats');
+const UpdateUserMessageStats = require('../utilities/update-user-message-stats');
 const AddUserNotification = require('../utilities/add-user-notification');
 
 module.exports = context => {
   const setMessageLog = SetMessageLog(context);
   const removeMessageLog = RemoveMessageLog(context);
-  const updateMessageStats = UpdateMessageStats(context);
+  const updateUserMessageStats = UpdateUserMessageStats(context);
   const addUserNotification = AddUserNotification(context);
   const type = context.environment.notifications.MESSAGE;
 
@@ -21,6 +21,6 @@ module.exports = context => {
         (await addUserNotification(uid, { type, created: Date.now(), detail: message }));
     }
 
-    return updateMessageStats(uid, message);
+    return updateUserMessageStats(uid, message);
   };
 };

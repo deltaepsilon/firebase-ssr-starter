@@ -14,7 +14,7 @@ export async function getMessagingToken() {
       messagingToken = await messaging.getToken();
     }
   } catch (e) {
-    console.log('e', e);
+    console.info('e', e);
     Alert(
       'Unblock notifications to enable.',
       'https://support.google.com/chrome/answer/3220216?co=GENIE.Platform%3DDesktop&hl=en'

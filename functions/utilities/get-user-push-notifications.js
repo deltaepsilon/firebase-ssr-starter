@@ -1,9 +1,9 @@
 const GetRefs = require('./get-refs');
 
 module.exports = context => async userId => {
-  const pushNotificationsRef = GetRefs(context).pushNotifications(userId);
+  const userPushNotificationsRef = GetRefs(context).userPushNotifications(userId);
 
-  const snapshot = await pushNotificationsRef.once('value');
+  const snapshot = await userPushNotificationsRef.once('value');
 
   return snapshot.val();
 };

@@ -3,9 +3,9 @@ jest.mock('../utilities/send-fcm-message');
 const admin = require('../utilities/test-admin');
 const environment = require('../environments/environment.test');
 const context = { admin, environment };
-const getSettings = require('../utilities/get-settings')(context);
-const setSettings = require('../utilities/set-settings')(context);
-const removeSettings = require('../utilities/remove-settings')(context);
+const getUserSettings = require('../utilities/get-user-settings')(context);
+const setUserSettings = require('../utilities/set-user-settings')(context);
+const removeUserSettings = require('../utilities/remove-user-settings')(context);
 
 const Func = require('./push-notifications-on-create');
 const sendFCMMessage = require('../utilities/send-fcm-message')(context);
@@ -44,13 +44,13 @@ describe('PushNotificationsOnCreate', () => {
       params: { uid, pushNotificationId },
     };
 
-    await setSettings(uid, settings);
+    await setUserSettings(uid, settings);
     await func(snap, eventContext);
     await func(snap, { params: { uid: 'without settings' } });
   });
 
   afterAll(async () => {
-    await removeSettings(uid, settings);
+    await removeUserSettings(uid, settings);
   });
 
   it('should have the isTest flag', () => {
@@ -74,7 +74,7 @@ describe('PushNotificationsOnCreate', () => {
     });
 
     it('should remove the invalid key', async () => {
-      const settings = await getSettings(uid);
+      const settings = await getUserSettings(uid);
 
       expect(Object.keys(settings.messagingTokens).join()).toEqual('valid');
     });

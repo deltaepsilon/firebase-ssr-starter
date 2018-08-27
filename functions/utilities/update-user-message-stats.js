@@ -5,8 +5,8 @@ const extractPhotoURLFromUser = require('./extract-photo-url-from-user');
 
 module.exports = context => async (uid, message) => {
   const getRefs = GetRefs(context);
-  const statsRef = getRefs.messageStats(uid);
-  const userRef = getRefs.users(uid);
+  const statsRef = getRefs.userMessageStats(uid);
+  const userRef = getRefs.user(uid);
 
   return context.admin.firestore().runTransaction(async t => {
     const statsDoc = await t.get(statsRef);

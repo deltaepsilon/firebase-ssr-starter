@@ -27,7 +27,6 @@ export class SetQueryParams extends React.Component {
       const original = this.withoutOrigin(location.href);
 
       if (url != original && typeof this.props.router.push == 'function') {
-        // console.log('pushState', url, original);
         this.props.router.push(url);
       }
     }

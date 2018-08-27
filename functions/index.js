@@ -10,6 +10,7 @@ const {
   AuthorizationOnCreate,
   MessagesOnWrite,
   ProcessNotificationsOnPublish,
+  ProcessUserNotificationsOnPublish,
   PushNotificationsOnCreate,
   SettingsOnWrite,
   UsersOnWrite,
@@ -24,10 +25,15 @@ exports.messagesOnWrite = functions.firestore
   .document(`${environment.schema.messages}/{uid}/messages/{messageId}`)
   .onWrite(MessagesOnWrite(context));
 
-// process-notifications-on-publish
+// process-user-notifications-on-publish
 exports.processNotificationsOnPublish = functions.pubsub
   .topic(environment.pubSub.PROCESS_NOTIFICATIONS)
   .onPublish(ProcessNotificationsOnPublish(context));
+
+  // process-user-notifications-on-publish
+exports.processUserNotificationsOnPublish = functions.pubsub
+  .topic(environment.pubSub.PROCESS_USER_NOTIFICATIONS)
+  .onPublish(ProcessUserNotificationsOnPublish(context));
 
 // push-notifications-on-create
 exports.pushNotificationsOnCreate = functions.database

@@ -31,14 +31,8 @@ export function DrawerContents({
   );
   const messageNotificationsCount = messageNotifications.length;
 
-  function handleClick(e) {
-    setIsDrawerOpen(false)
-    console.log('e', e);
-    console.log('setIsDrawerOpen', setIsDrawerOpen);
-  }
-
   return (
-    <div className="drawer-contents" onClick={handleClick}>
+    <div className="drawer-contents" onClick={() => setIsDrawerOpen(false)}>
       <DrawerHeader>
         <div className="drawer-header">
           <AccountIcon currentUser={currentUser} />
