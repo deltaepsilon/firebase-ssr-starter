@@ -18,7 +18,6 @@ export function SettingsForm({
   settings,
   user,
   setIsSubscribedToFCM,
-  setMessagingToken,
 }) {
   const uid = currentUser && currentUser.uid;
   const setSettings = SetSettings(environment, uid);
@@ -29,71 +28,73 @@ export function SettingsForm({
 
       <hr />
 
-      <Form>
-        <SaveableTextField
-          value={settings.displayName}
-          label="Full Name"
-          onSave={async displayName => setSettings({ displayName })}
-        />
+      <Form style={{ display: 'flex', justifyContent: 'center' }}>
+        <div style={{ maxWidth: '100%', width: '40rem' }}>
+          <SaveableTextField
+            value={settings.displayName}
+            label="Full Name"
+            onSave={async displayName => setSettings({ displayName })}
+          />
 
-        <br />
+          <br />
 
-        <h4>Email</h4>
+          <h4>Email</h4>
 
-        <p>{user.email}</p>
+          <p>{user.email}</p>
 
-        <br />
+          <br />
 
-        <h4>Profile Image</h4>
+          <h4>Profile Image</h4>
 
-        <ProfileImage settings={settings} setSettings={setSettings} />
+          <ProfileImage settings={settings} setSettings={setSettings} />
 
-        <hr />
+          <hr />
 
-        <h3>Options</h3>
+          <h3>Options</h3>
 
-        <Switch
-          checked={isSubscribedToFCM || false}
-          onChange={async () => {
-            if (isSubscribedToFCM) {
-              await setIsSubscribedToFCM(false);
-              Alert('Messaging disabled');
-            } else {
-              await setIsSubscribedToFCM(true);
-            }
-          }}
-        >
-          <Icon use="message" />
-          <span>In-app alerts</span>
-        </Switch>
+          <Switch
+            checked={isSubscribedToFCM || false}
+            onChange={async () => {
+              if (isSubscribedToFCM) {
+                await setIsSubscribedToFCM(false);
+                Alert('Messaging disabled');
+              } else {
+                await setIsSubscribedToFCM(true);
+              }
+            }}
+          >
+            <Icon use="message" />
+            <span>In-app alerts</span>
+          </Switch>
 
-        <Switch
-          checked={settings.optInEmail || false}
-          onChange={async () => {
-            if (settings.optInEmail) {
-              await setSettings({ optInEmail: false });
-            } else {
-              await setSettings({ optInEmail: true });
-            }
-          }}
-        >
-          <Icon use="email" />
-          <span>Email alerts</span>
-        </Switch>
+          <Switch
+            checked={settings.optInEmail || false}
+            onChange={async () => {
+              if (settings.optInEmail) {
+                await setSettings({ optInEmail: false });
+              } else {
+                await setSettings({ optInEmail: true });
+              }
+            }}
+          >
+            <Icon use="email" />
+            <span>Email alerts</span>
+          </Switch>
 
-        <Switch
-          checked={settings.optInMarketing || false}
-          onChange={async () => {
-            if (settings.optInMarketing) {
-              await setSettings({ optInMarketing: false });
-            } else {
-              await setSettings({ optInMarketing: true });
-            }
-          }}
-        >
-          <Icon use="local_offer" />
-          <span>Marketing email</span>
-        </Switch>
+          <Switch
+            checked={settings.optInMarketing || false}
+            onChange={async () => {
+              if (settings.optInMarketing) {
+                await setSettings({ optInMarketing: false });
+              } else {
+                await setSettings({ optInMarketing: true });
+              }
+            }}
+          >
+            <Icon use="local_offer" />
+            <span>Marketing email</span>
+          </Switch>
+        </div>
       </Form>
     </Paper>
   ) : null;
